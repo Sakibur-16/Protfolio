@@ -1,0 +1,179 @@
+@import "tailwindcss";
+
+/* ---------------------------------------------------------------------- */
+/* Design tokens — light, black-on-white redesign                         */
+/* ---------------------------------------------------------------------- */
+:root {
+  --bg: #ffffff;
+  --bg-alt: #f5f1e9;
+  --surface: #1a1a1a;
+  --surface-2: #232323;
+  --ink: #0a0a0a;
+  --muted: #59564f;
+  --line: rgba(10, 10, 10, 0.1);
+  --line-strong: rgba(10, 10, 10, 0.22);
+
+  --red: #e8402a;
+  --red-soft: rgba(232, 64, 42, 0.14);
+  --iridescent-1: #8a5cff;
+  --iridescent-2: #4c8bff;
+  --iridescent-3: #d6d6de;
+
+  --font-fraunces: "Archivo Variable", sans-serif;
+  --font-inter: "Inter Variable", sans-serif;
+  --font-plex-mono: "IBM Plex Mono", monospace;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-alt: var(--bg-alt);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-red: var(--red);
+  --color-red-soft: var(--red-soft);
+  --color-iridescent-1: var(--iridescent-1);
+  --color-iridescent-2: var(--iridescent-2);
+  --color-iridescent-3: var(--iridescent-3);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+
+  /* Legacy token names kept as aliases so existing components (Header,
+     Footer, IndexRail, Button, Tag, etc.) that reference text-cyan /
+     bg-ink / text-violet / bg-ember keep working under the new palette
+     without a mechanical rename of every className. */
+  --color-cyan: var(--red);
+  --color-violet: var(--muted);
+  --color-ember: var(--red);
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-plex-mono);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Base                                                                    */
+/* ---------------------------------------------------------------------- */
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+/* Hairline rule used throughout instead of ad-hoc border colors */
+.rule-line {
+  border-color: var(--line);
+}
+.rule-line-strong {
+  border-color: var(--line-strong);
+}
+
+/* Visible focus ring everywhere, including custom components — retuned for
+   a white background (the old cyan-on-dark ring was invisible here). */
+:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Grain overlay — subtle texture, purely decorative                      */
+/* ---------------------------------------------------------------------- */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: multiply;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Custom cursor — desktop, fine-pointer only, respects reduced motion    */
+/* Recolored for the white background (was an off-white dot, invisible    */
+/* on white; now near-black).                                             */
+/* ---------------------------------------------------------------------- */
+@media (pointer: fine) {
+  .cursor-enabled {
+    cursor: none;
+  }
+}
+
+.cursor-dot,
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 70;
+  will-change: transform;
+  border-radius: 9999px;
+}
+
+.cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--ink);
+}
+
+.cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line-strong);
+  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.cursor-ring.is-active {
+  width: 56px;
+  height: 56px;
+  border-color: var(--red);
+  background: color-mix(in srgb, var(--red) 12%, transparent);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Scrollbar — quiet, matches the surface                                 */
+/* ---------------------------------------------------------------------- */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line-strong);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+* {
+  scrollbar-color: var(--line-strong) var(--bg);
+}
+
+/* Utility: mono eyebrow label style shared across sections */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}

@@ -1,0 +1,356 @@
+import type { Project } from "@/types/portfolio";
+
+// Accent colors are assigned by category, not by project, so color carries
+// meaning: violet marks LLM/product-led work, cyan marks data- and vision-led
+// work, ember marks speech/voice work. See globals.css for the token values.
+const ACCENT = {
+  violet: "#7C6CFF",
+  cyan: "#46E0C4",
+  ember: "#FF6A3D",
+} as const;
+
+// ---------------------------------------------------------------------------
+// SELECTED WORK — prioritized case studies. Fields are only as detailed as
+// the underlying facts support. Where a project has no confirmed detail
+// beyond its name, challenge/approach/outcome are left null and status is
+// "undisclosed" rather than guessed — the UI renders those honestly instead
+// of hiding the project or inventing content for it.
+// ---------------------------------------------------------------------------
+export const selectedWork: Project[] = [
+  {
+    slug: "alfred-ai-dating-concierge",
+    title: "Alfred",
+    year: "2025",
+    role: "AI Developer — AI service layer",
+    category: "llm-application",
+    domains: ["llm", "product"],
+    status: "shipped",
+    featured: true,
+    shortDescription:
+      "The AI service layer behind an AI dating concierge — conversational guidance grounded in live web search.",
+    fullDescription:
+      "Alfred is an AI dating concierge. This project scope covered the AI service layer only: a production-ready FastAPI backend built around a provider-agnostic LLM abstraction, so the underlying model can be swapped without touching the product around it, plus a live SerpAPI search integration for grounding advice in current, real-world information.",
+    challenge:
+      "A dating concierge needs to reason conversationally about a user's specific situation, not just recite generic advice — and static model knowledge alone can't keep answers current.",
+    approach:
+      "Built a provider-agnostic LLM abstraction so the concierge isn't locked to a single model vendor, and integrated SerpAPI so responses can draw on live search results. A full pytest suite covers the service layer.",
+    outcome:
+      "Delivered as a handoff-ready AI layer with test coverage in place, for a separate backend team to integrate into the product.",
+    technologies: ["Python", "FastAPI", "Provider-agnostic LLM abstraction", "SerpAPI", "pytest"],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+  },
+  {
+    slug: "eqi30-emotional-intelligence-platform",
+    title: "EQi30",
+    year: "2025",
+    role: "AI Developer — AI service layer",
+    category: "llm-application",
+    domains: ["llm", "product", "education"],
+    status: "shipped",
+    featured: true,
+    shortDescription:
+      "A 12-engine AI system powering assessment, coaching, and microlearning for an emotional-intelligence platform.",
+    fullDescription:
+      "EQi30 is an emotional-intelligence platform. The AI service layer spans 12 engines covering assessment, coaching, microlearning, and adaptive scheduling, built in Python and FastAPI. A significant part of the work was data engineering: 28 separately authored microskill documents (docx and xlsx) had to be parsed and reconciled into one consistent structure the engines could run on.",
+    challenge:
+      "Translating a large body of emotional-intelligence content, authored across 28 separate documents with inconsistencies between them, into a structure a product could actually run coaching and scheduling logic on.",
+    approach:
+      "Built 12 AI engines spanning assessment, coaching, microlearning, and adaptive scheduling, and ran a dedicated content-mapping pass to resolve inconsistencies across the source documents.",
+    outcome:
+      "Mapped the source content into 40 abilities across 6 competencies, with 30 of those abilities now carrying complete day-by-day programs for the coaching engines to run on.",
+    technologies: ["Python", "FastAPI", "Content data engineering"],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+  },
+  {
+    slug: "rise-life-coaching-app",
+    title: "Rise",
+    year: "2025",
+    role: "AI Developer — AI service layer",
+    category: "llm-application",
+    domains: ["llm", "product"],
+    status: "shipped",
+    featured: true,
+    shortDescription:
+      "The AI layer for a mobile life-coaching app: eleven endpoints, five coaching personalities, and streamed responses.",
+    fullDescription:
+      "Rise is a mobile life-coaching app. Its AI layer exposes 11 FastAPI endpoints built around a five-personality tone system, so coaching responses feel distinct depending on the personality selected. Responses stream to the client over server-sent events as structured JSON, rather than arriving as a single blocking reply.",
+    challenge:
+      "Coaching needed to feel personal and immediate in a mobile client — five distinct personalities, delivered as a smooth stream rather than a delayed wall of text.",
+    approach:
+      "Designed 11 endpoints around a five-personality tone system, with server-sent-event streaming and structured JSON outputs the mobile app could render as it arrived.",
+    outcome:
+      "Delivered as a standalone AI service layer, ready for the mobile app's backend team to integrate.",
+    technologies: ["Python", "FastAPI", "Server-Sent Events", "Structured JSON outputs"],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+  },
+  {
+    slug: "medical-imaging-diagnostics",
+    title: "Medical Imaging Diagnostics",
+    year: "2025",
+    role: "Researcher",
+    category: "computer-vision",
+    domains: ["computer-vision", "healthcare"],
+    status: "research",
+    featured: true,
+    shortDescription:
+      "CNN-based image classification for malaria diagnosis from blood-smear images, evaluated for generalization across datasets.",
+    fullDescription:
+      "Diagnostic imaging models often score well on the dataset they were trained on and degrade on a different one collected under different conditions. This research trained and evaluated CNN-based image classification models across multiple blood-smear datasets, with the evaluation specifically designed around generalization rather than single-benchmark accuracy.",
+    challenge:
+      "Blood-smear datasets vary in staining, imaging equipment, and collection conditions — a model that performs well on one can fail on another, which matters a great deal for a diagnostic tool.",
+    approach:
+      "Trained CNN-based classification models in TensorFlow and Keras and assessed how performance generalized across datasets rather than optimizing for one.",
+    outcome:
+      "The findings were peer-reviewed and presented at ICDMIS 2025 (Springer) — see the Research section below.",
+    technologies: ["Python", "TensorFlow", "Keras", "CNNs", "Image classification"],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.cyan,
+  },
+  {
+    slug: "help-me-speak",
+    title: "Help Me Speak",
+    year: "2024",
+    role: "AI Developer",
+    category: "speech-ai",
+    domains: ["speech", "education"],
+    status: "undisclosed",
+    featured: true,
+    shortDescription:
+      "A speech-focused AI product aimed at helping users practice and improve spoken communication.",
+    fullDescription:
+      "Full case-study detail for this project is being finalized. It sits in the speech-AI domain alongside this résumé's transcription and voice-synthesis work.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.ember,
+    todo: "Add confirmed challenge/approach/outcome, technologies, role, and links once available.",
+  },
+  {
+    slug: "studypal-qld",
+    title: "StudyPal QLD",
+    year: "2024",
+    role: "AI Developer",
+    category: "education",
+    domains: ["education", "llm"],
+    status: "undisclosed",
+    featured: true,
+    shortDescription: "A study-assistance product built for students in Queensland, Australia.",
+    fullDescription: "Full case-study detail for this project is being finalized.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.cyan,
+    todo: "Add confirmed challenge/approach/outcome, technologies, role, and links once available.",
+  },
+  {
+    slug: "jobassist-ai",
+    title: "JobAssist AI",
+    year: "2024",
+    role: "AI Developer",
+    category: "llm-application",
+    domains: ["llm", "product"],
+    status: "undisclosed",
+    featured: true,
+    shortDescription: "An AI-powered assistant designed to support job-search and application workflows.",
+    fullDescription: "Full case-study detail for this project is being finalized.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+    todo: "Add confirmed challenge/approach/outcome, technologies, role, and links once available.",
+  },
+];
+
+// ---------------------------------------------------------------------------
+// ADDITIONAL PROJECTS — compact archive presentation, lighter on detail by
+// design. See components/sections/AdditionalProjects.tsx.
+// ---------------------------------------------------------------------------
+export const additionalProjects: Project[] = [
+  {
+    slug: "quranity",
+    title: "Quranity",
+    year: "2024",
+    role: "AI Developer",
+    category: "nlp",
+    domains: ["nlp", "education"],
+    status: "shipped",
+    featured: false,
+    shortDescription:
+      "A free Quranic REST API with tajweed-coded Arabic text, word-by-word translation, and full-text search.",
+    fullDescription:
+      "Built from scratch in Python and FastAPI, serving tajweed color-coded Arabic text, word-by-word translation, grammatical breakdown, and tafsir, with full-text search powered by SQLite FTS5.",
+    challenge:
+      "Few open data sources combine tajweed-accurate Arabic text, granular translation, and fast search in a single, freely usable API.",
+    approach:
+      "Built a REST API from scratch with a SQLite FTS5 full-text search layer over structured Quranic text, translation, and tafsir data.",
+    outcome: "A free, self-contained API other developers can build Quranic study tools on top of.",
+    technologies: ["Python", "FastAPI", "SQLite FTS5"],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.cyan,
+  },
+  {
+    slug: "frazzl-kid",
+    title: "Frazzl Kid",
+    year: "2025",
+    role: "Deployment & DevOps Support",
+    category: "education",
+    domains: ["education", "product"],
+    status: "shipped",
+    featured: false,
+    shortDescription: "Production deployment support for a FastAPI backend behind a children's educational app.",
+    fullDescription:
+      "Guided a first-time production deployment of the Frazzl Kid API to a Hostinger VPS, including SSH access, systemd service configuration, and firewall setup.",
+    challenge: null,
+    approach: "Configured SSH, systemd, and firewall rules for a first-time VPS deployment.",
+    outcome: "The API was moved from local development to a running production deployment.",
+    technologies: ["Python", "FastAPI", "Hostinger VPS", "systemd"],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.cyan,
+  },
+  {
+    slug: "wondertales",
+    title: "Wondertales",
+    year: "2024",
+    role: "AI Developer",
+    category: "llm-application",
+    domains: ["llm", "education"],
+    status: "undisclosed",
+    featured: false,
+    shortDescription: "An AI-powered storytelling product for children.",
+    fullDescription: "Full case-study detail for this project is being finalized.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+    todo: "Add confirmed detail once available.",
+  },
+  {
+    slug: "hairlync",
+    title: "Hairlync",
+    year: "2024",
+    role: "AI Developer",
+    category: "product-platform",
+    domains: ["product"],
+    status: "undisclosed",
+    featured: false,
+    shortDescription: "An AI-supported product in the hair and beauty-care space.",
+    fullDescription: "Full case-study detail for this project is being finalized.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+    todo: "Add confirmed detail once available.",
+  },
+  {
+    slug: "everidog",
+    title: "Everidog",
+    year: "2024",
+    role: "AI Developer",
+    category: "product-platform",
+    domains: ["product"],
+    status: "undisclosed",
+    featured: false,
+    shortDescription: "A product for dog owners.",
+    fullDescription: "Full case-study detail for this project is being finalized.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.cyan,
+    todo: "Add confirmed detail once available.",
+  },
+  {
+    slug: "aura",
+    title: "Aura",
+    year: "2024",
+    role: "AI Developer",
+    category: "product-platform",
+    domains: ["product"],
+    status: "undisclosed",
+    featured: false,
+    shortDescription: "Case study details for this project are being finalized.",
+    fullDescription: "Full case-study detail for this project is being finalized.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+    todo: "Add confirmed detail once available.",
+  },
+  {
+    slug: "byoj",
+    title: "BYOJ",
+    year: "2024",
+    role: "AI Developer",
+    category: "tooling",
+    domains: ["product"],
+    status: "undisclosed",
+    featured: false,
+    shortDescription: "Case study details for this project are being finalized.",
+    fullDescription: "Full case-study detail for this project is being finalized.",
+    challenge: null,
+    approach: null,
+    outcome: null,
+    technologies: [],
+    image: null,
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.cyan,
+    todo: "Add confirmed detail once available.",
+  },
+];
+
+export const allProjects: Project[] = [...selectedWork, ...additionalProjects];
+
+export const projectCategoryLabels: Record<Project["category"], string> = {
+  "llm-application": "LLM Application",
+  "rag-search": "RAG & Search",
+  nlp: "NLP",
+  "computer-vision": "Computer Vision",
+  "speech-ai": "Speech AI",
+  education: "Education",
+  healthcare: "Healthcare",
+  "product-platform": "Product Platform",
+  tooling: "Tooling",
+};

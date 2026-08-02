@@ -1,0 +1,43 @@
+import type { Metadata } from "next";
+import "@fontsource-variable/archivo";
+import "@fontsource-variable/inter";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+import { buildMetadata, personJsonLd } from "@/lib/metadata";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { IndexRail } from "@/components/layout/IndexRail";
+import { CursorFX } from "@/components/layout/CursorFX";
+import { GrainOverlay } from "@/components/layout/GrainOverlay";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { Preloader } from "@/components/layout/Preloader";
+import "./globals.css";
+
+export const metadata: Metadata = buildMetadata();
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className="h-full">
+      <body className="min-h-full bg-bg text-ink antialiased">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd()) }}
+        />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[200] focus:rounded focus:bg-ink focus:px-4 focus:py-2 focus:text-bg"
+        >
+          Skip to content
+        </a>
+        <Preloader />
+        <GrainOverlay />
+        <ScrollProgress />
+        <CursorFX />
+        <Header />
+        <IndexRail />
+        <main id="main-content">{children}</main>
+        <Footer />
+      </body>
+    </html>
+  );
+}
