@@ -41,6 +41,55 @@ export const selectedWork: Project[] = [
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.violet,
+    timeline: "2025",
+    deliverables: "FastAPI service · Provider-agnostic LLM layer · Test suite",
+    domainLabel: "Consumer dating",
+    architecture: [
+      {
+        title: "FastAPI service layer",
+        description: "The integration surface handed to the product's backend team.",
+      },
+      {
+        title: "Provider-agnostic LLM abstraction",
+        description:
+          "A single internal interface over the model vendor, so the underlying model can be swapped without touching the product around it.",
+      },
+      {
+        title: "Live search grounding",
+        description:
+          "SerpAPI integration so advice can draw on current, real-world information rather than static model knowledge.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Never bind the product to one model vendor",
+        description:
+          "Model quality and pricing move quickly. The abstraction means a vendor change is a config change, not a rewrite.",
+      },
+      {
+        title: "Ground advice in live search",
+        description:
+          "Static model knowledge goes stale. Live retrieval keeps guidance anchored to what is actually true now.",
+      },
+    ],
+    stackGroups: [
+      { label: "Service", items: ["Python", "FastAPI"] },
+      { label: "AI", items: ["Provider-agnostic LLM abstraction", "SerpAPI"] },
+      { label: "Quality", items: ["pytest"] },
+    ],
+    features: [
+      "Conversational dating guidance grounded in live web search",
+      "Swappable model provider behind one interface",
+      "Full pytest coverage across the service layer",
+    ],
+    challenges: [
+      {
+        problem:
+          "A concierge has to reason about a user's specific situation, not recite generic advice — and static model knowledge cannot keep answers current.",
+        solution:
+          "Paired a conversational LLM layer with live SerpAPI retrieval, so responses combine reasoning with current information.",
+      },
+    ],
   },
   {
     slug: "eqi30-emotional-intelligence-platform",
@@ -118,69 +167,67 @@ export const selectedWork: Project[] = [
     accentColor: ACCENT.cyan,
   },
   {
-    slug: "help-me-speak",
-    title: "Help Me Speak",
-    year: "2024",
-    role: "AI Developer",
-    category: "speech-ai",
-    domains: ["speech", "education"],
-    status: "undisclosed",
-    featured: true,
-    shortDescription:
-      "A speech-focused AI product aimed at helping users practice and improve spoken communication.",
-    fullDescription:
-      "Full case-study detail for this project is being finalized. It sits in the speech-AI domain alongside this résumé's transcription and voice-synthesis work.",
-    challenge: null,
-    approach: null,
-    outcome: null,
-    technologies: [],
-    image: null,
-    gallery: [],
-    links: { external: null, repository: null, store: null },
-    accentColor: ACCENT.ember,
-    todo: "Add confirmed challenge/approach/outcome, technologies, role, and links once available.",
-  },
-  {
-    slug: "studypal-qld",
-    title: "StudyPal QLD",
-    year: "2024",
-    role: "AI Developer",
-    category: "education",
-    domains: ["education", "llm"],
-    status: "undisclosed",
-    featured: true,
-    shortDescription: "A study-assistance product built for students in Queensland, Australia.",
-    fullDescription: "Full case-study detail for this project is being finalized.",
-    challenge: null,
-    approach: null,
-    outcome: null,
-    technologies: [],
-    image: null,
-    gallery: [],
-    links: { external: null, repository: null, store: null },
-    accentColor: ACCENT.cyan,
-    todo: "Add confirmed challenge/approach/outcome, technologies, role, and links once available.",
-  },
-  {
     slug: "jobassist-ai",
     title: "JobAssist AI",
     year: "2024",
     role: "AI Developer",
     category: "llm-application",
     domains: ["llm", "product"],
-    status: "undisclosed",
+    status: "in-development",
     featured: true,
-    shortDescription: "An AI-powered assistant designed to support job-search and application workflows.",
-    fullDescription: "Full case-study detail for this project is being finalized.",
-    challenge: null,
-    approach: null,
+    shortDescription:
+      "An AI job-search platform for the French market — CV building, cover letters, application emails, and role matching.",
+    fullDescription:
+      "A job-search platform aimed at applicants in France, built around four AI surfaces: a CV builder, a cover-letter generator, an application-email generator, and AI-driven job matching and recommendations. Each surface has to produce output a candidate can actually send without rewriting it.",
+    challenge:
+      "Generated application material fails the moment it reads as generic — it has to reflect the specific candidate and the specific posting, in the conventions the French hiring market expects.",
+    approach:
+      "Built the AI layer as a set of focused generators — CV, cover letter, application email — alongside a matching and recommendation system, rather than one general-purpose prompt doing everything.",
     outcome: null,
-    technologies: [],
+    technologies: ["Python", "LLM integration", "Prompt engineering"],
     image: null,
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.violet,
-    todo: "Add confirmed challenge/approach/outcome, technologies, role, and links once available.",
+    timeline: "2024",
+    deliverables: "AI generation layer · Job matching",
+    domainLabel: "Careers · France",
+    architecture: [
+      {
+        title: "Focused generators",
+        description:
+          "Separate CV, cover-letter, and application-email generators rather than one general-purpose prompt serving every surface.",
+      },
+      {
+        title: "Matching & recommendation",
+        description: "Ranks openings against a candidate's profile to surface roles worth applying to.",
+      },
+    ],
+    decisions: [
+      {
+        title: "One generator per artefact",
+        description:
+          "A CV, a cover letter, and an outreach email have different conventions and constraints. Splitting them made each output usable without a rewrite.",
+      },
+    ],
+    stackGroups: [
+      { label: "AI", items: ["Python", "LLM integration", "Prompt engineering"] },
+    ],
+    features: [
+      "AI CV builder",
+      "AI cover-letter generator",
+      "AI application-email generator",
+      "AI job matching and recommendations",
+    ],
+    challenges: [
+      {
+        problem:
+          "Generated application material fails the moment it reads as generic — it has to reflect the specific candidate, the specific posting, and French hiring conventions.",
+        solution:
+          "Built each artefact as its own generator with its own constraints, instead of one prompt trying to cover every case.",
+      },
+    ],
+    todo: "Confirm launch status, live URL, and measurable outcome once available.",
   },
 ];
 
@@ -193,25 +240,76 @@ export const additionalProjects: Project[] = [
     slug: "quranity",
     title: "Quranity",
     year: "2024",
-    role: "AI Developer",
-    category: "nlp",
-    domains: ["nlp", "education"],
+    role: "AI Developer, PM & QA",
+    category: "rag-search",
+    domains: ["rag", "nlp", "education"],
     status: "shipped",
     featured: false,
     shortDescription:
-      "A free Quranic REST API with tajweed-coded Arabic text, word-by-word translation, and full-text search.",
+      "A live Qur'an app with Qalam, an AI assistant whose answers are grounded in Qur'an and Hadith retrieval.",
     fullDescription:
-      "Built from scratch in Python and FastAPI, serving tajweed color-coded Arabic text, word-by-word translation, grammatical breakdown, and tafsir, with full-text search powered by SQLite FTS5.",
+      "A Qur'anic study app shipped on Google Play. Its centrepiece is Qalam, an AI assistant that answers questions by retrieving from Qur'an and Hadith sources rather than generating from model memory. The app also carries cinematic Qur'an stories and prayer times. Underneath sits a Python service exposing tajweed colour-coded Arabic text, word-by-word translation, grammatical breakdown, and tafsir, with full-text search over the corpus.",
     challenge:
-      "Few open data sources combine tajweed-accurate Arabic text, granular translation, and fast search in a single, freely usable API.",
+      "Religious answers are exactly where a model must not improvise. Every response has to trace back to a real source, which makes this a retrieval problem before it is a generation one.",
     approach:
-      "Built a REST API from scratch with a SQLite FTS5 full-text search layer over structured Quranic text, translation, and tafsir data.",
-    outcome: "A free, self-contained API other developers can build Quranic study tools on top of.",
-    technologies: ["Python", "FastAPI", "SQLite FTS5"],
+      "Built the assistant as a retrieval-grounded system over structured Qur'an and Hadith data, with a full-text search layer beneath it, and carried the work through product management and QA as well as the AI layer.",
+    outcome: "Live on Google Play with the Qalam assistant, Qur'an stories, and prayer times in production.",
+    technologies: ["Python", "Flutter", "Dart", "RAG", "Full-text search"],
     image: null,
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.cyan,
+    timeline: "2024",
+    deliverables: "Android app · Retrieval-grounded AI assistant · Content API",
+    domainLabel: "Islamic education",
+    architecture: [
+      {
+        title: "Structured Qur'an & Hadith corpus",
+        description:
+          "Tajweed colour-coded Arabic text, word-by-word translation, grammatical breakdown, and tafsir, normalised into one queryable structure.",
+      },
+      {
+        title: "Retrieval layer",
+        description:
+          "Full-text search over the corpus, so a question resolves to specific passages before any model is asked to phrase an answer.",
+      },
+      {
+        title: "Qalam assistant",
+        description:
+          "The response layer. It answers only from what retrieval returned, which is what keeps religious answers attributable.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Retrieval before generation",
+        description:
+          "Religious answers are exactly where a model must not improvise. Treating this as a search problem first made every answer traceable to a source.",
+      },
+      {
+        title: "One corpus, many surfaces",
+        description:
+          "The same structured data powers the assistant, the reading view, and search — rather than maintaining separate content pipelines per feature.",
+      },
+    ],
+    stackGroups: [
+      { label: "Application", items: ["Flutter", "Dart"] },
+      { label: "AI & retrieval", items: ["Python", "RAG", "Full-text search"] },
+    ],
+    features: [
+      "Qalam — an AI assistant grounded in Qur'an and Hadith retrieval",
+      "Cinematic Qur'an stories",
+      "Prayer times",
+      "Tajweed colour-coded Arabic with word-by-word translation",
+    ],
+    challenges: [
+      {
+        problem:
+          "A general-purpose model will confidently produce religious claims it cannot support, which is unacceptable in this domain.",
+        solution:
+          "Constrained the assistant to answer from retrieved passages only, so the failure mode becomes \"no answer found\" rather than a fabricated one.",
+      },
+    ],
+    todo: "Add the Google Play store URL to links.store — the listing is live but the URL was not supplied.",
   },
   {
     slug: "frazzl-kid",
@@ -233,6 +331,27 @@ export const additionalProjects: Project[] = [
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.cyan,
+    timeline: "2025",
+    deliverables: "Production deployment · Service configuration",
+    domainLabel: "Children's education",
+    architecture: [
+      {
+        title: "Hostinger VPS",
+        description: "The target environment for the first production deployment.",
+      },
+      {
+        title: "systemd service",
+        description: "Keeps the FastAPI backend running and restarting reliably as a managed service.",
+      },
+      {
+        title: "SSH & firewall",
+        description: "Access and network rules configured for a first-time production environment.",
+      },
+    ],
+    stackGroups: [
+      { label: "Application", items: ["Python", "FastAPI"] },
+      { label: "Infrastructure", items: ["Hostinger VPS", "systemd", "Linux"] },
+    ],
   },
   {
     slug: "wondertales",
@@ -342,6 +461,41 @@ export const additionalProjects: Project[] = [
 ];
 
 export const allProjects: Project[] = [...selectedWork, ...additionalProjects];
+
+/**
+ * The six projects that lead the work section, in the order they should
+ * appear. Kept as an explicit slug list so the running order is a deliberate
+ * editorial decision rather than a side effect of array position.
+ */
+const FEATURED_SLUGS = [
+  "quranity",
+  "hairlync",
+  "jobassist-ai",
+  "wondertales",
+  "alfred-ai-dating-concierge",
+  "frazzl-kid",
+] as const;
+
+export const featuredProjects: Project[] = FEATURED_SLUGS.map((slug) => {
+  const project = allProjects.find((p) => p.slug === slug);
+  if (!project) throw new Error(`Featured project "${slug}" is missing from the project data.`);
+  return project;
+});
+
+export const otherProjects: Project[] = allProjects.filter(
+  (project) => !FEATURED_SLUGS.includes(project.slug as (typeof FEATURED_SLUGS)[number])
+);
+
+/** Previous/next neighbours for the case-study pager, wrapping at both ends. */
+export function projectNeighbours(slug: string): { previous: Project; next: Project } | null {
+  const ordered = [...featuredProjects, ...otherProjects];
+  const index = ordered.findIndex((p) => p.slug === slug);
+  if (index === -1 || ordered.length < 2) return null;
+  return {
+    previous: ordered[(index - 1 + ordered.length) % ordered.length],
+    next: ordered[(index + 1) % ordered.length],
+  };
+}
 
 export const projectCategoryLabels: Record<Project["category"], string> = {
   "llm-application": "LLM Application",

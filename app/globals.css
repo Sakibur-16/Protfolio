@@ -1,55 +1,151 @@
 @import "tailwindcss";
 
 /* ---------------------------------------------------------------------- */
-/* Design tokens — light, black-on-white redesign                         */
+/* Aurora design tokens                                                    */
+/*                                                                         */
+/* Dark is the primary theme; light is a supported alternate. Both share   */
+/* one semantic contract, so components never reference a raw hex and the  */
+/* WebGL scene can read the same values via getComputedStyle.              */
 /* ---------------------------------------------------------------------- */
-:root {
+:root,
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --bg: #0a0a0b;
+  --bg-alt: #0e0e10;
+  --bg-raised: #141417;
+  --surface: #141417;
+  --surface-2: #1b1b1f;
+  --surface-ink: #f4f4f5;
+  --surface-muted: rgba(244, 244, 245, 0.6);
+  --surface-line: rgba(244, 244, 245, 0.1);
+  --ink: #f4f4f5;
+  --ink-dim: #a1a1aa;
+  --muted: #8b8b93;
+  --line: rgba(244, 244, 245, 0.09);
+  --line-strong: rgba(244, 244, 245, 0.2);
+
+  /* Signature gradient: warm orange -> electric blue. */
+  --accent-warm: #ff6b2c;
+  --accent-cool: #2c6bff;
+  --accent-gradient: linear-gradient(120deg, var(--accent-warm) 0%, var(--accent-cool) 100%);
+  --accent-glow-warm: rgba(255, 107, 44, 0.35);
+  --accent-glow-cool: rgba(44, 107, 255, 0.35);
+  --accent-ink: #ffffff;
+
+  /* Ambient blobs sitting behind sections. */
+  --glow-a: rgba(255, 107, 44, 0.16);
+  --glow-b: rgba(44, 107, 255, 0.16);
+  --glow-strength: 1;
+
+  /* Glass nav. */
+  --glass-tint-a: rgba(38, 38, 44, 0.55);
+  --glass-tint-b: rgba(14, 14, 18, 0.4);
+  --glass-tint-a-scrolled: rgba(38, 38, 44, 0.74);
+  --glass-tint-b-scrolled: rgba(14, 14, 18, 0.64);
+  --glass-border: rgba(244, 244, 245, 0.12);
+  --glass-highlight: rgba(244, 244, 245, 0.3);
+  --glass-underglow: rgba(244, 244, 245, 0.07);
+  --glass-shadow: rgba(0, 0, 0, 0.6);
+  --glass-sheen: rgba(244, 244, 245, 0.14);
+  --glass-frost: rgba(244, 244, 245, 0.05);
+  --glass-blur: 26px;
+  --glass-saturate: 170%;
+  --glass-brightness: 1.15;
+
+  /* WebGL scene palette. */
+  --scene-warm: #ff6b2c;
+  --scene-cool: #2c6bff;
+  --scene-node-opacity: 0.55;
+
+  --grain-opacity: 0.045;
+  --grain-blend: overlay;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+
   --bg: #ffffff;
-  --bg-alt: #f5f1e9;
-  --surface: #1a1a1a;
-  --surface-2: #232323;
-  --ink: #0a0a0a;
-  --muted: #59564f;
-  --line: rgba(10, 10, 10, 0.1);
-  --line-strong: rgba(10, 10, 10, 0.22);
+  --bg-alt: #f7f7f8;
+  --bg-raised: #ffffff;
+  --surface: #101013;
+  --surface-2: #1b1b1f;
+  --surface-ink: #f4f4f5;
+  --surface-muted: rgba(244, 244, 245, 0.6);
+  --surface-line: rgba(244, 244, 245, 0.12);
+  --ink: #0a0a0b;
+  --ink-dim: #52525b;
+  --muted: #64646d;
+  --line: rgba(10, 10, 11, 0.1);
+  --line-strong: rgba(10, 10, 11, 0.2);
 
-  --red: #e8402a;
-  --red-soft: rgba(232, 64, 42, 0.14);
-  --iridescent-1: #8a5cff;
-  --iridescent-2: #4c8bff;
-  --iridescent-3: #d6d6de;
+  --accent-warm: #e2541a;
+  --accent-cool: #1d55e0;
+  --accent-gradient: linear-gradient(120deg, var(--accent-warm) 0%, var(--accent-cool) 100%);
+  --accent-glow-warm: rgba(226, 84, 26, 0.24);
+  --accent-glow-cool: rgba(29, 85, 224, 0.24);
+  --accent-ink: #ffffff;
 
-  --font-fraunces: "Archivo Variable", sans-serif;
-  --font-inter: "Inter Variable", sans-serif;
-  --font-plex-mono: "IBM Plex Mono", monospace;
+  --glow-a: rgba(226, 84, 26, 0.1);
+  --glow-b: rgba(29, 85, 224, 0.1);
+  --glow-strength: 0.75;
+
+  --glass-tint-a: rgba(255, 255, 255, 0.74);
+  --glass-tint-b: rgba(255, 255, 255, 0.44);
+  --glass-tint-a-scrolled: rgba(255, 255, 255, 0.9);
+  --glass-tint-b-scrolled: rgba(255, 255, 255, 0.66);
+  --glass-border: rgba(10, 10, 11, 0.1);
+  --glass-highlight: rgba(255, 255, 255, 0.95);
+  --glass-underglow: rgba(255, 255, 255, 0.55);
+  --glass-shadow: rgba(10, 10, 11, 0.12);
+  --glass-sheen: rgba(255, 255, 255, 0.65);
+  --glass-frost: rgba(10, 10, 11, 0.035);
+  --glass-blur: 24px;
+  --glass-saturate: 185%;
+  --glass-brightness: 1.03;
+
+  --scene-warm: #e2541a;
+  --scene-cool: #1d55e0;
+  --scene-node-opacity: 0.5;
+
+  --grain-opacity: 0.03;
+  --grain-blend: multiply;
+}
+
+:root {
+  --font-display-stack: "Archivo Variable", sans-serif;
+  --font-body: "Inter Variable", sans-serif;
+  --font-mono-stack: "IBM Plex Mono", monospace;
+
+  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);
+  --dur-fast: 180ms;
+  --dur-base: 320ms;
+  --dur-slow: 620ms;
+  --dur-theme: 460ms;
 }
 
 @theme inline {
   --color-bg: var(--bg);
   --color-bg-alt: var(--bg-alt);
+  --color-bg-raised: var(--bg-raised);
   --color-surface: var(--surface);
   --color-surface-2: var(--surface-2);
+  --color-surface-ink: var(--surface-ink);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-line: var(--surface-line);
   --color-ink: var(--ink);
+  --color-ink-dim: var(--ink-dim);
   --color-muted: var(--muted);
-  --color-red: var(--red);
-  --color-red-soft: var(--red-soft);
-  --color-iridescent-1: var(--iridescent-1);
-  --color-iridescent-2: var(--iridescent-2);
-  --color-iridescent-3: var(--iridescent-3);
   --color-line: var(--line);
   --color-line-strong: var(--line-strong);
+  --color-warm: var(--accent-warm);
+  --color-cool: var(--accent-cool);
+  --color-accent-ink: var(--accent-ink);
 
-  /* Legacy token names kept as aliases so existing components (Header,
-     Footer, IndexRail, Button, Tag, etc.) that reference text-cyan /
-     bg-ink / text-violet / bg-ember keep working under the new palette
-     without a mechanical rename of every className. */
-  --color-cyan: var(--red);
-  --color-violet: var(--muted);
-  --color-ember: var(--red);
-
-  --font-display: var(--font-fraunces);
-  --font-sans: var(--font-inter);
-  --font-mono: var(--font-plex-mono);
+  --font-display: var(--font-display-stack);
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-mono-stack);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -57,61 +153,358 @@
 /* ---------------------------------------------------------------------- */
 html {
   scroll-behavior: smooth;
-  color-scheme: light;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Theme crossfade, applied only while the toggle settles. */
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition:
+    background-color var(--dur-theme) var(--ease-glass),
+    border-color var(--dur-theme) var(--ease-glass),
+    color var(--dur-theme) var(--ease-glass),
+    fill var(--dur-theme) var(--ease-glass),
+    stroke var(--dur-theme) var(--ease-glass),
+    box-shadow var(--dur-theme) var(--ease-glass) !important;
+  transition-delay: 0ms !important;
 }
 
 ::selection {
-  background: var(--ink);
-  color: var(--bg);
+  background: var(--accent-warm);
+  color: var(--accent-ink);
 }
 
-/* Hairline rule used throughout instead of ad-hoc border colors */
-.rule-line {
-  border-color: var(--line);
-}
-.rule-line-strong {
-  border-color: var(--line-strong);
-}
-
-/* Visible focus ring everywhere, including custom components — retuned for
-   a white background (the old cyan-on-dark ring was invisible here). */
 :focus-visible {
-  outline: 2px solid var(--ink);
+  outline: 2px solid var(--accent-cool);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 
 /* ---------------------------------------------------------------------- */
-/* Grain overlay — subtle texture, purely decorative                      */
+/* Gradient text + accent utilities                                        */
+/* ---------------------------------------------------------------------- */
+.text-gradient {
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.accent-bar {
+  background: var(--accent-gradient);
+}
+
+/* Pill button with a gradient rim that lights up on hover. The rim is a
+   masked border layer so the fill stays flat and the glow stays crisp. */
+.btn-glow {
+  position: relative;
+  isolation: isolate;
+  background: var(--accent-gradient);
+  color: var(--accent-ink);
+  box-shadow:
+    0 0 0 0 transparent,
+    0 8px 30px -10px var(--accent-glow-warm);
+  transition:
+    box-shadow var(--dur-base) var(--ease-editorial),
+    transform var(--dur-base) var(--ease-editorial);
+}
+
+.btn-glow:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 0 26px -4px var(--accent-glow-cool),
+    0 14px 44px -12px var(--accent-glow-warm);
+}
+
+.btn-ghost {
+  position: relative;
+  isolation: isolate;
+  border: 1px solid var(--line-strong);
+  color: var(--ink);
+  transition:
+    border-color var(--dur-base) var(--ease-editorial),
+    background-color var(--dur-base) var(--ease-editorial),
+    transform var(--dur-base) var(--ease-editorial);
+}
+
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: transparent;
+  background-color: color-mix(in srgb, var(--ink) 7%, transparent);
+}
+
+/* Magnetic CTA: springs back on exit, and carries a specular highlight that
+   tracks the pointer (--mx/--my are written by MagneticLink). */
+.magnetic {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  transition: transform 520ms var(--ease-editorial);
+  will-change: transform;
+}
+
+.magnetic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: radial-gradient(
+    120px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 255, 255, 0.28),
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-editorial);
+}
+
+.magnetic:hover::after {
+  opacity: 1;
+}
+
+/* Gradient hairline border for cards. Uses a masked pseudo-element so the
+   card keeps its own background instead of being painted over. */
+.gradient-border {
+  position: relative;
+}
+
+.gradient-border::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: var(--accent-gradient);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-editorial);
+  pointer-events: none;
+}
+
+.gradient-border:hover::after,
+.gradient-border:focus-within::after {
+  opacity: 1;
+}
+
+/* Diagonal light streaks behind the hero. */
+.light-streak {
+  position: absolute;
+  pointer-events: none;
+  background: var(--accent-gradient);
+  filter: blur(42px);
+  opacity: calc(0.16 * var(--glow-strength));
+  transform: rotate(-24deg);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Liquid glass — nav pill                                                 */
+/* ---------------------------------------------------------------------- */
+.liquid-glass {
+  position: relative;
+  isolation: isolate;
+  background-image: linear-gradient(152deg, var(--glass-tint-a) 0%, var(--glass-tint-b) 100%);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
+    brightness(var(--glass-brightness));
+  box-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 -1px 0 0 var(--glass-underglow) inset,
+    0 10px 36px -10px var(--glass-shadow);
+  transition:
+    background-image var(--dur-base) var(--ease-glass),
+    box-shadow var(--dur-base) var(--ease-glass),
+    border-color var(--dur-base) var(--ease-glass),
+    padding var(--dur-base) var(--ease-glass);
+}
+
+.liquid-glass::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(140% 100% at 18% -10%, var(--glass-sheen) 0%, transparent 55%),
+    linear-gradient(to bottom, var(--glass-sheen) 0%, transparent 48%);
+  opacity: 0.85;
+}
+
+.liquid-glass.is-scrolled {
+  background-image: linear-gradient(
+    152deg,
+    var(--glass-tint-a-scrolled) 0%,
+    var(--glass-tint-b-scrolled) 100%
+  );
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .liquid-glass {
+    background-image: none;
+    background-color: var(--bg-alt);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Marquee (trust strip)                                                   */
+/* ---------------------------------------------------------------------- */
+@keyframes marquee-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+/*
+ * Seamless marquee.
+ *
+ * The stutter at wrap comes from using flex `gap` on the track: with 2N items
+ * the total width is 2N·w + (2N−1)·g, so translating −50% lands half a gap
+ * short and the loop visibly jumps. Spacing therefore lives on each item as
+ * margin-right, making the width exactly 2N·(w+g) — half of which is a whole
+ * number of items, so the wrap is mathematically invisible.
+ */
+.marquee-track,
+.marquee-track-reverse {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  /* No column-gap here — spacing is per-item, see .marquee-item. */
+}
+
+.marquee-track {
+  animation: marquee-left 46s linear infinite;
+}
+
+.marquee-track-reverse {
+  animation: marquee-right 52s linear infinite;
+}
+
+.marquee-item {
+  margin-right: 0.875rem;
+  flex: 0 0 auto;
+}
+
+/*
+ * App-icon tile: rounded square with a liquid-glass face.
+ * A soft top-lit rim plus an inner sheen give the tile depth so a flat brand
+ * mark still reads as sitting on a physical surface.
+ */
+.icon-tile {
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 1.125rem;
+  border: 1px solid var(--glass-border);
+  background-image: linear-gradient(150deg, var(--glass-tint-a) 0%, var(--glass-tint-b) 100%);
+  backdrop-filter: blur(14px) saturate(160%) brightness(var(--glass-brightness));
+  -webkit-backdrop-filter: blur(14px) saturate(160%) brightness(var(--glass-brightness));
+  box-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 -1px 0 0 var(--glass-underglow) inset,
+    0 8px 24px -10px var(--glass-shadow);
+  transition:
+    transform var(--dur-base) var(--ease-editorial),
+    box-shadow var(--dur-base) var(--ease-editorial),
+    border-color var(--dur-base) var(--ease-editorial);
+}
+
+.icon-tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(120% 90% at 22% -12%, var(--glass-sheen) 0%, transparent 58%),
+    linear-gradient(to bottom, var(--glass-sheen) 0%, transparent 45%);
+  opacity: 0.9;
+}
+
+.icon-tile:hover {
+  transform: translateY(-3px);
+  border-color: var(--line-strong);
+  box-shadow:
+    0 1px 0 0 var(--glass-highlight) inset,
+    0 12px 30px -10px var(--glass-shadow),
+    0 0 22px -6px var(--accent-glow-cool);
+}
+
+@media (min-width: 640px) {
+  .icon-tile {
+    width: 4.5rem;
+    height: 4.5rem;
+    border-radius: 1.25rem;
+  }
+  .marquee-item {
+    margin-right: 1rem;
+  }
+}
+
+/* Pausing on hover lets someone actually read a logo they spotted. */
+.marquee-mask:hover .marquee-track,
+.marquee-mask:hover .marquee-track-reverse {
+  animation-play-state: paused;
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 8%,
+    #000 92%,
+    transparent
+  );
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Grain + cursor + scrollbar                                              */
 /* ---------------------------------------------------------------------- */
 .grain-overlay {
   position: fixed;
   inset: 0;
   z-index: 60;
   pointer-events: none;
-  opacity: 0.035;
-  mix-blend-mode: multiply;
+  opacity: var(--grain-opacity);
+  mix-blend-mode: var(--grain-blend);
 }
 
-/* ---------------------------------------------------------------------- */
-/* Custom cursor — desktop, fine-pointer only, respects reduced motion    */
-/* Recolored for the white background (was an off-white dot, invisible    */
-/* on white; now near-black).                                             */
-/* ---------------------------------------------------------------------- */
 @media (pointer: fine) {
   .cursor-enabled {
     cursor: none;
@@ -132,26 +525,27 @@ body {
 .cursor-dot {
   width: 6px;
   height: 6px;
-  background: var(--ink);
+  background: var(--accent-warm);
 }
 
 .cursor-ring {
   width: 32px;
   height: 32px;
   border: 1px solid var(--line-strong);
-  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  transition:
+    width var(--dur-fast) ease,
+    height var(--dur-fast) ease,
+    border-color var(--dur-fast) ease,
+    background var(--dur-fast) ease;
 }
 
 .cursor-ring.is-active {
   width: 56px;
   height: 56px;
-  border-color: var(--red);
-  background: color-mix(in srgb, var(--red) 12%, transparent);
+  border-color: var(--accent-cool);
+  background: color-mix(in srgb, var(--accent-cool) 12%, transparent);
 }
 
-/* ---------------------------------------------------------------------- */
-/* Scrollbar — quiet, matches the surface                                 */
-/* ---------------------------------------------------------------------- */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -169,11 +563,65 @@ body {
   scrollbar-color: var(--line-strong) var(--bg);
 }
 
-/* Utility: mono eyebrow label style shared across sections */
 .eyebrow {
-  font-family: var(--font-mono);
+  font-family: var(--font-mono-stack);
   font-size: 0.6875rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Theme-change circular reveal (View Transitions)                         */
+/* ---------------------------------------------------------------------- */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
+}
+
+html.vt-theme-active::view-transition-new(root) {
+  animation: theme-circle-in 560ms var(--ease-glass) forwards;
+}
+
+@keyframes theme-circle-in {
+  from {
+    clip-path: circle(0px at var(--vt-x, 50%) var(--vt-y, 0%));
+  }
+  to {
+    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0%));
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Reduced motion — last, so it wins                                       */
+/* ---------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee-track,
+  .marquee-track-reverse {
+    animation: none;
+  }
+
+  html.vt-theme-active::view-transition-new(root) {
+    animation: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

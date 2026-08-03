@@ -33,12 +33,12 @@ export function Contact() {
   }
 
   return (
-    <section id="contact" className="bg-bg px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
+    <section id="contact" className="relative overflow-hidden bg-bg px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
       <div className="mx-auto grid w-full max-w-6xl grid-cols-1 gap-16 lg:grid-cols-2 lg:gap-12">
         <div className="flex flex-col justify-between gap-16">
           <div>
             <Reveal blur>
-              <h2 className="font-display text-5xl font-medium tracking-tight text-ink sm:text-6xl lg:text-7xl">
+              <h2 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
                 Let&rsquo;s talk.
               </h2>
             </Reveal>
@@ -58,10 +58,10 @@ export function Contact() {
         <Reveal delay={0.1} className="w-full">
           <form
             onSubmit={handleSubmit}
-            className="flex w-full flex-col gap-5 rounded-3xl bg-surface p-8 shadow-sm sm:p-10"
+            className="flex w-full flex-col gap-5 gradient-border rounded-3xl border border-line bg-bg-raised p-8 sm:p-10"
           >
             <div className="flex flex-col gap-2">
-              <label htmlFor="contact-name" className="text-sm text-white/60">
+              <label htmlFor="contact-name" className="text-sm text-muted">
                 Name
               </label>
               <input
@@ -71,12 +71,12 @@ export function Contact() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="rounded-xl border border-white/10 bg-transparent px-4 py-3 text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                className="rounded-xl border border-line bg-transparent px-4 py-3 text-ink placeholder:text-muted focus:border-line-strong focus:outline-none"
                 placeholder="Your name"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="contact-email" className="text-sm text-white/60">
+              <label htmlFor="contact-email" className="text-sm text-muted">
                 Email
               </label>
               <input
@@ -86,12 +86,12 @@ export function Contact() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="rounded-xl border border-white/10 bg-transparent px-4 py-3 text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                className="rounded-xl border border-line bg-transparent px-4 py-3 text-ink placeholder:text-muted focus:border-line-strong focus:outline-none"
                 placeholder="you@email.com"
               />
             </div>
             <div className="flex flex-col gap-2">
-              <label htmlFor="contact-message" className="text-sm text-white/60">
+              <label htmlFor="contact-message" className="text-sm text-muted">
                 Your Project
               </label>
               <textarea
@@ -101,7 +101,7 @@ export function Contact() {
                 rows={4}
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="resize-none rounded-xl border border-white/10 bg-transparent px-4 py-3 text-white placeholder:text-white/40 focus:border-white/30 focus:outline-none"
+                className="resize-none rounded-xl border border-line bg-transparent px-4 py-3 text-ink placeholder:text-muted focus:border-line-strong focus:outline-none"
                 placeholder="Tell me a bit about what you're building"
               />
             </div>
@@ -109,7 +109,7 @@ export function Contact() {
               type="submit"
               disabled={!primaryTarget}
               data-cursor="interactive"
-              className="group mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-bg px-6 py-3 text-sm font-medium text-ink transition-transform hover:-translate-y-0.5 disabled:cursor-not-allowed disabled:opacity-50"
+              className="group mt-2 inline-flex w-fit items-center gap-2 rounded-full btn-glow px-6 py-3 text-sm font-medium transition-transform duration-300 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Submit
               <ArrowUpRight

@@ -48,15 +48,15 @@ export function Preloader() {
           aria-live="polite"
         >
           <span className="font-display text-2xl text-ink">
-            MSR<span className="text-cyan">.</span>
+            sakibur<span className="text-gradient">.</span>
           </span>
-          <p className="font-mono text-xs tracking-[0.2em] text-cyan">
+          <p className="font-mono text-xs tracking-[0.2em] text-warm">
             {STEPS[stepIndex]}
             {STEPS[stepIndex] !== "Ready" && "…"}
           </p>
           <div className="h-px w-40 overflow-hidden bg-line">
             <motion.div
-              className="h-full bg-cyan"
+              className="h-full bg-warm"
               initial={{ width: "0%" }}
               animate={{ width: `${((stepIndex + 1) / STEPS.length) * 100}%` }}
               transition={{ duration: 0.3, ease: "easeInOut" }}

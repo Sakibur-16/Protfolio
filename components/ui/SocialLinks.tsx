@@ -32,7 +32,7 @@ export function SocialLinks({
               target="_blank"
               rel="noopener noreferrer"
               data-cursor="interactive"
-              className="inline-flex items-center gap-2 font-mono text-xs tracking-wide text-muted transition-colors hover:text-cyan"
+              className="inline-flex items-center gap-2 font-mono text-xs tracking-wide text-muted transition-colors hover:text-warm"
             >
               <Icon size={15} aria-hidden />
               {link.label}

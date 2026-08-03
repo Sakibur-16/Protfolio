@@ -1,81 +1,85 @@
-import { Camera } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { profile } from "@/data/profile";
+import { HeroSceneMount } from "@/components/three/HeroSceneMount";
+import { Badge } from "@/components/ui/Badge";
+import { Button } from "@/components/ui/Button";
+import { GlowBlob } from "@/components/ui/GlowBlob";
 
-const currentYear = new Date().getFullYear();
-
-/** Small 4-point star accent with an iridescent (purple -> blue -> silver) gradient stroke. */
-function StarAccent({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 48 48" fill="none" className={className} aria-hidden="true">
-      <defs>
-        <linearGradient id="iridescent-star" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="var(--iridescent-1)" />
-          <stop offset="50%" stopColor="var(--iridescent-2)" />
-          <stop offset="100%" stopColor="var(--iridescent-3)" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M24 2c1.2 8.8 3 15.6 5.4 18S37.2 22.8 46 24c-8.8 1.2-15.6 3-18 5.4S24.8 37.2 24 46c-1.2-8.8-3-15.6-5.4-18S10.8 25.2 2 24c8.8-1.2 15.6-3 18-5.4S23.2 10.8 24 2Z"
-        stroke="url(#iridescent-star)"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-/** Small lightning-bolt accent with an iridescent (purple -> blue -> silver) gradient stroke. */
-function BoltAccent({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 32 48" fill="none" className={className} aria-hidden="true">
-      <defs>
-        <linearGradient id="iridescent-bolt" x1="0%" y1="0%" x2="100%" y2="100%">
-          <stop offset="0%" stopColor="var(--iridescent-1)" />
-          <stop offset="50%" stopColor="var(--iridescent-2)" />
-          <stop offset="100%" stopColor="var(--iridescent-3)" />
-        </linearGradient>
-      </defs>
-      <path
-        d="M20 2 4 27h10L12 46l16-25H18L20 2Z"
-        stroke="url(#iridescent-bolt)"
-        strokeWidth="1.5"
-        strokeLinejoin="round"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
+/**
+ * Full-bleed hero.
+ *
+ * Layering, back to front: ambient glow blobs -> diagonal light streaks ->
+ * the WebGL particle field -> a readability wash -> content. Everything
+ * behind the content is decorative and pointer-transparent.
+ */
 export function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[100svh] w-full flex-col justify-between overflow-hidden bg-bg px-6 pb-8 pt-32 sm:px-10 lg:px-16"
+      className="relative flex min-h-[100svh] w-full flex-col justify-center overflow-hidden px-6 pb-16 pt-32 sm:px-10 lg:px-16"
     >
-      <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col items-center justify-center text-center">
-        <StarAccent className="absolute -top-4 left-0 h-8 w-8 sm:h-10 sm:w-10 lg:left-8" />
-        <BoltAccent className="absolute -bottom-6 right-0 h-10 w-7 sm:h-12 sm:w-8 lg:right-8" />
+      {/* Ambient cinematic glow */}
+      <GlowBlob tone="warm" size="40rem" className="-left-40 -top-32 opacity-90" />
+      <GlowBlob tone="cool" size="44rem" className="-right-48 top-1/3 opacity-90" />
 
-        <h1 className="font-display text-[13vw] font-medium leading-[0.92] tracking-tight text-ink sm:text-[9vw] lg:text-[6.5rem]">
-          <span className="block">{profile.headline}</span>
-          <span className="block text-muted">{profile.roleTitle}</span>
-        </h1>
-
-        {/*
-          Portrait placeholder — swap this div for a real <Image> pointing at
-          /public/images/portrait.jpg (or similar) once a photo is available.
-          Keep the rounded-corner treatment and roughly this aspect ratio.
-        */}
-        <div className="relative z-10 mt-6 h-40 w-32 overflow-hidden rounded-2xl bg-bg-alt shadow-sm ring-1 ring-line sm:h-56 sm:w-44 lg:h-64 lg:w-52">
-          <div className="flex h-full w-full items-center justify-center">
-            <Camera className="h-8 w-8 text-muted sm:h-10 sm:w-10" strokeWidth={1.25} aria-hidden="true" />
-          </div>
-        </div>
+      {/* Diagonal light streaks */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <span className="light-streak left-[-10%] top-[12%] h-[26rem] w-[38rem]" />
+        <span className="light-streak right-[-14%] bottom-[6%] h-[22rem] w-[34rem]" />
       </div>
 
-      <div className="relative z-10 flex w-full items-end justify-between text-xs uppercase tracking-[0.2em] text-muted">
-        <span>&copy;{currentYear}</span>
-        <span>{profile.taglines[0] ?? profile.roleTitle}</span>
+      {/* WebGL field */}
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <HeroSceneMount />
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(52% 40% at 42% 50%, color-mix(in srgb, var(--bg) 82%, transparent) 0%, transparent 72%)",
+          }}
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto grid w-full max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className="flex flex-col items-start">
+          <Badge pulse>{profile.availability.label}</Badge>
+
+          <h1 className="mt-7 max-w-2xl font-display text-[2.9rem] font-semibold leading-[0.98] tracking-tight text-ink sm:text-6xl lg:text-7xl">
+            I build AI that{" "}
+            <span className="text-gradient">reasons, retrieves, and acts</span>.
+          </h1>
+
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-dim sm:text-lg">
+            {profile.roleTitle} in {profile.location.city}. Production RAG and agentic systems,
+            NLP, and applied research — built to be reliable and explainable, not just
+            impressive in a demo.
+          </p>
+
+          <div className="mt-10 flex flex-wrap items-center gap-3">
+            <Button href="#contact">
+              Book a call
+              <ArrowUpRight
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                aria-hidden="true"
+              />
+            </Button>
+            <Button href="#work" variant="ghost">
+              View work
+            </Button>
+          </div>
+
+          <ul className="mt-12 flex flex-wrap gap-x-8 gap-y-3">
+            {profile.taglines.map((tagline) => (
+              <li key={tagline} className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted">
+                {tagline}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Right column intentionally left to the 3D field on desktop —
+            the scene is the visual, so nothing competes with it here. */}
+        <div aria-hidden="true" className="hidden lg:block" />
       </div>
     </section>
   );

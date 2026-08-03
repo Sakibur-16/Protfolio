@@ -11,7 +11,7 @@ export function Eyebrow({
 }) {
   return (
     <span className={cn("eyebrow inline-flex items-center gap-2", className)}>
-      {dot && <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-cyan" />}
+      {dot && <span aria-hidden className="h-1.5 w-1.5 rounded-full accent-bar" />}
       {children}
     </span>
   );

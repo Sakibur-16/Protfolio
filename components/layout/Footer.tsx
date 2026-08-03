@@ -11,7 +11,7 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="font-display text-xl text-ink">
-            MSR<span className="text-cyan">.</span>
+            sakibur<span className="text-gradient">.</span>
           </p>
           <p className="mt-1 font-mono text-xs text-muted">
             {profile.location.city}, {profile.location.country} — built with Next.js
@@ -24,7 +24,7 @@ export function Footer() {
               key={link.id}
               href={link.href}
               data-cursor="interactive"
-              className="font-mono text-xs tracking-wide text-muted transition-colors hover:text-cyan"
+              className="font-mono text-xs tracking-wide text-muted transition-colors hover:text-warm"
             >
               {link.label}
             </a>

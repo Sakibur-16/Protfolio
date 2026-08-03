@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/data/site";
 import { profile } from "@/data/profile";
 import { publications } from "@/data/publications";
+import { socialLinks } from "@/data/socialLinks";
 import type { Project } from "@/types/portfolio";
 
 export function buildMetadata(overrides: Partial<Metadata> = {}): Metadata {
@@ -73,12 +74,21 @@ export function personJsonLd() {
       addressLocality: profile.location.city,
       addressCountry: profile.location.country,
     },
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: "East West University",
+    },
+    sameAs: socialLinks
+      .filter((link): link is typeof link & { href: string } => Boolean(link.href))
+      .map((link) => link.href),
     knowsAbout: [
       "Large Language Models",
       "Retrieval-Augmented Generation",
+      "Agentic AI",
       "Natural Language Processing",
+      "Generative AI",
       "Computer Vision",
-      "Speech AI",
+      "Brain-Computer Interfaces",
     ],
   };
 }

@@ -14,7 +14,7 @@ export function SectionHeading({
   return (
     <div className="max-w-2xl">
       <Eyebrow>
-        {code && <span className="text-cyan">{code}</span>}
+        {code && <span className="text-warm">{code}</span>}
         {eyebrow}
       </Eyebrow>
       <h2 className="mt-4 font-display text-4xl leading-[1.05] tracking-tight text-ink sm:text-5xl">

@@ -1,62 +1,65 @@
-import { allProjects, projectCategoryLabels } from "@/data/projects";
+import { featuredProjects, otherProjects, allProjects } from "@/data/projects";
 import { Reveal } from "@/components/motion/Reveal";
+import { ProjectCarousel } from "@/components/projects/ProjectCarousel";
+import { ProjectCard } from "@/components/projects/ProjectCard";
+import { GlowBlob } from "@/components/ui/GlowBlob";
+import { Badge } from "@/components/ui/Badge";
 
 /**
- * Rotating placeholder gradient fills for project thumbnails until real
- * screenshots are available. Swap the <div> below for a real
- * <Image src="/images/projects/<slug>.jpg" .../> once screenshots exist —
- * see the comment at the thumbnail markup.
+ * Work section, in two registers.
+ *
+ * The auto-cycling deck is the showpiece — layered, tilted cards for the lead
+ * case studies. Beneath it, a plain responsive grid carries every project, so
+ * a visitor scanning for something specific never has to wait for a carousel
+ * to come round to it.
  */
-const PLACEHOLDER_GRADIENTS = [
-  "linear-gradient(135deg, #f3d9e6 0%, #e9c7f0 50%, #cdd8f5 100%)",
-  "linear-gradient(135deg, #cfe0f7 0%, #b9d3ef 50%, #dfe6f2 100%)",
-  "linear-gradient(135deg, #f6e7cf 0%, #f0d9c7 50%, #f5e9df 100%)",
-  "linear-gradient(135deg, #d8e8dc 0%, #c9dfd0 50%, #e3ede6 100%)",
-];
+const FEATURED_COUNT = featuredProjects.length;
+const gridProjects = otherProjects;
 
 export function SelectedWork() {
   return (
-    <section id="work" className="bg-bg-alt px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
-      <div className="mx-auto w-full max-w-6xl">
-        <Reveal blur>
-          <h2 className="font-display text-5xl font-medium tracking-tight text-ink sm:text-6xl lg:text-7xl">
-            Projects
+    <section id="work" className="relative overflow-hidden bg-bg px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
+      <GlowBlob tone="dual" size="46rem" className="left-1/2 top-0 -translate-x-1/2" />
+
+      <div className="relative mx-auto w-full max-w-6xl">
+        <Reveal>
+          <Badge>Selected work</Badge>
+        </Reveal>
+
+        <Reveal delay={0.05}>
+          <h2 className="mt-6 max-w-2xl font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
+            Shipped AI, <span className="text-gradient">not slideware</span>.
           </h2>
         </Reveal>
 
-        <div className="mt-12 grid grid-cols-1 gap-8 sm:mt-16 sm:grid-cols-2 sm:gap-10">
-          {allProjects.map((project, i) => {
-            const link = project.links.external ?? project.links.repository ?? project.links.store;
-            return (
-              <Reveal key={project.slug} delay={(i % 2) * 0.08}>
-                <a
-                  href={link ?? "#work"}
-                  className="group block"
-                  target={link ? "_blank" : undefined}
-                  rel={link ? "noreferrer" : undefined}
-                >
-                  {/*
-                    Project thumbnail placeholder — swap this gradient div for
-                    a real <Image src="/images/projects/{project.slug}.jpg" />
-                    once screenshots exist.
-                  */}
-                  <div
-                    className="aspect-[4/3] w-full overflow-hidden rounded-3xl shadow-sm ring-1 ring-line transition-transform duration-500 ease-out group-hover:-translate-y-1 group-hover:scale-[1.01] group-hover:shadow-md"
-                    style={{ background: PLACEHOLDER_GRADIENTS[i % PLACEHOLDER_GRADIENTS.length] }}
-                  />
-                  <div className="mt-4 flex items-baseline justify-between gap-4">
-                    <h3 className="font-display text-xl font-medium tracking-tight text-ink sm:text-2xl">
-                      {project.title}
-                    </h3>
-                    <span className="whitespace-nowrap text-sm uppercase tracking-wide text-muted">
-                      {projectCategoryLabels[project.category]}
-                    </span>
-                  </div>
-                </a>
-              </Reveal>
-            );
-          })}
-        </div>
+        <Reveal delay={0.1}>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
+            {allProjects.length} projects across LLM products, retrieval systems, computer vision,
+            and speech. The deck cycles automatically — drag, swipe, or use the arrow keys.
+          </p>
+        </Reveal>
+
+        <Reveal delay={0.15} className="mt-14 block sm:mt-16">
+          <ProjectCarousel projects={featuredProjects} />
+        </Reveal>
+
+        {gridProjects.length > 0 && (
+          <div className="mt-24 sm:mt-32">
+            <Reveal>
+              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
+                More work — {gridProjects.length} projects
+              </h3>
+            </Reveal>
+
+            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {gridProjects.map((project, i) => (
+                <Reveal key={project.slug} delay={Math.min(i, 5) * 0.05}>
+                  <ProjectCard project={project} index={i + FEATURED_COUNT} />
+                </Reveal>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

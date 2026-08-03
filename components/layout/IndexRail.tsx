@@ -29,13 +29,13 @@ export function IndexRail() {
             <span
               className={cn(
                 "h-px w-4 bg-line-strong transition-all duration-300",
-                isActive && "w-8 bg-cyan"
+                isActive && "w-8 accent-bar"
               )}
             />
             <span
               className={cn(
                 "font-mono text-[0.65rem] tracking-[0.2em] text-muted opacity-0 transition-opacity duration-300 group-hover:opacity-100",
-                isActive && "text-cyan opacity-100"
+                isActive && "text-warm opacity-100"
               )}
             >
               {link.code} — {link.label}

@@ -127,6 +127,26 @@ export interface Project {
   accentColor: string;
   /** Internal note only — never rendered. Used to flag fields awaiting client confirmation. */
   todo?: string;
+
+  // --- Case-study fields -------------------------------------------------
+  // All optional. The detail page renders a section only when its data
+  // exists, so a project we know little about shows a short honest page
+  // rather than a scaffold of empty headings.
+
+  /** "At a glance" card rows. */
+  timeline?: string;
+  deliverables?: string;
+  domainLabel?: string;
+  /** Ordered architecture layers for the stepper. */
+  architecture?: { title: string; description: string }[];
+  /** Engineering decisions, rendered as a numbered ledger. */
+  decisions?: { title: string; description: string }[];
+  /** Tech stack grouped by category, rendered as label + chip rows. */
+  stackGroups?: { label: string; items: string[] }[];
+  /** Capability list. */
+  features?: string[];
+  /** Problem/solution pairs, rendered as cards. */
+  challenges?: { problem: string; solution: string }[];
 }
 
 export interface SkillDomain {
@@ -157,6 +177,8 @@ export interface EducationEntry {
   gpa?: string;
   eqfLevel?: string;
   coreAreas: string[];
+  /** Clubs, competitions, and similar. Omitted entries render nothing. */
+  activities?: string[];
 }
 
 export interface Certification {
