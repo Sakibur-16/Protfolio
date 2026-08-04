@@ -476,9 +476,13 @@ body {
   }
 }
 
-/* Pausing on hover lets someone actually read a logo they spotted. */
-.marquee-mask:hover .marquee-track,
-.marquee-mask:hover .marquee-track-reverse {
+/*
+ * Pause only while the pointer is on an individual tile — not the whole row.
+ * Hovering anywhere in the band used to freeze the entire strip, which made
+ * the section look broken whenever the cursor merely crossed it.
+ */
+.marquee-track:has(.icon-tile:hover),
+.marquee-track-reverse:has(.icon-tile:hover) {
   animation-play-state: paused;
 }
 

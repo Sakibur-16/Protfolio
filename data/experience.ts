@@ -2,16 +2,13 @@ import type { ExperienceEntry } from "@/types/portfolio";
 
 // Source: the owner's LinkedIn profile.
 //
-// The current employer is intentionally unnamed at the owner's request —
-// referred to by sector and location only.
-//
 // The current-employer progression is modelled as three separate entries rather than
 // one nested record — the promotions are distinct roles with distinct scopes,
 // and the shared `organization` is what groups them in the UI.
 export const experience: ExperienceEntry[] = [
   {
     id: "current-ai-developer",
-    organization: "Leading Technology Company",
+    organization: "Sparktech Agency",
     role: "AI Developer",
     startDate: "July 2026",
     endDate: "Present",
@@ -26,7 +23,7 @@ export const experience: ExperienceEntry[] = [
   },
   {
     id: "current-junior-ai-developer",
-    organization: "Leading Technology Company",
+    organization: "Sparktech Agency",
     role: "Junior AI Developer",
     startDate: "January 2026",
     endDate: "June 2026",
@@ -41,7 +38,7 @@ export const experience: ExperienceEntry[] = [
   },
   {
     id: "current-trainee-ai-developer",
-    organization: "Leading Technology Company",
+    organization: "Sparktech Agency",
     role: "Trainee AI Developer",
     startDate: "October 2025",
     endDate: "December 2025",

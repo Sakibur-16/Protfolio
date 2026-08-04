@@ -8,6 +8,7 @@ import { profile } from "@/data/profile";
 import { useActiveSection } from "@/lib/useActiveSection";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { MagneticLink } from "@/components/ui/MagneticLink";
+import { RollingText } from "@/components/ui/RollingText";
 import { cn } from "@/lib/utils";
 
 const NAV_IDS = navigation.map((n) => n.id);
@@ -130,9 +131,9 @@ export function Header() {
 
             <MagneticLink
               href="#contact"
-              className="btn-glow hidden items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium sm:inline-flex"
+              className="btn-glow group hidden items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium sm:inline-flex"
             >
-              Contact me
+              <RollingText text="Contact me" />
               <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
             </MagneticLink>
 

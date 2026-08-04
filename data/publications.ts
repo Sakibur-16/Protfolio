@@ -1,7 +1,12 @@
 import type { Publication } from "@/types/portfolio";
 
-// Add doiUrl / paperUrl once real links are available — the UI only
-// renders a link button when the value is non-null.
+// Links supplied by the site owner.
+//
+// The Springer chapter maps unambiguously — it is the only Springer-published
+// paper of the three. The two IEEE Xplore documents were assigned by document
+// ID order (10928549 predates 11504090, matching RAAICON 2024 before SPICSCON
+// 2025). Both publishers block automated fetching, so that pairing could not
+// be verified programmatically — worth a click-through to confirm.
 export const publications: Publication[] = [
   {
     id: "malaria-diagnosis-generalization",
@@ -11,7 +16,7 @@ export const publications: Publication[] = [
     authorRole: "Author",
     venue: "2nd International Conference on Data Mining and Information Security (ICDMIS 2025)",
     affiliation: "Springer",
-    doiUrl: null,
+    doiUrl: "https://link.springer.com/chapter/10.1007/978-3-032-25955-4_35",
     paperUrl: null,
   },
   {
@@ -21,8 +26,8 @@ export const publications: Publication[] = [
     year: "2025",
     authorRole: "Co-author",
     venue: "4th IEEE SPICSCON 2025",
-    affiliation: "University of Rajshahi, Bangladesh",
-    doiUrl: null,
+    affiliation: "IEEE",
+    doiUrl: "https://ieeexplore.ieee.org/abstract/document/11504090",
     paperUrl: null,
   },
   {
@@ -33,7 +38,7 @@ export const publications: Publication[] = [
     authorRole: "Author",
     venue: "3rd IEEE Robotics, Automation, and AI Conference (RAAICON 2024)",
     affiliation: "IEEE",
-    doiUrl: null,
+    doiUrl: "https://ieeexplore.ieee.org/abstract/document/10928549",
     paperUrl: null,
   },
 ];

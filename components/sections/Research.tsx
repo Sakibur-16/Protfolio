@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import { publications } from "@/data/publications";
 import { education } from "@/data/education";
 import { Reveal } from "@/components/motion/Reveal";
+import { cn } from "@/lib/utils";
 
 /**
  * Peer-reviewed work, plus education as a supporting column.
@@ -13,7 +14,7 @@ export function Research() {
   const [degree, ...earlierEducation] = education;
 
   return (
-    <section id="research" className="bg-bg-alt px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
+    <section id="research" className="bg-bg-alt px-5 py-20 sm:px-10 sm:py-32 lg:px-16">
       <div className="mx-auto w-full max-w-6xl">
         <Reveal blur>
           <h2 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
@@ -33,14 +34,43 @@ export function Research() {
             const link = paper.doiUrl ?? paper.paperUrl;
             return (
               <Reveal as="li" key={paper.id} delay={i * 0.05}>
-                <article className="grid grid-cols-1 gap-3 border-b border-line py-8 lg:grid-cols-[4rem_1fr_auto] lg:gap-8">
-                  <p className="font-mono text-xs tabular-nums text-muted">
+                {/*
+                  When a paper has a link the whole row is clickable: the title
+                  is the anchor and its ::after overlay covers the row. The
+                  title also shifts to the accent colour on hover so it reads
+                  as a link rather than as plain text with an arrow beside it.
+                */}
+                <article
+                  className={cn(
+                    "group relative grid grid-cols-1 gap-3 border-b border-line py-7 transition-colors duration-300 sm:py-8 lg:grid-cols-[4rem_1fr_auto] lg:gap-8",
+                    link && "cursor-pointer hover:bg-bg"
+                  )}
+                >
+                  <p className="font-mono text-xs tabular-nums text-muted transition-colors duration-300 group-hover:text-warm">
                     {String(i + 1).padStart(2, "0")}
                   </p>
 
                   <div>
-                    <h3 className="font-display text-lg font-medium leading-snug tracking-tight text-ink sm:text-xl">
-                      {paper.title}
+                    <h3
+                      className={cn(
+                        "font-display text-lg font-medium leading-snug tracking-tight text-ink sm:text-xl",
+                        link &&
+                          "underline-offset-4 transition-colors duration-300 group-hover:text-warm group-hover:underline"
+                      )}
+                    >
+                      {link ? (
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noreferrer"
+                          data-cursor="interactive"
+                          className="after:absolute after:inset-0 after:content-[''] focus-visible:outline-none"
+                        >
+                          {paper.title}
+                        </a>
+                      ) : (
+                        paper.title
+                      )}
                     </h3>
                     <p className="mt-2 text-sm text-muted">
                       {paper.venue} · {paper.affiliation}
@@ -53,16 +83,12 @@ export function Research() {
                     </span>
                     <span className="font-mono text-xs tabular-nums text-muted">{paper.year}</span>
                     {link && (
-                      <a
-                        href={link}
-                        target="_blank"
-                        rel="noreferrer"
-                        data-cursor="interactive"
-                        aria-label={`Read: ${paper.title}`}
-                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-[transform,background-color,color] duration-300 ease-[var(--ease-editorial)] hover:-translate-y-0.5 hover:bg-ink hover:text-bg"
+                      <span
+                        aria-hidden="true"
+                        className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-[transform,background-color,color] duration-300 ease-[var(--ease-editorial)] group-hover:-translate-y-0.5 group-hover:bg-ink group-hover:text-bg"
                       >
-                        <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                      </a>
+                        <ArrowUpRight className="h-4 w-4" />
+                      </span>
                     )}
                   </div>
                 </article>

@@ -75,7 +75,7 @@ export function Experience() {
   return (
     <section
       id="experience"
-      className="relative overflow-hidden bg-bg-alt px-6 py-24 sm:px-10 sm:py-32 lg:px-16"
+      className="relative overflow-hidden bg-bg-alt px-5 py-20 sm:px-10 sm:py-32 lg:px-16"
     >
       <GlowBlob tone="dual" size="42rem" className="left-1/2 top-10 -translate-x-1/2" />
 
@@ -86,14 +86,14 @@ export function Experience() {
 
         <Reveal delay={0.05}>
           <h2 className="mt-6 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-            Trainee to <span className="text-gradient">AI Developer</span>
+            Where I&rsquo;ve <span className="text-gradient">shipped</span>
           </h2>
         </Reveal>
 
         <Reveal delay={0.1}>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-muted">
-            Three promotions in under a year, each one widening the scope from learning production
-            RAG to owning it.
+            Three promotions in under a year at Sparktech Agency, each one widening the scope
+            from learning production RAG to owning it.
           </p>
         </Reveal>
 
@@ -166,8 +166,10 @@ export function Experience() {
                     {role.role}
                   </h3>
 
-                  <p className="mt-1 text-sm text-muted">
-                    {role.organization} · {role.location}
+                  <p className="mt-1.5 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
+                    <span className="font-medium text-warm">{role.organization}</span>
+                    <span aria-hidden="true" className="text-line-strong">·</span>
+                    <span className="text-muted">{role.location}</span>
                   </p>
 
                   <ul className="mt-5 flex flex-col gap-2">

@@ -42,7 +42,7 @@ export function About() {
   return (
     <section
       id="about"
-      className="relative overflow-hidden bg-bg px-6 py-24 sm:px-10 sm:py-32 lg:px-16"
+      className="relative overflow-hidden bg-bg px-5 py-20 sm:px-10 sm:py-32 lg:px-16"
     >
       <GlowBlob tone="cool" size="36rem" className="-right-32 top-10" />
 

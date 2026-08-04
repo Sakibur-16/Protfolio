@@ -56,7 +56,7 @@ export function Quote() {
   // leaving the copy stuck at 18% opacity waiting for a scroll animation.
   if (prefersReducedMotion) {
     return (
-      <section id="quote" ref={containerRef} className="bg-bg px-6 py-32 sm:px-10 sm:py-40 lg:px-16">
+      <section id="quote" ref={containerRef} className="bg-bg px-5 py-24 sm:px-10 sm:py-40 lg:px-16">
         <div className="mx-auto max-w-4xl text-center">
           <p className="font-display text-3xl font-medium leading-snug tracking-tight text-ink sm:text-4xl lg:text-5xl">
             {QUOTE}
@@ -70,7 +70,7 @@ export function Quote() {
     <section
       id="quote"
       ref={containerRef}
-      className="bg-bg px-6 py-32 sm:px-10 sm:py-40 lg:px-16"
+      className="bg-bg px-5 py-24 sm:px-10 sm:py-40 lg:px-16"
     >
       <div className="mx-auto max-w-4xl text-center">
         <p className="font-display text-3xl font-medium leading-snug tracking-tight sm:text-4xl lg:text-5xl">

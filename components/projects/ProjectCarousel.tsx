@@ -136,7 +136,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
         onMouseLeave={() => setPaused(false)}
         onFocus={() => setPaused(true)}
         onBlur={() => setPaused(false)}
-        className="relative h-[27rem] cursor-grab touch-pan-y select-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:h-[30rem]"
+        className="relative h-[25rem] cursor-grab touch-pan-y select-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:h-[30rem]"
         style={{ perspective: "1700px", perspectiveOrigin: "50% 45%" }}
       >
         {projects.map((project, i) => {
@@ -162,7 +162,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
           return (
             <motion.article
               key={project.slug}
-              className="absolute left-1/2 top-0 w-[18.5rem] sm:w-[22rem]"
+              className="absolute left-1/2 top-0 w-[16.5rem] sm:w-[22rem]"
               // z-index MUST live on this element: these are the siblings that
               // stack against each other. Putting it on an inner node did
               // nothing and let later cards paint over the focused one.
@@ -193,7 +193,8 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
             >
               <div
                 className={cn(
-                  "overflow-hidden rounded-3xl bg-bg-raised ring-1 transition-shadow duration-500",
+                  // `relative` + `group` anchor the full-card link overlay below.
+                  "group relative overflow-hidden rounded-3xl bg-bg-raised ring-1 transition-shadow duration-500",
                   isActive ? "shadow-2xl ring-line-strong" : "shadow-lg ring-line"
                 )}
               >
@@ -220,8 +221,20 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                     {projectCategoryLabels[project.category]}
                   </div>
 
-                  <h3 className="font-display text-xl font-medium leading-tight tracking-tight text-ink sm:text-2xl">
-                    {project.title}
+                  {/*
+                    The title is the link, and its ::after overlay stretches
+                    across the whole card — so clicking anywhere navigates,
+                    while the accessible name stays the project title rather
+                    than a bare "arrow".
+                  */}
+                  <h3 className="font-display text-xl font-medium leading-tight tracking-tight text-ink transition-colors duration-300 group-hover:text-warm sm:text-2xl">
+                    <Link
+                      href={`/projects/${project.slug}`}
+                      data-cursor="interactive"
+                      className="after:absolute after:inset-0 after:z-10 after:content-[''] focus-visible:outline-none"
+                    >
+                      {project.title}
+                    </Link>
                   </h3>
 
                   <p className="line-clamp-2 text-sm leading-relaxed text-muted">
@@ -230,14 +243,12 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
 
                   <div className="mt-1.5 flex items-center justify-between gap-4 border-t border-line pt-3.5">
                     <span className="truncate text-sm font-medium text-ink">{project.role}</span>
-                    <Link
-                      href={`/projects/${project.slug}`}
-                      data-cursor="interactive"
-                      aria-label={`Open case study: ${project.title}`}
-                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-[transform,background-color,color] duration-300 ease-[var(--ease-editorial)] hover:-translate-y-0.5 hover:bg-ink hover:text-bg"
+                    <span
+                      aria-hidden="true"
+                      className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line-strong text-ink transition-[transform,background-color,color] duration-300 ease-[var(--ease-editorial)] group-hover:-translate-y-0.5 group-hover:bg-ink group-hover:text-bg"
                     >
-                      <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                    </Link>
+                      <ArrowUpRight className="h-4 w-4" />
+                    </span>
                   </div>
                 </div>
               </div>

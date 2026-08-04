@@ -18,7 +18,7 @@ const gridProjects = otherProjects;
 
 export function SelectedWork() {
   return (
-    <section id="work" className="relative overflow-hidden bg-bg px-6 py-24 sm:px-10 sm:py-32 lg:px-16">
+    <section id="work" className="relative overflow-hidden bg-bg px-5 py-20 sm:px-10 sm:py-32 lg:px-16">
       <GlowBlob tone="dual" size="46rem" className="left-1/2 top-0 -translate-x-1/2" />
 
       <div className="relative mx-auto w-full max-w-6xl">

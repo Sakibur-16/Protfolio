@@ -74,6 +74,10 @@ export function personJsonLd() {
       addressLocality: profile.location.city,
       addressCountry: profile.location.country,
     },
+    worksFor: {
+      "@type": "Organization",
+      name: "Sparktech Agency",
+    },
     alumniOf: {
       "@type": "CollegeOrUniversity",
       name: "East West University",

@@ -33,9 +33,14 @@ export const techStack: TechItem[] = [
   { name: "Google Cloud", iconKey: "siGooglecloud" },
 ];
 
-/** Split into two rows that scroll in opposite directions. */
-export const techRowTop = techStack.filter((_, i) => i % 2 === 0);
-export const techRowBottom = techStack.filter((_, i) => i % 2 === 1);
+/**
+ * Both rows carry the full stack — the bottom row simply reversed — so each
+ * copy is wide enough that two of them always exceed the viewport. Splitting
+ * the list in half made each copy too short and left dead space on wide
+ * screens once the track wrapped.
+ */
+export const techRowTop = techStack;
+export const techRowBottom = [...techStack].reverse();
 
 /** Resolves a free-text technology name to a brand mark where one exists. */
 const NAME_TO_KEY: Record<string, keyof typeof icons> = {

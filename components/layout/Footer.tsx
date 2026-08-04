@@ -11,10 +11,10 @@ export function Footer() {
       <div className="mx-auto flex max-w-6xl flex-col gap-8 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="font-display text-xl text-ink">
-            sakibur<span className="text-gradient">.</span>
+            Md. Sakibur Rahman
           </p>
           <p className="mt-1 font-mono text-xs text-muted">
-            {profile.location.city}, {profile.location.country} — built with Next.js
+            {profile.roleTitle} — {profile.location.city}, {profile.location.country}
           </p>
         </div>
 

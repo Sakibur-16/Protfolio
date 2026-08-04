@@ -8,7 +8,7 @@ export function Expertise() {
   return (
     <section
       id="services"
-      className="relative overflow-hidden bg-bg-alt px-6 py-24 sm:px-10 sm:py-32 lg:px-16"
+      className="relative overflow-hidden bg-bg-alt px-5 py-20 sm:px-10 sm:py-32 lg:px-16"
     >
       <GlowBlob tone="warm" size="38rem" className="-left-40 top-1/4" />
 
