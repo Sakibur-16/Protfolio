@@ -49,9 +49,23 @@ export const skillDomains: SkillDomain[] = [
     items: ["Model fine-tuning", "Baseline benchmarking", "Data annotation & cleaning", "Preprocessing pipelines"],
   },
   {
+    id: "backend",
+    domain: "Backend & API Engineering",
+    description:
+      "Multi-tenant REST APIs with role-aware permissions, transactional integrity, and idempotent handling of money and third-party webhooks.",
+    items: ["Django", "Django REST Framework", "FastAPI", "PostgreSQL", "Redis", "Celery", "JWT", "Stripe"],
+  },
+  {
+    id: "devops",
+    domain: "DevOps & Cloud Infrastructure",
+    description:
+      "Containerised multi-service delivery on AWS, provisioned as code and shipped through CI with health checks and rollback.",
+    items: ["Docker", "AWS", "Terraform", "Ansible", "GitHub Actions", "Nginx", "Prometheus", "Grafana"],
+  },
+  {
     id: "engineering",
-    domain: "Engineering & Delivery",
-    description: "Carrying an AI initiative from a research question or product idea through to production.",
-    items: ["Python", "FastAPI", "SQL", "Flutter", "Dart", "C", "Java"],
+    domain: "Languages & Foundations",
+    description: "Carrying an initiative from a research question or product idea through to production.",
+    items: ["Python", "SQL", "C", "Java", "MATLAB", "TypeScript"],
   },
 ];

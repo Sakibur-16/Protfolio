@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import "@fontsource-variable/archivo";
-import "@fontsource-variable/inter";
-import "@fontsource/ibm-plex-mono/400.css";
-import "@fontsource/ibm-plex-mono/500.css";
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
 import { buildMetadata, personJsonLd } from "@/lib/metadata";
 import { ThemeProvider, themeInitScript } from "@/components/theme/ThemeProvider";
 import { Header } from "@/components/layout/Header";

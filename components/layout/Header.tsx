@@ -61,7 +61,7 @@ export function Header() {
         <div
           className={cn(
             "liquid-glass flex items-center gap-2 rounded-full sm:gap-3",
-            scrolled ? "is-scrolled px-3 py-1.5 sm:px-3.5 sm:py-1.5" : "px-3.5 py-2 sm:px-4 sm:py-2"
+            scrolled ? "is-scrolled px-3 py-2 sm:px-4 sm:py-2" : "px-4 py-2.5 sm:px-5 sm:py-2.5"
           )}
         >
           <a
@@ -72,10 +72,10 @@ export function Header() {
           >
             {/* Monogram badge + full name. The name hides on narrow viewports
                 so the pill stays a compact capsule. */}
-            <span className="accent-bar inline-flex h-7 items-center justify-center rounded-lg px-1.5 font-display text-[0.6rem] font-bold tracking-tight text-accent-ink">
+            <span className="accent-bar inline-flex h-8 items-center justify-center rounded-lg px-2 font-display text-[0.7rem] font-bold tracking-tight text-accent-ink">
               SRN
             </span>
-            <span className="hidden font-display text-sm font-medium tracking-tight text-ink lg:inline">
+            <span className="hidden font-display text-[0.95rem] font-semibold tracking-[-0.01em] text-ink lg:inline">
               Md Sakibur Rahman
             </span>
           </a>
@@ -94,7 +94,7 @@ export function Header() {
                   data-cursor="interactive"
                   aria-current={isActive ? "true" : undefined}
                   className={cn(
-                    "relative rounded-full px-2.5 py-1 font-mono text-[0.65rem] tracking-wide transition-colors duration-300",
+                    "relative rounded-full px-3.5 py-1.5 text-[0.875rem] font-medium tracking-[-0.005em] transition-colors duration-300",
                     isActive ? "text-ink" : "text-muted hover:text-ink"
                   )}
                 >
@@ -131,7 +131,7 @@ export function Header() {
 
             <MagneticLink
               href="#contact"
-              className="btn-glow group hidden items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium sm:inline-flex"
+              className="btn-glow group hidden items-center gap-1.5 rounded-full px-4 py-2 text-[0.8rem] font-semibold sm:inline-flex"
             >
               <RollingText text="Contact me" />
               <ArrowUpRight className="h-3 w-3" aria-hidden="true" />
@@ -171,7 +171,7 @@ export function Header() {
                     href={link.href}
                     onClick={() => setOpen(false)}
                     data-cursor="interactive"
-                    className="flex items-baseline gap-3 rounded-2xl px-3 py-3 font-display text-xl text-ink transition-colors duration-200 hover:bg-ink/[0.06]"
+                    className="flex items-baseline gap-3 rounded-2xl px-3 py-3 font-display text-xl font-medium text-ink transition-colors duration-200 hover:bg-ink/[0.06]"
                   >
                     <span className="font-mono text-[0.65rem] text-muted">{link.code}</span>
                     {link.label}

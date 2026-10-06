@@ -20,7 +20,8 @@ const SKILL_CLUSTERS: { label: string; domainIds: string[] }[] = [
   { label: "AI & retrieval", domainIds: ["rag-agentic", "llm-applications"] },
   { label: "Language & generation", domainIds: ["nlp", "generative-ai"] },
   { label: "Vision & signals", domainIds: ["computer-vision", "bci"] },
-  { label: "Engineering", domainIds: ["ml-foundations", "engineering"] },
+  { label: "Backend & cloud", domainIds: ["backend", "devops"] },
+  { label: "Foundations", domainIds: ["ml-foundations", "engineering"] },
 ];
 
 const clusters = SKILL_CLUSTERS.map((cluster) => ({
@@ -104,7 +105,7 @@ export function About() {
 
             <Reveal delay={0.05}>
               <h2 className="mt-6 font-display text-4xl font-semibold leading-[1.05] tracking-tight text-ink sm:text-5xl">
-                Reliable AI, <span className="text-gradient">not just impressive demos</span>.
+                Reliable AI, not just impressive demos.
               </h2>
             </Reveal>
 
@@ -134,44 +135,47 @@ export function About() {
           </div>
         </div>
 
-        {/* Skill clusters — labelled columns instead of one flat chip cloud. */}
-        <div className="mt-20 border-t border-line pt-12 sm:mt-24">
+        {/*
+          Toolkit as a spec sheet rather than five columns of bulleted chips.
+          A label/value table with hairline rules reads like documentation —
+          scannable, dense, and it sidesteps the stacked-card look that the
+          rest of the page already uses too often.
+        */}
+        <div className="mt-20 sm:mt-28">
           <Reveal>
-            <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-              Toolkit
-            </h3>
+            <div className="flex items-baseline justify-between gap-6 border-b border-line pb-4">
+              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">Toolkit</h3>
+              <p className="font-mono text-xs tabular-nums text-muted">
+                {clusters.reduce((n, c) => n + c.items.length, 0)} technologies
+              </p>
+            </div>
           </Reveal>
 
-          <div className="mt-8 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+          <dl>
             {clusters.map((cluster, i) => (
-              <Reveal key={cluster.label} delay={Math.min(i, 3) * 0.05}>
-                <div>
-                  <p className="flex items-center gap-2.5 font-display text-base font-medium text-ink">
-                    <span aria-hidden="true" className="accent-bar h-4 w-0.5 rounded-full" />
+              <Reveal key={cluster.label} delay={Math.min(i, 4) * 0.04}>
+                <div className="group grid grid-cols-1 gap-2 border-b border-line py-5 transition-colors duration-300 hover:bg-bg-alt sm:grid-cols-[minmax(0,11rem)_1fr] sm:gap-8 sm:py-6">
+                  <dt className="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-muted transition-colors duration-300 group-hover:text-warm">
                     {cluster.label}
-                  </p>
-                  <ul className="mt-4 flex flex-col gap-2">
+                  </dt>
+                  <dd className="flex flex-wrap items-center gap-x-4 gap-y-2">
                     {cluster.items.map((item) => {
                       const iconKey = iconKeyForTech(item);
                       return (
-                        <li key={item} className="flex items-center gap-2.5 text-sm text-muted">
-                          {iconKey ? (
-                            <TechIcon iconKey={iconKey} colored className="h-3.5 w-3.5" />
-                          ) : (
-                            <span
-                              aria-hidden="true"
-                              className="h-1 w-1 shrink-0 rounded-full bg-line-strong"
-                            />
-                          )}
+                        <span
+                          key={item}
+                          className="inline-flex items-center gap-1.5 text-[0.9rem] text-ink-dim"
+                        >
+                          {iconKey && <TechIcon iconKey={iconKey} colored className="h-3.5 w-3.5" />}
                           {item}
-                        </li>
+                        </span>
                       );
                     })}
-                  </ul>
+                  </dd>
                 </div>
               </Reveal>
             ))}
-          </div>
+          </dl>
         </div>
       </div>
     </section>

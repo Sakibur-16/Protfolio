@@ -86,7 +86,7 @@ export function Experience() {
 
         <Reveal delay={0.05}>
           <h2 className="mt-6 font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-            Where I&rsquo;ve <span className="text-gradient">shipped</span>
+            Where I&rsquo;ve shipped
           </h2>
         </Reveal>
 

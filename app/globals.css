@@ -113,9 +113,12 @@
 }
 
 :root {
-  --font-display-stack: "Archivo Variable", sans-serif;
-  --font-body: "Inter Variable", sans-serif;
-  --font-mono-stack: "IBM Plex Mono", monospace;
+  /* Geist reads as engineered rather than generic — it is a real type
+     family with a matching mono, which keeps display, body, and code labels
+     in one voice instead of three borrowed ones. */
+  --font-display-stack: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono-stack: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
 
   --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);

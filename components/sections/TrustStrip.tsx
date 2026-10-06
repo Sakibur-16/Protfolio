@@ -1,4 +1,4 @@
-import { allProjects } from "@/data/projects";
+import { allProjects, TOTAL_PROJECTS_DELIVERED } from "@/data/projects";
 import { publications } from "@/data/publications";
 import { skillDomains } from "@/data/skills";
 import { techRowTop, techRowBottom, type TechItem } from "@/data/techStack";
@@ -14,10 +14,11 @@ import { TechIcon } from "@/components/ui/TechIcon";
  * technology stack instead, and every counter is derived from real data.
  */
 const stats = [
-  { value: String(allProjects.length), label: "AI projects delivered" },
+  { value: String(TOTAL_PROJECTS_DELIVERED), label: "Projects delivered" },
   { value: String(publications.length), label: "Peer-reviewed papers" },
   { value: String(skillDomains.length), label: "Technical domains" },
-  { value: "2024", label: "Building AI since" },
+  // Documented case studies is a smaller, separate number — see projects.ts.
+  { value: String(allProjects.length), label: "Case studies written" },
 ];
 
 /**
