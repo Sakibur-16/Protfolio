@@ -1,634 +1,260 @@
 @import "tailwindcss";
 
+/* Dark mode keys off data-theme on <html>, stamped before first paint by lib/theme.ts. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* ---------------------------------------------------------------------- */
-/* Aurora design tokens                                                    */
-/*                                                                         */
-/* Dark is the primary theme; light is a supported alternate. Both share   */
-/* one semantic contract, so components never reference a raw hex and the  */
-/* WebGL scene can read the same values via getComputedStyle.              */
+/* Tokens. Light = paper and pen ink; dark = night notebook. One accent.   */
+/* Text pairs are >= 4.5:1 in both themes (see docs/design-system.md).     */
 /* ---------------------------------------------------------------------- */
-:root,
+:root {
+  color-scheme: light;
+  --bg: #f2f0e9;
+  --surface: #e9e6dc;
+  --ink: #13141a;
+  --muted: #575a63;
+  --rule: #d3d0c4;
+  --accent: #2a3fd6;
+}
+
 [data-theme="dark"] {
   color-scheme: dark;
-
-  --bg: #0a0a0b;
-  --bg-alt: #0e0e10;
-  --bg-raised: #141417;
-  --surface: #141417;
-  --surface-2: #1b1b1f;
-  --surface-ink: #f4f4f5;
-  --surface-muted: rgba(244, 244, 245, 0.6);
-  --surface-line: rgba(244, 244, 245, 0.1);
-  --ink: #f4f4f5;
-  --ink-dim: #a1a1aa;
-  --muted: #8b8b93;
-  --line: rgba(244, 244, 245, 0.09);
-  --line-strong: rgba(244, 244, 245, 0.2);
-
-  /* Signature gradient: warm orange -> electric blue. */
-  --accent-warm: #ff6b2c;
-  --accent-cool: #2c6bff;
-  --accent-gradient: linear-gradient(120deg, var(--accent-warm) 0%, var(--accent-cool) 100%);
-  --accent-glow-warm: rgba(255, 107, 44, 0.35);
-  --accent-glow-cool: rgba(44, 107, 255, 0.35);
-  --accent-ink: #ffffff;
-
-  /* Ambient blobs sitting behind sections. */
-  --glow-a: rgba(255, 107, 44, 0.16);
-  --glow-b: rgba(44, 107, 255, 0.16);
-  --glow-strength: 1;
-
-  /* Glass nav. */
-  --glass-tint-a: rgba(38, 38, 44, 0.55);
-  --glass-tint-b: rgba(14, 14, 18, 0.4);
-  --glass-tint-a-scrolled: rgba(38, 38, 44, 0.74);
-  --glass-tint-b-scrolled: rgba(14, 14, 18, 0.64);
-  --glass-border: rgba(244, 244, 245, 0.12);
-  --glass-highlight: rgba(244, 244, 245, 0.3);
-  --glass-underglow: rgba(244, 244, 245, 0.07);
-  --glass-shadow: rgba(0, 0, 0, 0.6);
-  --glass-sheen: rgba(244, 244, 245, 0.14);
-  --glass-frost: rgba(244, 244, 245, 0.05);
-  --glass-blur: 26px;
-  --glass-saturate: 170%;
-  --glass-brightness: 1.15;
-
-  /* WebGL scene palette. */
-  --scene-warm: #ff6b2c;
-  --scene-cool: #2c6bff;
-  --scene-node-opacity: 0.55;
-
-  --grain-opacity: 0.045;
-  --grain-blend: overlay;
-}
-
-[data-theme="light"] {
-  color-scheme: light;
-
-  --bg: #ffffff;
-  --bg-alt: #f7f7f8;
-  --bg-raised: #ffffff;
-  --surface: #101013;
-  --surface-2: #1b1b1f;
-  --surface-ink: #f4f4f5;
-  --surface-muted: rgba(244, 244, 245, 0.6);
-  --surface-line: rgba(244, 244, 245, 0.12);
-  --ink: #0a0a0b;
-  --ink-dim: #52525b;
-  --muted: #64646d;
-  --line: rgba(10, 10, 11, 0.1);
-  --line-strong: rgba(10, 10, 11, 0.2);
-
-  --accent-warm: #e2541a;
-  --accent-cool: #1d55e0;
-  --accent-gradient: linear-gradient(120deg, var(--accent-warm) 0%, var(--accent-cool) 100%);
-  --accent-glow-warm: rgba(226, 84, 26, 0.24);
-  --accent-glow-cool: rgba(29, 85, 224, 0.24);
-  --accent-ink: #ffffff;
-
-  --glow-a: rgba(226, 84, 26, 0.1);
-  --glow-b: rgba(29, 85, 224, 0.1);
-  --glow-strength: 0.75;
-
-  --glass-tint-a: rgba(255, 255, 255, 0.74);
-  --glass-tint-b: rgba(255, 255, 255, 0.44);
-  --glass-tint-a-scrolled: rgba(255, 255, 255, 0.9);
-  --glass-tint-b-scrolled: rgba(255, 255, 255, 0.66);
-  --glass-border: rgba(10, 10, 11, 0.1);
-  --glass-highlight: rgba(255, 255, 255, 0.95);
-  --glass-underglow: rgba(255, 255, 255, 0.55);
-  --glass-shadow: rgba(10, 10, 11, 0.12);
-  --glass-sheen: rgba(255, 255, 255, 0.65);
-  --glass-frost: rgba(10, 10, 11, 0.035);
-  --glass-blur: 24px;
-  --glass-saturate: 185%;
-  --glass-brightness: 1.03;
-
-  --scene-warm: #e2541a;
-  --scene-cool: #1d55e0;
-  --scene-node-opacity: 0.5;
-
-  --grain-opacity: 0.03;
-  --grain-blend: multiply;
-}
-
-:root {
-  /* Geist reads as engineered rather than generic — it is a real type
-     family with a matching mono, which keeps display, body, and code labels
-     in one voice instead of three borrowed ones. */
-  --font-display-stack: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono-stack: "Geist Mono Variable", ui-monospace, SFMono-Regular, monospace;
-
-  --ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
-  --ease-glass: cubic-bezier(0.32, 0.72, 0, 1);
-  --dur-fast: 180ms;
-  --dur-base: 320ms;
-  --dur-slow: 620ms;
-  --dur-theme: 460ms;
+  --bg: #0f1013;
+  --surface: #181a20;
+  --ink: #eceae3;
+  --muted: #9ea1aa;
+  --rule: #2b2e36;
+  --accent: #8fa3ff;
 }
 
 @theme inline {
   --color-bg: var(--bg);
-  --color-bg-alt: var(--bg-alt);
-  --color-bg-raised: var(--bg-raised);
   --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-surface-ink: var(--surface-ink);
-  --color-surface-muted: var(--surface-muted);
-  --color-surface-line: var(--surface-line);
   --color-ink: var(--ink);
-  --color-ink-dim: var(--ink-dim);
   --color-muted: var(--muted);
-  --color-line: var(--line);
-  --color-line-strong: var(--line-strong);
-  --color-warm: var(--accent-warm);
-  --color-cool: var(--accent-cool);
-  --color-accent-ink: var(--accent-ink);
+  --color-rule: var(--rule);
+  --color-accent: var(--accent);
 
-  --font-display: var(--font-display-stack);
-  --font-sans: var(--font-body);
-  --font-mono: var(--font-mono-stack);
+  --font-display: "Newsreader Variable", Newsreader, Georgia, "Times New Roman", serif;
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
 }
 
-/* ---------------------------------------------------------------------- */
-/* Base                                                                    */
-/* ---------------------------------------------------------------------- */
 html {
+  background: var(--bg);
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
 body {
   background: var(--bg);
   color: var(--ink);
-  font-family: var(--font-body);
+  font-family: var(--font-sans);
+  font-size: 1.0625rem;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  overflow-x: hidden;
-}
-
-/* Theme crossfade, applied only while the toggle settles. */
-.theme-transition,
-.theme-transition *,
-.theme-transition *::before,
-.theme-transition *::after {
-  transition:
-    background-color var(--dur-theme) var(--ease-glass),
-    border-color var(--dur-theme) var(--ease-glass),
-    color var(--dur-theme) var(--ease-glass),
-    fill var(--dur-theme) var(--ease-glass),
-    stroke var(--dur-theme) var(--ease-glass),
-    box-shadow var(--dur-theme) var(--ease-glass) !important;
-  transition-delay: 0ms !important;
 }
 
 ::selection {
-  background: var(--accent-warm);
-  color: var(--accent-ink);
+  background: var(--accent);
+  color: var(--bg);
 }
 
 :focus-visible {
-  outline: 2px solid var(--accent-cool);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 4px;
+  border-radius: 2px;
 }
 
 /* ---------------------------------------------------------------------- */
-/* Gradient text + accent utilities                                        */
+/* Type                                                                    */
 /* ---------------------------------------------------------------------- */
-.text-gradient {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
 }
 
-.accent-bar {
-  background: var(--accent-gradient);
+.display em,
+.display i {
+  font-style: italic;
+  /* Italic descenders clip at tight leading; keep a little room below. */
+  padding-bottom: 0.06em;
 }
 
-/* Pill button with a gradient rim that lights up on hover. The rim is a
-   masked border layer so the fill stays flat and the glow stays crisp. */
-.btn-glow {
-  position: relative;
-  isolation: isolate;
-  background: var(--accent-gradient);
-  color: var(--accent-ink);
-  box-shadow:
-    0 0 0 0 transparent,
-    0 8px 30px -10px var(--accent-glow-warm);
-  transition:
-    box-shadow var(--dur-base) var(--ease-editorial),
-    transform var(--dur-base) var(--ease-editorial);
-}
-
-.btn-glow:hover {
-  transform: translateY(-2px);
-  box-shadow:
-    0 0 26px -4px var(--accent-glow-cool),
-    0 14px 44px -12px var(--accent-glow-warm);
-}
-
-.btn-ghost {
-  position: relative;
-  isolation: isolate;
-  border: 1px solid var(--line-strong);
-  color: var(--ink);
-  transition:
-    border-color var(--dur-base) var(--ease-editorial),
-    background-color var(--dur-base) var(--ease-editorial),
-    transform var(--dur-base) var(--ease-editorial);
-}
-
-.btn-ghost:hover {
-  transform: translateY(-2px);
-  border-color: transparent;
-  background-color: color-mix(in srgb, var(--ink) 7%, transparent);
-}
-
-/* Magnetic CTA: springs back on exit, and carries a specular highlight that
-   tracks the pointer (--mx/--my are written by MagneticLink). */
-.magnetic {
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  transition: transform 520ms var(--ease-editorial);
-  will-change: transform;
-}
-
-.magnetic::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background: radial-gradient(
-    120px circle at var(--mx, 50%) var(--my, 50%),
-    rgba(255, 255, 255, 0.28),
-    transparent 70%
-  );
-  opacity: 0;
-  transition: opacity var(--dur-base) var(--ease-editorial);
-}
-
-.magnetic:hover::after {
-  opacity: 1;
-}
-
-/* Gradient hairline border for cards. Uses a masked pseudo-element so the
-   card keeps its own background instead of being painted over. */
-.gradient-border {
-  position: relative;
-}
-
-.gradient-border::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  padding: 1px;
-  background: var(--accent-gradient);
-  -webkit-mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-  mask:
-    linear-gradient(#000 0 0) content-box,
-    linear-gradient(#000 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity var(--dur-base) var(--ease-editorial);
-  pointer-events: none;
-}
-
-.gradient-border:hover::after,
-.gradient-border:focus-within::after {
-  opacity: 1;
-}
-
-/* Diagonal light streaks behind the hero. */
-.light-streak {
-  position: absolute;
-  pointer-events: none;
-  background: var(--accent-gradient);
-  filter: blur(42px);
-  opacity: calc(0.16 * var(--glow-strength));
-  transform: rotate(-24deg);
-}
-
-/* ---------------------------------------------------------------------- */
-/* Liquid glass — nav pill                                                 */
-/* ---------------------------------------------------------------------- */
-.liquid-glass {
-  position: relative;
-  isolation: isolate;
-  background-image: linear-gradient(152deg, var(--glass-tint-a) 0%, var(--glass-tint-b) 100%);
-  border: 1px solid var(--glass-border);
-  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
-    brightness(var(--glass-brightness));
-  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate))
-    brightness(var(--glass-brightness));
-  box-shadow:
-    0 1px 0 0 var(--glass-highlight) inset,
-    0 -1px 0 0 var(--glass-underglow) inset,
-    0 10px 36px -10px var(--glass-shadow);
-  transition:
-    background-image var(--dur-base) var(--ease-glass),
-    box-shadow var(--dur-base) var(--ease-glass),
-    border-color var(--dur-base) var(--ease-glass),
-    padding var(--dur-base) var(--ease-glass);
-}
-
-.liquid-glass::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: -1;
-  background:
-    radial-gradient(140% 100% at 18% -10%, var(--glass-sheen) 0%, transparent 55%),
-    linear-gradient(to bottom, var(--glass-sheen) 0%, transparent 48%);
-  opacity: 0.85;
-}
-
-.liquid-glass.is-scrolled {
-  background-image: linear-gradient(
-    152deg,
-    var(--glass-tint-a-scrolled) 0%,
-    var(--glass-tint-b-scrolled) 100%
-  );
-}
-
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
-  .liquid-glass {
-    background-image: none;
-    background-color: var(--bg-alt);
-  }
-}
-
-/* ---------------------------------------------------------------------- */
-/* Marquee (trust strip)                                                   */
-/* ---------------------------------------------------------------------- */
-@keyframes marquee-left {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes marquee-right {
-  from {
-    transform: translateX(-50%);
-  }
-  to {
-    transform: translateX(0);
-  }
-}
-
-/*
- * Seamless marquee.
- *
- * The stutter at wrap comes from using flex `gap` on the track: with 2N items
- * the total width is 2N·w + (2N−1)·g, so translating −50% lands half a gap
- * short and the loop visibly jumps. Spacing therefore lives on each item as
- * margin-right, making the width exactly 2N·(w+g) — half of which is a whole
- * number of items, so the wrap is mathematically invisible.
- */
-.marquee-track,
-.marquee-track-reverse {
-  display: flex;
-  width: max-content;
-  will-change: transform;
-  /* No column-gap here — spacing is per-item, see .marquee-item. */
-}
-
-.marquee-track {
-  animation: marquee-left 46s linear infinite;
-}
-
-.marquee-track-reverse {
-  animation: marquee-right 52s linear infinite;
-}
-
-.marquee-item {
-  margin-right: 0.875rem;
-  flex: 0 0 auto;
-}
-
-/*
- * App-icon tile: rounded square with a liquid-glass face.
- * A soft top-lit rim plus an inner sheen give the tile depth so a flat brand
- * mark still reads as sitting on a physical surface.
- */
-.icon-tile {
-  position: relative;
-  isolation: isolate;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 4rem;
-  height: 4rem;
-  border-radius: 1.125rem;
-  border: 1px solid var(--glass-border);
-  background-image: linear-gradient(150deg, var(--glass-tint-a) 0%, var(--glass-tint-b) 100%);
-  backdrop-filter: blur(14px) saturate(160%) brightness(var(--glass-brightness));
-  -webkit-backdrop-filter: blur(14px) saturate(160%) brightness(var(--glass-brightness));
-  box-shadow:
-    0 1px 0 0 var(--glass-highlight) inset,
-    0 -1px 0 0 var(--glass-underglow) inset,
-    0 8px 24px -10px var(--glass-shadow);
-  transition:
-    transform var(--dur-base) var(--ease-editorial),
-    box-shadow var(--dur-base) var(--ease-editorial),
-    border-color var(--dur-base) var(--ease-editorial);
-}
-
-.icon-tile::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  z-index: -1;
-  background:
-    radial-gradient(120% 90% at 22% -12%, var(--glass-sheen) 0%, transparent 58%),
-    linear-gradient(to bottom, var(--glass-sheen) 0%, transparent 45%);
-  opacity: 0.9;
-}
-
-.icon-tile:hover {
-  transform: translateY(-3px);
-  border-color: var(--line-strong);
-  box-shadow:
-    0 1px 0 0 var(--glass-highlight) inset,
-    0 12px 30px -10px var(--glass-shadow),
-    0 0 22px -6px var(--accent-glow-cool);
-}
-
-@media (min-width: 640px) {
-  .icon-tile {
-    width: 4.5rem;
-    height: 4.5rem;
-    border-radius: 1.25rem;
-  }
-  .marquee-item {
-    margin-right: 1rem;
-  }
-}
-
-/*
- * Pause only while the pointer is on an individual tile — not the whole row.
- * Hovering anywhere in the band used to freeze the entire strip, which made
- * the section look broken whenever the cursor merely crossed it.
- */
-.marquee-track:has(.icon-tile:hover),
-.marquee-track-reverse:has(.icon-tile:hover) {
-  animation-play-state: paused;
-}
-
-.marquee-mask {
-  -webkit-mask-image: linear-gradient(
-    to right,
-    transparent,
-    #000 8%,
-    #000 92%,
-    transparent
-  );
-  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
-}
-
-/* ---------------------------------------------------------------------- */
-/* Grain + cursor + scrollbar                                              */
-/* ---------------------------------------------------------------------- */
-.grain-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 60;
-  pointer-events: none;
-  opacity: var(--grain-opacity);
-  mix-blend-mode: var(--grain-blend);
-}
-
-@media (pointer: fine) {
-  .cursor-enabled {
-    cursor: none;
-  }
-}
-
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 70;
-  will-change: transform;
-  border-radius: 9999px;
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  background: var(--accent-warm);
-}
-
-.cursor-ring {
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--line-strong);
-  transition:
-    width var(--dur-fast) ease,
-    height var(--dur-fast) ease,
-    border-color var(--dur-fast) ease,
-    background var(--dur-fast) ease;
-}
-
-.cursor-ring.is-active {
-  width: 56px;
-  height: 56px;
-  border-color: var(--accent-cool);
-  background: color-mix(in srgb, var(--accent-cool) 12%, transparent);
-}
-
-::-webkit-scrollbar {
-  width: 10px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--line-strong);
-  border-radius: 999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--muted);
-}
-* {
-  scrollbar-color: var(--line-strong) var(--bg);
-}
-
-.eyebrow {
-  font-family: var(--font-mono-stack);
-  font-size: 0.6875rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+.meta {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
   color: var(--muted);
 }
 
-/* ---------------------------------------------------------------------- */
-/* Theme-change circular reveal (View Transitions)                         */
-/* ---------------------------------------------------------------------- */
-::view-transition-old(root),
-::view-transition-new(root) {
-  animation: none;
-  mix-blend-mode: normal;
-}
-::view-transition-old(root) {
-  z-index: 1;
-}
-::view-transition-new(root) {
-  z-index: 2;
+.prose-col {
+  max-width: 62ch;
 }
 
-html.vt-theme-active::view-transition-new(root) {
-  animation: theme-circle-in 560ms var(--ease-glass) forwards;
+.link {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
-@keyframes theme-circle-in {
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Buttons: rectangular, 2px radius, press to 0.97                         */
+/* ---------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+  padding: 0.7rem 1.25rem;
+  border: 1px solid var(--ink);
+  border-radius: 2px;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--ink);
+  transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn:hover {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.btn-primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Citation markers [n] and their popover                                  */
+/* ---------------------------------------------------------------------- */
+.cite {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0;
+  line-height: 0;
+  color: var(--accent);
+  vertical-align: baseline;
+  position: relative;
+  top: -0.7em;
+  padding: 0.5em 0.2em;
+  cursor: pointer;
+}
+
+.cite:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+.cite--hero {
+  font-size: clamp(0.8rem, 0.45rem + 1.1vw, 1.3rem);
+  top: -2.1em;
+}
+
+.cite-pop {
+  position: fixed;
+  z-index: 60;
+  display: block;
+  padding: 0.85rem 1rem;
+  background: var(--surface);
+  color: var(--ink);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-style: normal;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-align: left;
+  text-transform: none;
+  transform-origin: top left;
+  animation: pop-in 160ms cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Motion: transform + opacity only, ease-out, under 300ms                 */
+/* ---------------------------------------------------------------------- */
+@keyframes rise {
   from {
-    clip-path: circle(0px at var(--vt-x, 50%) var(--vt-y, 0%));
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
   }
   to {
-    clip-path: circle(var(--vt-r, 150vmax) at var(--vt-x, 50%) var(--vt-y, 0%));
+    opacity: 1;
+    transform: none;
   }
 }
 
-/* ---------------------------------------------------------------------- */
-/* Reduced motion — last, so it wins                                       */
-/* ---------------------------------------------------------------------- */
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Staggered entrance on load. --i sets the order. */
+.rise {
+  transform-origin: 0 100%;
+  animation: rise 280ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+/* Scroll-linked entrance where the browser supports it; elsewhere content is simply visible. */
+@supports (animation-timeline: view()) {
+  .reveal {
+    transform-origin: 0 100%;
+    animation: rise linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry calc(30% + var(--i, 0) * 6%);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  .marquee-track,
-  .marquee-track-reverse {
-    animation: none;
+  .rise,
+  .reveal,
+  .cite-pop {
+    animation: none !important;
   }
 
-  html.vt-theme-active::view-transition-new(root) {
-    animation: none;
+  .btn {
+    transition: none;
   }
 
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
+  .btn:active {
+    transform: none;
   }
 }

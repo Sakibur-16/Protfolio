@@ -1,15 +1,22 @@
 import type { SiteConfig } from "@/types/portfolio";
 
-// Update NEXT_PUBLIC_SITE_URL in your environment before deploying so
-// canonical URLs, sitemap.ts, and JSON-LD all resolve correctly.
+// NEXT_PUBLIC_SITE_URL overrides this per environment. The fallback is the
+// real production domain so canonical, Open Graph, sitemap and JSON-LD URLs
+// are right even when the variable is unset.
 export const siteConfig: SiteConfig = {
   name: "Md. Sakibur Rahman",
   shortName: "Sakibur Rahman",
-  title: "Md. Sakibur Rahman — AI Developer & ML Researcher",
+  title: "Md. Sakibur Rahman — AI Developer",
   description:
-    "AI developer and ML researcher building production LLM, RAG, NLP, computer vision, and speech products, with published research in medical AI, code understanding, and brain-computer interfaces.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sakiburrahman.dev",
+    "AI developer in Dhaka building RAG and agentic systems whose answers trace back to real sources. Case studies, peer-reviewed research, and contact.",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sakibursr.me",
   locale: "en_US",
-  themeColor: "#0a0a0b",
-  ogImage: "/og-image.png",
+  themeColor: "#f2f0e9",
+  ogImage: "/opengraph-image.png",
 };
+
+export const contact = {
+  email: "sakibursrrahman@gmail.com",
+  linkedin: "https://www.linkedin.com/in/srnrahman/",
+  location: "Dhaka, Bangladesh",
+} as const;

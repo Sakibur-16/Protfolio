@@ -1,29 +1,14 @@
 import type { Metadata } from "next";
-import { siteConfig } from "@/data/site";
-import { profile } from "@/data/profile";
-import { publications } from "@/data/publications";
-import { socialLinks } from "@/data/socialLinks";
-import type { Project } from "@/types/portfolio";
+import { contact, siteConfig } from "@/data/site";
 
-export function buildMetadata(overrides: Partial<Metadata> = {}): Metadata {
+// The Open Graph / Twitter image comes from app/opengraph-image.png (file
+// convention), so it is not repeated here.
+export function buildMetadata(): Metadata {
   return {
     metadataBase: new URL(siteConfig.url),
-    title: {
-      default: siteConfig.title,
-      template: `%s — ${siteConfig.shortName}`,
-    },
+    title: siteConfig.title,
     description: siteConfig.description,
-    keywords: [
-      "AI Developer",
-      "Machine Learning Engineer",
-      "LLM Engineer",
-      "RAG",
-      "NLP",
-      "Computer Vision",
-      "Speech AI",
-      "Dhaka",
-      "Bangladesh",
-    ],
+    keywords: ["AI Developer", "RAG", "Agentic AI", "LLM", "NLP", "Computer Vision", "Dhaka", "Bangladesh"],
     alternates: { canonical: "/" },
     openGraph: {
       type: "website",
@@ -31,33 +16,15 @@ export function buildMetadata(overrides: Partial<Metadata> = {}): Metadata {
       title: siteConfig.title,
       description: siteConfig.description,
       siteName: siteConfig.shortName,
-      images: [{ url: siteConfig.ogImage }],
       locale: siteConfig.locale,
     },
     twitter: {
       card: "summary_large_image",
       title: siteConfig.title,
       description: siteConfig.description,
-      images: [siteConfig.ogImage],
     },
     icons: { icon: "/icon.svg" },
-    ...overrides,
   };
-}
-
-export function projectMetadata(project: Project): Metadata {
-  return buildMetadata({
-    title: project.title,
-    description: project.shortDescription,
-    alternates: { canonical: `/projects/${project.slug}` },
-    openGraph: {
-      type: "article",
-      url: `${siteConfig.url}/projects/${project.slug}`,
-      title: `${project.title} — ${siteConfig.shortName}`,
-      description: project.shortDescription,
-      images: [{ url: siteConfig.ogImage }],
-    },
-  });
 }
 
 /** JSON-LD Person schema, rendered once in the root layout. */
@@ -65,50 +32,24 @@ export function personJsonLd() {
   return {
     "@context": "https://schema.org",
     "@type": "Person",
-    name: profile.fullName,
-    jobTitle: profile.roleTitle,
+    name: siteConfig.name,
+    jobTitle: "AI Developer",
     description: siteConfig.description,
     url: siteConfig.url,
     address: {
       "@type": "PostalAddress",
-      addressLocality: profile.location.city,
-      addressCountry: profile.location.country,
+      addressLocality: "Dhaka",
+      addressCountry: "Bangladesh",
     },
-    worksFor: {
-      "@type": "Organization",
-      name: "Sparktech Agency",
-    },
-    alumniOf: {
-      "@type": "CollegeOrUniversity",
-      name: "East West University",
-    },
-    sameAs: socialLinks
-      .filter((link): link is typeof link & { href: string } => Boolean(link.href))
-      .map((link) => link.href),
+    worksFor: { "@type": "Organization", name: "Sparktech Agency" },
+    alumniOf: { "@type": "CollegeOrUniversity", name: "East West University" },
+    sameAs: [contact.linkedin],
     knowsAbout: [
-      "Large Language Models",
       "Retrieval-Augmented Generation",
       "Agentic AI",
+      "Large Language Models",
       "Natural Language Processing",
-      "Generative AI",
       "Computer Vision",
-      "Brain-Computer Interfaces",
     ],
   };
-}
-
-/** JSON-LD ScholarlyArticle entries for the research section. */
-export function publicationsJsonLd() {
-  return publications.map((pub) => ({
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    headline: pub.title,
-    datePublished: pub.year,
-    author: {
-      "@type": "Person",
-      name: profile.fullName,
-    },
-    publisher: pub.affiliation ? { "@type": "Organization", name: pub.affiliation } : undefined,
-    isPartOf: pub.venue,
-  }));
 }

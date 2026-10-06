@@ -13,22 +13,28 @@ Note: the `taste-skill` was not available in this session, so this is my own pro
 ## Colour tokens
 | Token | Light | Dark | Use |
 |---|---|---|---|
-| `--bg` | `#F6F2EA` | `#12110E` | page |
-| `--surface` | `#EEE8DB` | `#1B1915` | footnote popovers, code, diagram plates (sparingly) |
-| `--ink` | `#16140F` | `#EDE8DC` | body and headings |
-| `--muted` | `#5A5446` | `#A39C8B` | metadata, captions |
-| `--rule` | `#D6CEBD` | `#35312A` | 1px hairlines (decorative, no text) |
-| `--accent` | `#A8341A` | `#EC7A4C` | links, `[n]` markers, focus ring |
+**Revision (build):** the accent changed from rust to pen-ink blue. The design skill flags warm paper + rust/clay as the most common generic palette; blue ink on warm paper keeps the notebook feel and is more distinctive. Dark mode uses a cool near-black. Values below are what ships in `app/globals.css`.
+
+| Token | Light | Dark | Use |
+|---|---|---|---|
+| `--bg` | `#F2F0E9` | `#0F1013` | page |
+| `--surface` | `#E9E6DC` | `#181A20` | footnote popover |
+| `--ink` | `#13141A` | `#ECEAE3` | body and headings |
+| `--muted` | `#575A63` | `#9EA1AA` | metadata, captions |
+| `--rule` | `#D3D0C4` | `#2B2E36` | 1px hairlines (decorative, no text) |
+| `--accent` | `#2A3FD6` | `#8FA3FF` | links, `[n]` markers, focus ring, primary button |
 
 Contrast (text tokens must be ≥ 4.5:1):
 
 | Pair | Light | Dark |
 |---|---|---|
-| ink on bg | 16.5 | 15.4 |
-| muted on bg | 6.7 | 6.9 |
-| muted on surface | 6.2 | 6.4 |
-| accent on bg | 5.9 | 6.7 |
-| accent on surface | 5.4 | 6.2 |
+| ink on bg | 16.1 | 15.8 |
+| muted on bg | 6.0 | 7.4 |
+| muted on surface | 5.5 | 6.7 |
+| accent on bg | 6.6 | 8.0 |
+| accent on surface | 6.1 | 7.3 |
+
+axe-core (WCAG 2.0/2.1/2.2 A and AA plus best-practice) reports zero violations at 1440px and 390px in both themes.
 
 Dark mode: follows `prefers-color-scheme` by default, with a manual toggle stored in localStorage (the existing ThemeProvider already stamps `data-theme` before paint; keep that mechanism).
 

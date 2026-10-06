@@ -1,24 +1,16 @@
-import { Hero } from "@/components/sections/Hero";
-import { TrustStrip } from "@/components/sections/TrustStrip";
-import { About } from "@/components/sections/About";
-import { Experience } from "@/components/sections/Experience";
-import { Quote } from "@/components/sections/Quote";
-import { Expertise } from "@/components/sections/Expertise";
-import { SelectedWork } from "@/components/sections/SelectedWork";
-import { Research } from "@/components/sections/Research";
-import { Contact } from "@/components/sections/Contact";
+import { Hero } from "@/components/site/Hero";
+import { Work } from "@/components/site/Work";
+import { Research } from "@/components/site/Research";
+import { Experience } from "@/components/site/Experience";
+import { Contact } from "@/components/site/Contact";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-      <TrustStrip />
-      <About />
-      <Experience />
-      <Quote />
-      <Expertise />
-      <SelectedWork />
+      <Work />
       <Research />
+      <Experience />
       <Contact />
     </>
   );

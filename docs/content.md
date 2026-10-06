@@ -16,16 +16,17 @@ Rule: the site renders only what is written here. Anything marked `TODO(owner)` 
 Paper links / DOIs: TODO(owner)
 
 ## Case study 1 — Quranity (lead)
-Pre-filled, with CONFLICTS to resolve (see questions):
-- Handoff says: 2024, "live Qur'an app with Qalam, an AI assistant grounded in Qur'an and Hadith retrieval", role AI Developer, PM & QA.
-- Repo (`data/projects.ts`) says: 2026 (May–June), role Full-Stack & DevOps Engineer, "containerized Islamic content platform", separate FastAPI AI guidance service calling OpenAI, seven guidance perspectives, Qur'an/Hadith citation handling, Next.js + Django + Celery/FFmpeg HLS + Terraform/Ansible on AWS.
-- Problem: TODO(owner)
-- My role: TODO(owner) (which of the two descriptions is right?)
-- How it works (diagram): TODO(owner) — retrieval path from question to cited answer
-- The hard part (one real failure and the fix): TODO(owner)
-- Result (verifiable only): TODO(owner)
-- Stack: TODO(owner) confirm list from repo
-- Live URL: TODO(owner)
+Owner answers (2026-10-06), now live in `data/work.ts`:
+- Year 2024. Role: AI Developer, PM and QA. Qalam is the AI guidance service.
+- Grounding: Qur'an/Hadith database lookup.
+- No good source: answers from the closest related sources.
+- Testing: manual and automated, by people and by bots.
+- Hard part: generic fallback whenever the retrieved source mismatched, and language detection not working; fixed by rebuilding the prompting and instructions.
+- Live on Google Play and the App Store; landing page https://quranity.app/en
+- Drawn from those answers, please confirm: the 5-step answer path (question, language, source lookup, prompt, answer) and its order.
+- Stack shown: Python, FastAPI, OpenAI API, Qur'an and Hadith database (FastAPI and OpenAI come from the old repo data).
+- TODO(owner): Google Play and App Store URLs (not on the landing page, so not linked). Any publicly shareable numbers (users, corpus size, test results).
+- Note: the old repo data described a 2026 build with a Full-Stack and DevOps role. The site now follows the owner's 2024 / AI Developer, PM and QA answer.
 
 ## Case study 2 — EQi30
 Pre-filled from repo: 2025, AI service layer, 12 engines (assessment, coaching, microlearning, adaptive scheduling), Python + FastAPI. 28 source documents (docx/xlsx) reconciled into 40 abilities across 6 competencies, 30 with complete day-by-day programs.
