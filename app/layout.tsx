@@ -1,13 +1,47 @@
 import type { Metadata, Viewport } from "next";
-import "@fontsource-variable/geist";
-import "@fontsource-variable/geist-mono";
-import "@fontsource-variable/newsreader/opsz.css";
-import "@fontsource-variable/newsreader/opsz-italic.css";
+import localFont from "next/font/local";
 import { buildMetadata, personJsonLd } from "@/lib/metadata";
 import { themeInitScript } from "@/lib/theme";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import "./globals.css";
+
+// Self-hosted variable fonts (Latin subset). next/font preloads them and adds a
+// size-matched fallback, so the first paint does not jump when they arrive.
+// (next/font requires literal paths, so they are written out in full.)
+const display = localFont({
+  src: [
+    {
+      path: "../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2",
+      weight: "200 800",
+      style: "normal",
+    },
+    {
+      path: "../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2",
+      weight: "200 800",
+      style: "italic",
+    },
+  ],
+  variable: "--font-newsreader",
+  display: "swap",
+  fallback: ["Georgia", "Times New Roman", "serif"],
+});
+
+const sans = localFont({
+  src: "../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
+  weight: "100 900",
+  variable: "--font-geist",
+  display: "swap",
+  fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
+});
+
+const mono = localFont({
+  src: "../node_modules/@fontsource-variable/geist-mono/files/geist-mono-latin-wght-normal.woff2",
+  weight: "100 900",
+  variable: "--font-geist-mono",
+  display: "swap",
+  fallback: ["ui-monospace", "Menlo", "monospace"],
+});
 
 export const metadata: Metadata = buildMetadata();
 
@@ -20,7 +54,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         {/* Stamps data-theme on <html> before first paint to avoid a theme flash. */}
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />

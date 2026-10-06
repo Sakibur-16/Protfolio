@@ -35,9 +35,9 @@
   --color-rule: var(--rule);
   --color-accent: var(--accent);
 
-  --font-display: "Newsreader Variable", Newsreader, Georgia, "Times New Roman", serif;
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono Variable", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, Menlo, monospace;
 }
 
 html {
