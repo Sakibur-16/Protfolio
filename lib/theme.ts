@@ -1,7 +1,8 @@
 export const THEME_STORAGE_KEY = "theme";
 
 /**
- * Runs in <head> before first paint so the page never flashes the wrong
- * theme. A stored choice wins; otherwise the OS preference decides.
+ * Runs in <head> before first paint. It marks the page as script-enabled (so
+ * scroll reveals can start hidden) and stamps the theme. The site opens in the
+ * light theme; a stored choice from the toggle wins on later visits.
  */
-export const themeInitScript = `(function(){try{var s=localStorage.getItem("${THEME_STORAGE_KEY}");var t=s==="light"||s==="dark"?s:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");document.documentElement.setAttribute("data-theme",t);}catch(e){}})();`;
+export const themeInitScript = `(function(){var d=document.documentElement;d.classList.add("js");try{var s=localStorage.getItem("${THEME_STORAGE_KEY}");d.setAttribute("data-theme",s==="dark"?"dark":"light");}catch(e){d.setAttribute("data-theme","light");}})();`;

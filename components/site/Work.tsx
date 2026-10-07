@@ -93,7 +93,7 @@ function AnswerPath() {
 function LeadStudy() {
   const s = quranity;
   return (
-    <article id={s.id} className="grid gap-10 border-t border-ink py-16 lg:grid-cols-12 lg:gap-12 lg:py-24">
+    <article id={s.id} className="draw-top grid gap-10 py-16 lg:grid-cols-12 lg:gap-12 lg:py-24">
       <div className="lg:col-span-3">
         <div className="lg:sticky lg:top-24">
           <p className="display text-[clamp(4.5rem,3rem+6vw,8rem)] italic leading-none text-accent">{studyNumber(s.id)}</p>
@@ -167,7 +167,7 @@ function MatrixStudy({ study }: { study: CaseStudy }) {
     { title: "Result", body: study.result },
   ];
   return (
-    <article id={study.id} className="border-t border-ink py-16 lg:py-24">
+    <article id={study.id} className="draw-top py-16 lg:py-24">
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-4">
           <p className="display text-[clamp(4rem,3rem+4vw,6rem)] italic leading-none text-accent">{studyNumber(study.id)}</p>
@@ -203,7 +203,7 @@ function MatrixStudy({ study }: { study: CaseStudy }) {
 function ResearchStudy() {
   const s = malaria;
   return (
-    <article id={s.id} className="border-t border-ink py-16 lg:py-24">
+    <article id={s.id} className="draw-top py-16 lg:py-24">
       <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
         <p className="display text-6xl italic leading-none text-accent">{studyNumber(s.id)}</p>
         <p className="meta">
@@ -238,7 +238,7 @@ function ResearchStudy() {
 /** 04: shorter project entries as a ruled index. */
 function MoreProjects() {
   return (
-    <article id="more-projects" className="border-t border-ink py-16 lg:py-24">
+    <article id="more-projects" className="draw-top py-16 lg:py-24">
       <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
         <p className="display text-6xl italic leading-none text-accent">{moreProjectsNumber}</p>
         <h3 className="display text-3xl">More projects</h3>
@@ -247,11 +247,11 @@ function MoreProjects() {
         {miniProjects.map((project, index) => (
           <li
             key={project.name}
-            className="reveal grid gap-x-8 gap-y-3 border-b border-rule py-7 lg:grid-cols-[15rem_1fr_17rem]"
+            className="reveal group grid gap-x-8 gap-y-3 border-b border-rule py-7 lg:grid-cols-[15rem_1fr_17rem]"
             style={{ "--i": index } as CSSProperties}
           >
             <div>
-              <p className="display text-2xl">{project.name}</p>
+              <p className="display text-2xl transition-transform duration-200 ease-out group-hover:translate-x-1.5">{project.name}</p>
               <p className="meta mt-1">
                 {project.year} · {project.role}
               </p>

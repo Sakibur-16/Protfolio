@@ -5,6 +5,8 @@ import { buildMetadata, personJsonLd } from "@/lib/metadata";
 import { themeInitScript } from "@/lib/theme";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { RevealObserver } from "@/components/site/RevealObserver";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
 import "./globals.css";
 
 // Self-hosted variable fonts (Latin subset). next/font preloads them and adds a
@@ -75,9 +77,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
+        <ScrollProgress />
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        <RevealObserver />
         {/* Cookieless page-view analytics. Switches on once Web Analytics is enabled in the Vercel project. */}
         <Analytics />
       </body>

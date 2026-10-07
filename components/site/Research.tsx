@@ -17,7 +17,7 @@ export function Research() {
           Google Scholar ↗
         </a>
       </p>
-      <ol className="mt-10 border-t border-ink">
+      <ol className="draw-top mt-10">
         {ids.map((id, index) => {
           const paper = byId.get(id);
           const source = paperSources[index];

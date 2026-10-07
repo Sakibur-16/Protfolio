@@ -1,11 +1,6 @@
 import { contact } from "@/data/site";
+import { HeaderNav } from "@/components/site/HeaderNav";
 import { ThemeToggle } from "@/components/site/ThemeToggle";
-
-const nav = [
-  { label: "Work", href: "#work" },
-  { label: "Research", href: "#research" },
-  { label: "Experience", href: "#experience" },
-] as const;
 
 export function Header() {
   return (
@@ -15,14 +10,8 @@ export function Header() {
           Sakibur Rahman
         </a>
         <div className="flex items-center gap-1 sm:gap-6">
-          <nav aria-label="Primary" className="hidden items-center gap-6 md:flex">
-            {nav.map((item) => (
-              <a key={item.href} href={item.href} className="text-sm text-muted hover:text-accent">
-                {item.label}
-              </a>
-            ))}
-          </nav>
-          <a href={`mailto:${contact.email}`} className="pressable text-sm font-medium text-accent hover:underline">
+          <HeaderNav />
+          <a href={`mailto:${contact.email}`} className="pressable text-sm font-semibold text-accent hover:underline">
             Email me
           </a>
           <ThemeToggle />

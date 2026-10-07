@@ -4,8 +4,9 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------------------------------------------------------------------- */
-/* Tokens. Light = paper and pen ink; dark = night notebook. One accent.   */
-/* Text pairs are >= 4.5:1 in both themes (see docs/design-system.md).     */
+/* Tokens. Light = paper and pen ink; dark = deep navy night notebook.     */
+/* One accent. Every text pair is >= 4.5:1 (see docs/design-system.md).    */
+/* --inv-* style the inverted band (contact + footer) in each theme.       */
 /* ---------------------------------------------------------------------- */
 :root {
   color-scheme: light;
@@ -15,16 +16,28 @@
   --muted: #575a63;
   --rule: #d3d0c4;
   --accent: #2a3fd6;
+
+  --inv-bg: #13141a;
+  --inv-fg: #f2f0e9;
+  --inv-muted: #a9acb5;
+  --inv-rule: #2f323c;
+  --inv-accent: #9db0ff;
 }
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #0f1013;
-  --surface: #181a20;
-  --ink: #eceae3;
-  --muted: #9ea1aa;
-  --rule: #2b2e36;
-  --accent: #8fa3ff;
+  --bg: #111729;
+  --surface: #1a2240;
+  --ink: #eeebe2;
+  --muted: #a4a9bc;
+  --rule: #2c3659;
+  --accent: #9db0ff;
+
+  --inv-bg: #eeebe2;
+  --inv-fg: #111729;
+  --inv-muted: #4f566e;
+  --inv-rule: #cfcabb;
+  --inv-accent: #2a3fd6;
 }
 
 @theme inline {
@@ -72,7 +85,7 @@ body {
 /* ---------------------------------------------------------------------- */
 .display {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 460;
   font-optical-sizing: auto;
   letter-spacing: -0.02em;
   line-height: 1.05;
@@ -111,7 +124,65 @@ body {
 }
 
 /* ---------------------------------------------------------------------- */
-/* Buttons: rectangular, 2px radius, press to 0.97                         */
+/* Inverted band: remaps the tokens, so every component inside just works. */
+/* ---------------------------------------------------------------------- */
+.band {
+  --bg: var(--inv-bg);
+  --ink: var(--inv-fg);
+  --muted: var(--inv-muted);
+  --rule: var(--inv-rule);
+  --accent: var(--inv-accent);
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Notebook backdrop for the hero: faint ruled lines and a margin line.    */
+/* ---------------------------------------------------------------------- */
+.notebook {
+  position: relative;
+  isolation: isolate;
+}
+
+.notebook::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent calc(2.5rem - 1px),
+    color-mix(in srgb, var(--rule) 70%, transparent) calc(2.5rem - 1px),
+    color-mix(in srgb, var(--rule) 70%, transparent) 2.5rem
+  );
+  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
+}
+
+.notebook::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(max(0px, (100% - 1280px) / 2) + 0.4rem);
+  width: 1px;
+  z-index: -1;
+  pointer-events: none;
+  background: color-mix(in srgb, var(--accent) 40%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+
+@media (min-width: 640px) {
+  .notebook::after {
+    left: calc(max(0px, (100% - 1280px) / 2) + 1rem);
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Buttons: solid, with a hard offset shadow that lifts on hover           */
 /* ---------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
@@ -119,14 +190,15 @@ body {
   justify-content: center;
   gap: 0.5rem;
   white-space: nowrap;
-  padding: 0.7rem 1.25rem;
-  border: 1px solid var(--ink);
+  padding: 0.8rem 1.4rem;
+  border: 1.5px solid var(--ink);
   border-radius: 2px;
+  background: var(--bg);
   font-size: 0.9375rem;
-  font-weight: 500;
+  font-weight: 600;
   line-height: 1.2;
   color: var(--ink);
-  transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .btn:active {
@@ -135,23 +207,20 @@ body {
 
 @media (hover: hover) and (pointer: fine) {
   .btn:hover {
-    background: var(--ink);
-    color: var(--bg);
+    transform: translate(-3px, -3px);
+    box-shadow: 4px 4px 0 var(--ink);
+  }
+
+  .btn:active:hover {
+    transform: translate(0, 0) scale(0.97);
+    box-shadow: 0 0 0 var(--ink);
   }
 }
 
 .btn-primary {
   background: var(--accent);
-  border-color: var(--accent);
+  border-color: var(--ink);
   color: var(--bg);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .btn-primary:hover {
-    background: var(--ink);
-    border-color: var(--ink);
-    color: var(--bg);
-  }
 }
 
 /* Press feedback for small controls that are not .btn. */
@@ -191,6 +260,7 @@ body {
 .cite--hero {
   font-size: clamp(0.8rem, 0.45rem + 1.1vw, 1.3rem);
   top: -2.1em;
+  animation: cite-in 500ms cubic-bezier(0.16, 1, 0.3, 1) 1500ms both;
 }
 
 .cite-pop {
@@ -228,33 +298,16 @@ body {
 }
 
 /* ---------------------------------------------------------------------- */
-/* Motion: transform + opacity only, ease-out, under 300ms                 */
+/* Motion. Transform and opacity only. Entrances use ease-out.            */
 /* ---------------------------------------------------------------------- */
 @keyframes rise {
   from {
     opacity: 0;
-    transform: translateY(10px) scale(0.95);
+    transform: translateY(24px) scale(0.97);
   }
   to {
     opacity: 1;
     transform: none;
-  }
-}
-
-/* Staggered entrance on load. --i sets the order. */
-.rise {
-  transform-origin: 0 100%;
-  animation: rise 280ms cubic-bezier(0.23, 1, 0.32, 1) both;
-  animation-delay: calc(var(--i, 0) * 70ms);
-}
-
-/* Scroll-linked entrance where the browser supports it; elsewhere content is simply visible. */
-@supports (animation-timeline: view()) {
-  .reveal {
-    transform-origin: 0 100%;
-    animation: rise linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry calc(30% + var(--i, 0) * 6%);
   }
 }
 
@@ -267,19 +320,197 @@ body {
   }
 }
 
-/* Reduced motion means gentler, not none: keep a short fade, drop all movement. */
+@keyframes word-up {
+  from {
+    transform: translateY(112%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes cite-in {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Hero headline: each word rises out of its own mask. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  padding: 0 0.08em 0.14em 0;
+  margin-bottom: -0.14em;
+}
+
+.word > span {
+  display: inline-block;
+  animation: word-up 900ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(120ms + var(--w, 0) * 85ms);
+}
+
+/* The accent underline draws itself under "sources." */
+.sources {
+  position: relative;
+  display: inline-block;
+}
+
+.sources::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0.08em;
+  bottom: 0.02em;
+  height: 0.055em;
+  background: var(--accent);
+  transform-origin: left;
+  animation: draw 800ms cubic-bezier(0.16, 1, 0.3, 1) 1000ms both;
+}
+
+/* Staggered entrance on load. --i sets the order. */
+.rise {
+  transform-origin: 0 100%;
+  animation: rise 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: calc(550ms + var(--i, 0) * 110ms);
+}
+
+/*
+ * Scroll reveals. RevealObserver adds .in when an element enters the viewport.
+ * Hidden only when JS is running (the html.js class), so nothing is lost without it.
+ */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(32px) scale(0.98);
+  transform-origin: 0 100%;
+  transition:
+    opacity 700ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 800ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+
+.js .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Section rules draw across the page when they scroll into view. */
+.draw-top {
+  position: relative;
+}
+
+.draw-top::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--ink);
+  pointer-events: none;
+}
+
+.js .draw-top::before {
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 1100ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.js .draw-top.in::before {
+  transform: scaleX(1);
+}
+
+/* Thin reading-progress bar under the header. */
+.progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 70;
+  height: 3px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  pointer-events: none;
+}
+
+/* Header link for the section currently in view. */
+.nav-link {
+  position: relative;
+  padding-block: 0.25rem;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -2px;
+  height: 2px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.nav-link[aria-current="true"] {
+  color: var(--ink);
+}
+
+.nav-link[aria-current="true"]::after {
+  transform: scaleX(1);
+}
+
+/*
+ * Reduced motion means gentler, not none: keep soft fades, drop all movement.
+ * (Windows "Show animations" off, or macOS "Reduce motion", turns this on.)
+ */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  .rise {
-    animation: fade 200ms ease-out both;
+  .word > span {
+    animation: fade 400ms ease-out both;
     animation-delay: 0ms;
   }
 
-  .reveal {
-    animation: none !important;
+  .sources::after {
+    animation: fade 400ms ease-out 200ms both;
+  }
+
+  .rise {
+    animation: fade 300ms ease-out both;
+    animation-delay: 0ms;
+  }
+
+  .cite--hero {
+    animation: fade 300ms ease-out 300ms both;
+  }
+
+  .js .reveal {
+    transform: none;
+    transition: opacity 400ms ease-out;
+    transition-delay: 0ms;
+  }
+
+  .js .draw-top::before {
+    transform: none;
+    transition: none;
   }
 
   .cite-pop {
@@ -299,5 +530,9 @@ body {
   .btn:active,
   .pressable:active {
     transform: none;
+  }
+
+  .nav-link::after {
+    transition: none;
   }
 }
