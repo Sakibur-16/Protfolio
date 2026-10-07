@@ -1,3 +1,13 @@
+# Design direction update 3 (2026-10-07): "dusk paper"
+
+Owner supplied a Framer SaaS template ("Powder") as a reference and chose: inspired by it (not copied), Inter headings, and "something creative, unique and catchy" for colour. Nothing from the template's assets, wording or illustrations is used.
+
+- Palette: ink navy (#070B14) with warm cream text and one amber signal accent (#FFB067). Light theme: paper (#F4EFE6) with burnt orange (#A63D07). Dark is the default.
+- Hero: centred headline over a generated paper-cut dusk landscape (navy sky, amber horizon), an announcement pill, and a product panel with the real Quranity screens rising from the bottom edge.
+- Sections taken from the template's structure: scroll-lit intro paragraph, swipeable case-study cards (colour tiles in amber, teal, cream and ink), and an FAQ accordion ("How Qalam stays grounded", written from the owner's answers). Pricing, changelog, testimonials and blog were not used.
+- Type: Inter (variable, with italic) for headings and body, weight 540, tracking -0.04em; Geist Mono for metadata.
+- Contrast: all text pairs >= 4.5:1; the dimmed words in the scroll-lit paragraph never go below 50% opacity.
+
 # Design direction update 2 (2026-10-07): "cinematic hybrid"
 
 Owner feedback: the first hybrid did not match the Vixels reference. Changes: full-bleed AI-generated hero image (floating paper and glass panes joined by blue citation lines; generated with Figma's image tool, text-free), slow zoom on load plus scroll parallax, glass header pill, two real figures along the hero's bottom edge (15+ applications led, from the CV; 3 papers), and a slow strip of real affiliations (Springer, IEEE, Sparktech, Acote, East West University, Google Play, App Store). The same image bookends the contact card. Project tiles lift on hover; the Quranity image zooms slowly.

@@ -159,6 +159,3 @@ export const studies = [quranity, eqi30, malaria].filter((study) => study.publis
 export function studyNumber(id: string): string {
   return String(studies.findIndex((study) => study.id === id) + 1).padStart(2, "0");
 }
-
-/** Number for the section that follows the case studies. */
-export const moreProjectsNumber = String(studies.length + 1).padStart(2, "0");

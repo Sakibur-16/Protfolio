@@ -6,6 +6,7 @@ const nav = [
   { label: "Work", id: "work" },
   { label: "Research", id: "research" },
   { label: "Experience", id: "experience" },
+  { label: "Q&A", id: "faq" },
 ] as const;
 
 /** Primary links; the one for the section currently in view gets an underline that slides in. */

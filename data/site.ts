@@ -11,7 +11,7 @@ export const siteConfig: SiteConfig = {
     "AI developer in Dhaka building RAG, agentic and ML systems whose answers trace back to real sources. Case studies, peer-reviewed research, and contact.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sakibursr.me",
   locale: "en_US",
-  themeColor: "#f2f0e9",
+  themeColor: "#070b14",
   ogImage: "/opengraph-image.png",
 };
 

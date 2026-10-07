@@ -4,17 +4,17 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 /* ---------------------------------------------------------------------- */
-/* Tokens. Light = paper and pen ink; dark = deep navy night notebook.     */
+/* Tokens. Dark (default) = ink navy with a warm amber signal; light = paper with burnt orange.     */
 /* One accent. Every text pair is >= 4.5:1 (see docs/design-system.md).    */
 /* ---------------------------------------------------------------------- */
 :root {
   color-scheme: light;
-  --bg: #f2f0e9;
-  --surface: #e9e6dc;
-  --ink: #13141a;
-  --muted: #575a63;
-  --rule: #d3d0c4;
-  --accent: #2a3fd6;
+  --bg: #f4efe6;
+  --surface: #eae3d6;
+  --ink: #0e1220;
+  --muted: #565b6a;
+  --rule: #d9d1c0;
+  --accent: #a63d07;
 
   --radius-frame: 28px;
   --radius-tile: 24px;
@@ -22,12 +22,12 @@
 
 [data-theme="dark"] {
   color-scheme: dark;
-  --bg: #111729;
-  --surface: #1a2240;
-  --ink: #eeebe2;
-  --muted: #a4a9bc;
-  --rule: #2c3659;
-  --accent: #9db0ff;
+  --bg: #070b14;
+  --surface: #101828;
+  --ink: #f4eee6;
+  --muted: #a5abba;
+  --rule: #1f2942;
+  --accent: #ffb067;
 }
 
 @theme inline {
@@ -38,8 +38,8 @@
   --color-rule: var(--rule);
   --color-accent: var(--accent);
 
-  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
-  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, Menlo, monospace;
 }
 
@@ -75,56 +75,56 @@ body {
 /* .on-dark is always dark, in both themes. Tiles are fixed colour plates. */
 /* ---------------------------------------------------------------------- */
 .on-dark {
-  --bg: #0b101e;
-  --surface: #171e38;
-  --ink: #eeebe2;
-  --muted: #a9aec2;
-  --rule: #2a3352;
-  --accent: #9db0ff;
+  --bg: #070b14;
+  --surface: #101828;
+  --ink: #f4eee6;
+  --muted: #a5abba;
+  --rule: #1f2942;
+  --accent: #ffb067;
   background: var(--bg);
   color: var(--ink);
 }
 
-.tile-blue {
-  --bg: #2a3fd6;
-  --surface: #2434b8;
-  --ink: #ffffff;
-  --muted: #d4daff;
-  --rule: rgb(255 255 255 / 0.32);
-  --accent: #ffffff;
+.tile-amber {
+  --bg: #ffb067;
+  --surface: #f2a050;
+  --ink: #0e1220;
+  --muted: #4a3515;
+  --rule: rgb(14 18 32 / 0.25);
+  --accent: #0e1220;
   background: var(--bg);
   color: var(--ink);
 }
 
-.tile-navy {
-  --bg: #0b101e;
-  --surface: #171e38;
-  --ink: #eeebe2;
-  --muted: #a9aec2;
-  --rule: #2a3352;
-  --accent: #9db0ff;
+.tile-teal {
+  --bg: #0e3b4a;
+  --surface: #0b2f3b;
+  --ink: #f4eee6;
+  --muted: #b3c8cf;
+  --rule: rgb(244 238 230 / 0.22);
+  --accent: #ffb067;
   background: var(--bg);
   color: var(--ink);
 }
 
-.tile-sand {
-  --bg: #e4dfd0;
-  --surface: #d8d2bf;
-  --ink: #13141a;
-  --muted: #4b4e57;
-  --rule: #c2bca8;
-  --accent: #2a3fd6;
+.tile-cream {
+  --bg: #f4eee6;
+  --surface: #eae3d6;
+  --ink: #0e1220;
+  --muted: #4f5463;
+  --rule: #d4ccb9;
+  --accent: #a63d07;
   background: var(--bg);
   color: var(--ink);
 }
 
-.tile-mist {
-  --bg: #d6dcff;
-  --surface: #c6cdf7;
-  --ink: #13141a;
-  --muted: #40455e;
-  --rule: #b3bcec;
-  --accent: #2a3fd6;
+.tile-ink {
+  --bg: #101828;
+  --surface: #0b111f;
+  --ink: #f4eee6;
+  --muted: #a5abba;
+  --rule: #26324f;
+  --accent: #ffb067;
   background: var(--bg);
   color: var(--ink);
 }
@@ -134,9 +134,9 @@ body {
 /* ---------------------------------------------------------------------- */
 .display {
   font-family: var(--font-display);
-  font-weight: 650;
-  letter-spacing: -0.035em;
-  line-height: 1;
+  font-weight: 540;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
 }
 
 .display em,
@@ -716,5 +716,124 @@ body {
 
   .lift:hover {
     transform: none;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Template-inspired pieces: announcement pill, scroll-lit text, carousel, FAQ */
+/* ---------------------------------------------------------------------- */
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.35rem 0.4rem 0.35rem 1rem;
+  border: 1px solid var(--rule);
+  border-radius: 9999px;
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.2;
+  backdrop-filter: blur(10px);
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.pill-link:active {
+  transform: scale(0.97);
+}
+
+.pill-link .btn-chip {
+  width: 1.7rem;
+  height: 1.7rem;
+  font-size: 0.8rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pill-link:hover .btn-chip {
+    transform: translateX(3px);
+  }
+}
+
+/* The intro paragraph: words brighten one by one as it scrolls through the viewport. */
+.js .scroll-lit {
+  --p: 0;
+}
+
+.lit-word {
+  /* Never below 50%, so the unlit words still pass the contrast rule. */
+  opacity: clamp(0.5, calc(0.5 + var(--p, 1) * var(--n) * 0.6 - var(--i) * 0.5), 1);
+}
+
+/* Carousel */
+.carousel-track {
+  scrollbar-width: none;
+}
+
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.carousel-btn {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--rule);
+  border-radius: 9999px;
+  font-size: 1.1rem;
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.carousel-btn:active:not(:disabled) {
+  transform: scale(0.94);
+}
+
+.carousel-btn:disabled {
+  opacity: 0.35;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .carousel-btn:hover:not(:disabled) {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+/* FAQ accordion on native <details>. */
+.faq-item > summary {
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq-item > summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq-icon {
+  transition: transform 260ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.faq-item[open] .faq-icon {
+  transform: rotate(45deg);
+}
+
+.faq-item[open] > .faq-body {
+  animation: rise 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lit-word {
+    opacity: 1 !important;
+  }
+
+  .faq-icon {
+    transition: none;
+  }
+
+  .faq-item[open] > .faq-body {
+    animation: fade 300ms ease-out both;
+  }
+
+  .carousel-btn {
+    transition: none;
   }
 }

@@ -9,23 +9,23 @@ import { RevealObserver } from "@/components/site/RevealObserver";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
 import "./globals.css";
 
-// Self-hosted variable fonts (Latin subset): Geist with its italic, and Geist Mono. next/font preloads them and adds a
+// Self-hosted variable fonts (Latin subset): Inter with its italic, and Geist Mono. next/font preloads them and adds a
 // size-matched fallback, so the first paint does not jump when they arrive.
 // (next/font requires literal paths, so they are written out in full.)
-const sans = localFont({
+const inter = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
+      path: "../node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
       weight: "100 900",
       style: "normal",
     },
     {
-      path: "../node_modules/@fontsource-variable/geist/files/geist-latin-wght-italic.woff2",
+      path: "../node_modules/@fontsource-variable/inter/files/inter-latin-wght-italic.woff2",
       weight: "100 900",
       style: "italic",
     },
   ],
-  variable: "--font-geist",
+  variable: "--font-inter",
   display: "swap",
   fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
 });
@@ -42,8 +42,8 @@ export const metadata: Metadata = buildMetadata();
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#f2f0e9" },
-    { media: "(prefers-color-scheme: dark)", color: "#111729" },
+    { media: "(prefers-color-scheme: light)", color: "#f4efe6" },
+    { media: "(prefers-color-scheme: dark)", color: "#070b14" },
   ],
 };
 
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${mono.variable}`}
+      className={`${inter.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <head>

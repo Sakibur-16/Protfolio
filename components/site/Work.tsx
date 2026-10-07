@@ -1,5 +1,6 @@
 import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
+import { Carousel } from "@/components/site/Carousel";
 import { Cite } from "@/components/site/Cite";
 import { sources } from "@/data/sources";
 import {
@@ -7,7 +8,6 @@ import {
   eqi30,
   malaria,
   miniProjects,
-  moreProjectsNumber,
   quranity,
   quranityFallback,
   quranitySteps,
@@ -15,7 +15,7 @@ import {
   type CaseStudy,
 } from "@/data/work";
 
-const tones = ["tile-blue", "tile-navy", "tile-sand", "tile-mist"] as const;
+const tones = ["tile-amber", "tile-cream", "tile-ink", "tile-teal"] as const;
 
 function Block({ title, children }: { title: string; children: ReactNode }) {
   return (
@@ -254,37 +254,86 @@ function ResearchStudy() {
   );
 }
 
-/** Shorter project entries as a grid of colour tiles. */
-function MoreProjects() {
+function CardShell({ tone, children }: { tone: string; children: ReactNode }) {
   return (
-    <article id="more-projects" className="pt-16 lg:pt-24">
-      <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
-        <p className="display text-6xl italic leading-none text-accent">{moreProjectsNumber}</p>
-        <h3 className="display text-3xl">More projects</h3>
-      </div>
-      <ul className="mt-10 grid gap-4 md:grid-cols-2">
+    <li className="w-[84vw] shrink-0 snap-start sm:w-[26rem]">
+      <article
+        className={`${tone} flex h-full min-h-[31rem] flex-col justify-between overflow-hidden rounded-[var(--radius-tile)]`}
+      >
+        {children}
+      </article>
+    </li>
+  );
+}
+
+/** Overview of every project as swipeable cards. The two with full write-ups link to them. */
+function ProjectCards() {
+  return (
+    <>
+      <Carousel label="Projects">
+        <CardShell tone="tile-ink">
+          <div className="relative aspect-[4/3] w-full overflow-hidden">
+            <Image
+              src="/work/quranity-screens.jpg"
+              alt="Quranity app screens showing prayer times and the Qalam AI assistant."
+              fill
+              sizes="(min-width: 640px) 416px, 84vw"
+              className="object-cover object-left"
+            />
+          </div>
+          <div className="flex flex-1 flex-col justify-between gap-5 p-7">
+            <div>
+              <p className="display text-3xl">Quranity</p>
+              <p className="meta mt-1">
+                {quranity.role} · {quranity.year}
+              </p>
+              <p className="mt-4 text-[0.9375rem] leading-relaxed">
+                Qalam answers from the Qur’an and Hadith, with the reference attached. Live on Google Play and the App
+                Store.
+              </p>
+            </div>
+            <a href="#quranity" className="link text-sm font-medium">
+              Read the case study →
+            </a>
+          </div>
+        </CardShell>
+
+        <CardShell tone="tile-teal">
+          <div className="p-7">
+            <span className="meta rounded-full border border-rule px-3 py-1">{malaria.year}</span>
+            <p className="display mt-16 text-[clamp(2rem,1.4rem+1.6vw,2.75rem)]">Malaria diagnosis from blood smears</p>
+            <p className="meta mt-3">{malaria.role}</p>
+          </div>
+          <div className="flex flex-col gap-5 p-7 pt-0">
+            <p className="text-[0.9375rem] leading-relaxed">
+              Does a model that works on one blood-smear dataset still work on another? Published at ICDMIS 2025 by
+              Springer.
+            </p>
+            <Stack items={malaria.stack} />
+            <a href="#malaria" className="link text-sm font-medium">
+              Read the research →
+            </a>
+          </div>
+        </CardShell>
+
         {miniProjects.map((project, index) => (
-          <li
-            key={project.name}
-            className={`reveal lift ${tones[index % tones.length]} flex min-h-[22rem] flex-col justify-between gap-10 rounded-[var(--radius-tile)] p-7 sm:p-9`}
-            style={{ "--i": index % 2 } as CSSProperties}
-          >
-            <div className="flex items-start justify-between gap-4">
-              <p className="display text-[clamp(2rem,1.4rem+1.8vw,3.25rem)]">{project.name}</p>
+          <CardShell key={project.name} tone={tones[index % tones.length]}>
+            <div className="flex items-start justify-between gap-4 p-7">
+              <p className="display text-[clamp(2rem,1.4rem+1.6vw,2.75rem)]">{project.name}</p>
               <span className="meta shrink-0 rounded-full border border-rule px-3 py-1">{project.year}</span>
             </div>
-            <div>
-              <p className="meta mb-3">{project.role}</p>
-              <p className="max-w-[42ch] text-[0.9375rem] leading-relaxed">{project.description}</p>
-              <div className="mt-5 border-t border-rule pt-4">
+            <div className="flex flex-col gap-4 p-7 pt-0">
+              <p className="meta">{project.role}</p>
+              <p className="text-[0.9375rem] leading-relaxed">{project.description}</p>
+              <div className="border-t border-rule pt-4">
                 <Stack items={project.stack} />
               </div>
             </div>
-          </li>
+          </CardShell>
         ))}
-      </ul>
-      <p className="prose-col mt-8 text-muted">{alsoBuilt}</p>
-    </article>
+      </Carousel>
+      <p className="prose-col mt-10 text-muted">{alsoBuilt}</p>
+    </>
   );
 }
 
@@ -293,10 +342,12 @@ export function Work() {
     <section id="work" className="mx-auto w-full max-w-[1280px] px-4 pt-24 sm:px-8 lg:pt-32">
       <h2 className="display text-[clamp(2.25rem,1.3rem+3vw,4rem)]">Selected work</h2>
       <div className="mt-10">
+        <ProjectCards />
+      </div>
+      <div className="mt-20 lg:mt-28">
         <LeadStudy />
         {eqi30.published ? <MatrixStudy study={eqi30} /> : null}
         <ResearchStudy />
-        <MoreProjects />
       </div>
     </section>
   );
