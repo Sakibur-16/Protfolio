@@ -9,7 +9,7 @@ export const siteConfig: SiteConfig = {
   title: "Md. Sakibur Rahman — AI Developer",
   description:
     "AI developer in Dhaka building RAG, agentic and ML systems whose answers trace back to real sources. Case studies, peer-reviewed research, and contact.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sakibursr.me",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.sakibursr.me",
   locale: "en_US",
   themeColor: "#f2f0e9",
   ogImage: "/opengraph-image.png",

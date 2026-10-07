@@ -44,4 +44,4 @@ Rise (owner decision), stat counters, At a glance, marquee, 8 service cards, aut
 Profile photo (owner will add), availability line, phone number.
 
 ## SEO and ops
-Canonical/OG: https://sakibursr.me. OG image is `app/opengraph-image.png`. Hosting: Vercel; set `NEXT_PUBLIC_SITE_URL=https://sakibursr.me` and enable Web Analytics in the Vercel project (the `<Analytics />` component is already in the layout).
+Canonical/OG: https://www.sakibursr.me (apex redirects to www on Vercel). OG image is `app/opengraph-image.png`. Hosting: Vercel; set `NEXT_PUBLIC_SITE_URL=https://www.sakibursr.me` and enable Web Analytics in the Vercel project (the `<Analytics />` component is already in the layout).
