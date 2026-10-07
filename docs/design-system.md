@@ -1,3 +1,16 @@
+# Design direction update (2026-10-07): "framed hybrid"
+
+Supersedes the serif/hairline notes below where they conflict. Inspired by the structure of an agency site the owner liked (rounded hero frame, pill buttons, floating header, device tiles); nothing copied, and no stat counters, logo strips or fake social proof.
+
+- Page: light paper by default (opens light whatever the OS says), navy dark mode on toggle.
+- Hero: rounded always-dark frame (28px) with the headline, CTAs and the Quranity phones rising from the bottom edge; contents as pills below.
+- Header: floating dark pill with local Dhaka time.
+- Type: Geist only (bold, tight, -0.035em), Geist italic for emphasis, Geist Mono for metadata. Newsreader removed.
+- Shape: soft. Frames 28px, tiles 24px, buttons and chips pill, popover 14px.
+- Buttons: pill with an arrow chip that slides on hover; press scales to 0.97.
+- Tiles: fixed colour plates (blue, navy, sand, mist) for project entries; real product imagery only where it exists.
+- Motion: word-by-word headline reveal, drawn underline, IntersectionObserver scroll reveals, drawn rules, scroll-progress bar, active-section nav. Reduced motion keeps soft fades.
+
 # Design system — "research notebook" (PROPOSAL, awaiting approval)
 
 Status: draft. No site code has been changed. Colour contrast below was computed (WCAG 2.x), not eyeballed.

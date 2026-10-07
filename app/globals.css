@@ -6,7 +6,6 @@
 /* ---------------------------------------------------------------------- */
 /* Tokens. Light = paper and pen ink; dark = deep navy night notebook.     */
 /* One accent. Every text pair is >= 4.5:1 (see docs/design-system.md).    */
-/* --inv-* style the inverted band (contact + footer) in each theme.       */
 /* ---------------------------------------------------------------------- */
 :root {
   color-scheme: light;
@@ -17,11 +16,8 @@
   --rule: #d3d0c4;
   --accent: #2a3fd6;
 
-  --inv-bg: #13141a;
-  --inv-fg: #f2f0e9;
-  --inv-muted: #a9acb5;
-  --inv-rule: #2f323c;
-  --inv-accent: #9db0ff;
+  --radius-frame: 28px;
+  --radius-tile: 24px;
 }
 
 [data-theme="dark"] {
@@ -32,12 +28,6 @@
   --muted: #a4a9bc;
   --rule: #2c3659;
   --accent: #9db0ff;
-
-  --inv-bg: #eeebe2;
-  --inv-fg: #111729;
-  --inv-muted: #4f566e;
-  --inv-rule: #cfcabb;
-  --inv-accent: #2a3fd6;
 }
 
 @theme inline {
@@ -48,7 +38,7 @@
   --color-rule: var(--rule);
   --color-accent: var(--accent);
 
-  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-display: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, Menlo, monospace;
 }
@@ -56,7 +46,7 @@
 html {
   background: var(--bg);
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 6rem;
 }
 
 body {
@@ -77,24 +67,81 @@ body {
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 6px;
 }
 
 /* ---------------------------------------------------------------------- */
-/* Type                                                                    */
+/* Colour scopes. They remap the tokens, so components inside just work.   */
+/* .on-dark is always dark, in both themes. Tiles are fixed colour plates. */
+/* ---------------------------------------------------------------------- */
+.on-dark {
+  --bg: #0b101e;
+  --surface: #171e38;
+  --ink: #eeebe2;
+  --muted: #a9aec2;
+  --rule: #2a3352;
+  --accent: #9db0ff;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.tile-blue {
+  --bg: #2a3fd6;
+  --surface: #2434b8;
+  --ink: #ffffff;
+  --muted: #d4daff;
+  --rule: rgb(255 255 255 / 0.32);
+  --accent: #ffffff;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.tile-navy {
+  --bg: #0b101e;
+  --surface: #171e38;
+  --ink: #eeebe2;
+  --muted: #a9aec2;
+  --rule: #2a3352;
+  --accent: #9db0ff;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.tile-sand {
+  --bg: #e4dfd0;
+  --surface: #d8d2bf;
+  --ink: #13141a;
+  --muted: #4b4e57;
+  --rule: #c2bca8;
+  --accent: #2a3fd6;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+.tile-mist {
+  --bg: #d6dcff;
+  --surface: #c6cdf7;
+  --ink: #13141a;
+  --muted: #40455e;
+  --rule: #b3bcec;
+  --accent: #2a3fd6;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+/* ---------------------------------------------------------------------- */
+/* Type: bold, tightly set sans. Italic is the same family.                */
 /* ---------------------------------------------------------------------- */
 .display {
   font-family: var(--font-display);
-  font-weight: 460;
-  font-optical-sizing: auto;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  line-height: 1;
 }
 
 .display em,
 .display i {
   font-style: italic;
-  /* Italic descenders clip at tight leading; keep a little room below. */
   padding-bottom: 0.06em;
 }
 
@@ -124,80 +171,21 @@ body {
 }
 
 /* ---------------------------------------------------------------------- */
-/* Inverted band: remaps the tokens, so every component inside just works. */
-/* ---------------------------------------------------------------------- */
-.band {
-  --bg: var(--inv-bg);
-  --ink: var(--inv-fg);
-  --muted: var(--inv-muted);
-  --rule: var(--inv-rule);
-  --accent: var(--inv-accent);
-  background: var(--bg);
-  color: var(--ink);
-}
-
-/* ---------------------------------------------------------------------- */
-/* Notebook backdrop for the hero: faint ruled lines and a margin line.    */
-/* ---------------------------------------------------------------------- */
-.notebook {
-  position: relative;
-  isolation: isolate;
-}
-
-.notebook::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image: repeating-linear-gradient(
-    to bottom,
-    transparent 0,
-    transparent calc(2.5rem - 1px),
-    color-mix(in srgb, var(--rule) 70%, transparent) calc(2.5rem - 1px),
-    color-mix(in srgb, var(--rule) 70%, transparent) 2.5rem
-  );
-  -webkit-mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 40%, transparent 100%);
-}
-
-.notebook::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: calc(max(0px, (100% - 1280px) / 2) + 0.4rem);
-  width: 1px;
-  z-index: -1;
-  pointer-events: none;
-  background: color-mix(in srgb, var(--accent) 40%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
-  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
-}
-
-@media (min-width: 640px) {
-  .notebook::after {
-    left: calc(max(0px, (100% - 1280px) / 2) + 1rem);
-  }
-}
-
-/* ---------------------------------------------------------------------- */
-/* Buttons: solid, with a hard offset shadow that lifts on hover           */
+/* Buttons: pills with an arrow chip. The chip slides on hover.            */
 /* ---------------------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
+  gap: 1rem;
   white-space: nowrap;
-  padding: 0.8rem 1.4rem;
+  padding: 0.4rem 0.4rem 0.4rem 1.4rem;
   border: 1.5px solid var(--ink);
-  border-radius: 2px;
-  background: var(--bg);
+  border-radius: 9999px;
+  background: var(--ink);
+  color: var(--bg);
   font-size: 0.9375rem;
   font-weight: 600;
-  line-height: 1.2;
-  color: var(--ink);
+  line-height: 1;
   transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
@@ -205,25 +193,74 @@ body {
   transform: scale(0.97);
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .btn:hover {
-    transform: translate(-3px, -3px);
-    box-shadow: 4px 4px 0 var(--ink);
-  }
-
-  .btn:active:hover {
-    transform: translate(0, 0) scale(0.97);
-    box-shadow: 0 0 0 var(--ink);
-  }
-}
-
-.btn-primary {
+.btn-chip {
+  display: grid;
+  place-items: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 9999px;
   background: var(--accent);
-  border-color: var(--ink);
   color: var(--bg);
+  font-size: 1.05rem;
+  transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
 }
 
-/* Press feedback for small controls that are not .btn. */
+.btn-ghost {
+  background: transparent;
+  color: var(--ink);
+  padding: 0.4rem 1.5rem;
+  min-height: calc(2.4rem + 0.8rem + 3px);
+}
+
+.btn-sm {
+  padding: 0.22rem 0.22rem 0.22rem 1rem;
+  gap: 0.7rem;
+  font-size: 0.875rem;
+}
+
+.btn-sm .btn-chip {
+  width: 1.9rem;
+  height: 1.9rem;
+  font-size: 0.9rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover .btn-chip {
+    transform: translateX(4px);
+  }
+
+  .btn-ghost:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
+}
+
+/* Contents pills under the hero. */
+.chip {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--rule);
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  transition: transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.chip:active {
+  transform: scale(0.97);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chip:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+}
+
+/* Press feedback for small controls that are not buttons. */
 .pressable {
   transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
 }
@@ -265,13 +302,13 @@ body {
 
 .cite-pop {
   position: fixed;
-  z-index: 60;
+  z-index: 80;
   display: block;
-  padding: 0.85rem 1rem;
+  padding: 0.9rem 1.05rem;
   background: var(--surface);
   color: var(--ink);
   border: 1px solid var(--rule);
-  border-radius: 2px;
+  border-radius: 14px;
   font-family: var(--font-sans);
   font-size: 0.875rem;
   font-style: normal;
@@ -349,6 +386,17 @@ body {
   }
 }
 
+@keyframes phones-in {
+  from {
+    opacity: 0;
+    transform: translateY(8%) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 /* Hero headline: each word rises out of its own mask. */
 .word {
   display: inline-block;
@@ -376,7 +424,8 @@ body {
   left: 0;
   right: 0.08em;
   bottom: 0.02em;
-  height: 0.055em;
+  height: 0.06em;
+  border-radius: 9999px;
   background: var(--accent);
   transform-origin: left;
   animation: draw 800ms cubic-bezier(0.16, 1, 0.3, 1) 1000ms both;
@@ -387,6 +436,12 @@ body {
   transform-origin: 0 100%;
   animation: rise 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
   animation-delay: calc(550ms + var(--i, 0) * 110ms);
+}
+
+/* The phones glide up into the hero frame. */
+.phones {
+  transform-origin: 50% 100%;
+  animation: phones-in 1100ms cubic-bezier(0.16, 1, 0.3, 1) 450ms both;
 }
 
 /*
@@ -434,13 +489,13 @@ body {
   transform: scaleX(1);
 }
 
-/* Thin reading-progress bar under the header. */
+/* Thin reading-progress bar at the very top. */
 .progress {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 70;
+  z-index: 90;
   height: 3px;
   background: var(--accent);
   transform: scaleX(0);
@@ -461,6 +516,7 @@ body {
   right: 0;
   bottom: -2px;
   height: 2px;
+  border-radius: 9999px;
   background: var(--accent);
   transform: scaleX(0);
   transform-origin: left;
@@ -493,8 +549,9 @@ body {
     animation: fade 400ms ease-out 200ms both;
   }
 
-  .rise {
-    animation: fade 300ms ease-out both;
+  .rise,
+  .phones {
+    animation: fade 400ms ease-out both;
     animation-delay: 0ms;
   }
 
@@ -523,11 +580,14 @@ body {
   }
 
   .btn,
-  .pressable {
+  .chip,
+  .pressable,
+  .btn-chip {
     transition: none;
   }
 
   .btn:active,
+  .chip:active,
   .pressable:active {
     transform: none;
   }
@@ -535,4 +595,13 @@ body {
   .nav-link::after {
     transition: none;
   }
+}
+
+/* Fades an image's left and top edges into whatever it sits on. */
+.fade-edges {
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 26%), linear-gradient(to bottom, transparent 0, #000 26%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0, #000 26%), linear-gradient(to bottom, transparent 0, #000 26%);
+  mask-composite: intersect;
 }

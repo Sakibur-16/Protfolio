@@ -5,7 +5,7 @@ import { sources } from "@/data/sources";
 export function Experience() {
   return (
     <section id="experience" className="mx-auto w-full max-w-[1280px] px-4 pt-24 sm:px-8 lg:pt-32">
-      <h2 className="display text-[clamp(2rem,1.3rem+2.6vw,3.5rem)]">Experience</h2>
+      <h2 className="display text-[clamp(2.25rem,1.3rem+3vw,4rem)]">Experience</h2>
       <p className="prose-col mt-4 text-muted">{experienceIntro}</p>
       <ul className="draw-top mt-10">
         {experience.map((entry, index) => (

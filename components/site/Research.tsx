@@ -10,7 +10,7 @@ const ids = ["malaria-diagnosis-generalization", "transformer-code-summarization
 export function Research() {
   return (
     <section id="research" className="mx-auto w-full max-w-[1280px] px-4 pt-24 sm:px-8 lg:pt-32">
-      <h2 className="display text-[clamp(2rem,1.3rem+2.6vw,3.5rem)]">Research</h2>
+      <h2 className="display text-[clamp(2.25rem,1.3rem+3vw,4rem)]">Research</h2>
       <p className="prose-col mt-4 text-muted">
         Three peer-reviewed papers: medical imaging, code understanding, and brain-computer interfaces.{" "}
         <a className="link" href={contact.scholar} target="_blank" rel="noopener noreferrer">

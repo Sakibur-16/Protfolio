@@ -9,30 +9,22 @@ import { RevealObserver } from "@/components/site/RevealObserver";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
 import "./globals.css";
 
-// Self-hosted variable fonts (Latin subset). next/font preloads them and adds a
+// Self-hosted variable fonts (Latin subset): Geist with its italic, and Geist Mono. next/font preloads them and adds a
 // size-matched fallback, so the first paint does not jump when they arrive.
 // (next/font requires literal paths, so they are written out in full.)
-const display = localFont({
+const sans = localFont({
   src: [
     {
-      path: "../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-normal.woff2",
-      weight: "200 800",
+      path: "../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
+      weight: "100 900",
       style: "normal",
     },
     {
-      path: "../node_modules/@fontsource-variable/newsreader/files/newsreader-latin-wght-italic.woff2",
-      weight: "200 800",
+      path: "../node_modules/@fontsource-variable/geist/files/geist-latin-wght-italic.woff2",
+      weight: "100 900",
       style: "italic",
     },
   ],
-  variable: "--font-newsreader",
-  display: "swap",
-  fallback: ["Georgia", "Times New Roman", "serif"],
-});
-
-const sans = localFont({
-  src: "../node_modules/@fontsource-variable/geist/files/geist-latin-wght-normal.woff2",
-  weight: "100 900",
   variable: "--font-geist",
   display: "swap",
   fallback: ["ui-sans-serif", "system-ui", "sans-serif"],
@@ -51,7 +43,7 @@ export const metadata: Metadata = buildMetadata();
 export const viewport: Viewport = {
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "#f2f0e9" },
-    { media: "(prefers-color-scheme: dark)", color: "#0f1013" },
+    { media: "(prefers-color-scheme: dark)", color: "#111729" },
   ],
 };
 
@@ -59,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html
       lang="en"
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      className={`${sans.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -79,7 +71,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <ScrollProgress />
         <Header />
-        <main id="main-content">{children}</main>
+        <main id="main-content" className="pt-20">
+          {children}
+        </main>
         <Footer />
         <RevealObserver />
         {/* Cookieless page-view analytics. Switches on once Web Analytics is enabled in the Vercel project. */}

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import type { CSSProperties } from "react";
 import { Cite } from "@/components/site/Cite";
 import { contact } from "@/data/site";
@@ -9,15 +10,14 @@ const pad = (n: number) => String(n).padStart(2, "0");
 const studyRows = studies.map((study, index) => ({
   n: pad(index + 1),
   label: study.short ?? study.title,
-  note: study.year,
   href: `#${study.id}`,
 }));
 
 const restRows = [
-  { label: "More projects", note: `${miniProjects.length}`, href: "#more-projects" },
-  { label: "Research", note: "3 papers", href: "#research" },
-  { label: "Experience", note: "2024 on", href: "#experience" },
-  { label: "Contact", note: "", href: "#contact" },
+  { label: "More projects", href: "#more-projects", note: `${miniProjects.length}` },
+  { label: "Research", href: "#research", note: "" },
+  { label: "Experience", href: "#experience", note: "" },
+  { label: "Contact", href: "#contact", note: "" },
 ].map((row, index) => ({ ...row, n: pad(studyRows.length + index + 1) }));
 
 const contents = [...studyRows, ...restRows];
@@ -27,67 +27,66 @@ const headlineWords = ["AI/ML", "systems", "that", "show", "their"];
 
 export function Hero() {
   return (
-    <div className="notebook">
-      <section
-        id="top"
-        className="mx-auto flex min-h-[calc(100dvh-65px)] w-full max-w-[1280px] flex-col justify-between gap-16 px-4 pb-12 pt-12 sm:px-8 lg:pt-16"
-      >
-        <h1 className="display max-w-[16ch] text-[clamp(2.6rem,1rem+6.4vw,5.5rem)]">
-          {headlineWords.map((word, index) => (
-            <span key={word}>
-              <span className="word">
-                <span style={{ "--w": index } as CSSProperties}>{word}</span>
-              </span>{" "}
+    <section id="top" className="px-3 sm:px-4">
+      <div className="on-dark relative isolate mx-auto flex min-h-[calc(100dvh-6.25rem)] max-w-[1480px] flex-col overflow-hidden rounded-[var(--radius-frame)]">
+        <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center gap-10 px-6 pb-10 pt-14 sm:px-10 lg:pb-16">
+          <h1 className="display max-w-[13ch] text-[clamp(2.75rem,1rem+5.4vw,5.5rem)]">
+            {headlineWords.map((word, index) => (
+              <span key={word}>
+                <span className="word">
+                  <span style={{ "--w": index } as CSSProperties}>{word}</span>
+                </span>{" "}
+              </span>
+            ))}
+            <span className="word">
+              <span style={{ "--w": headlineWords.length } as CSSProperties}>
+                <em className="sources text-accent">sources.</em>
+              </span>
             </span>
-          ))}
-          <span className="word">
-            <span style={{ "--w": headlineWords.length } as CSSProperties}>
-              <em className="sources text-accent">sources.</em>
-            </span>
-          </span>
-          <Cite source={sources.quranity} hero />
-        </h1>
+            <Cite source={sources.quranity} hero />
+          </h1>
 
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="rise lg:col-span-6" style={{ "--i": 0 } as CSSProperties}>
-            <p className="prose-col text-lg">
+          <div className="rise max-w-[34rem]" style={{ "--i": 0 } as CSSProperties}>
+            <p className="text-lg text-ink/85">
               I’m Sakibur Rahman, an AI developer at Sparktech Agency.
               <Cite source={sources.sparktech} /> I build RAG, agentic and ML systems whose answers trace to sources.
             </p>
-            <div className="mt-8 flex flex-wrap gap-4">
-              <a href="#work" className="btn btn-primary">
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <a href="#work" className="btn">
                 Read the work
+                <span className="btn-chip" aria-hidden="true">
+                  →
+                </span>
               </a>
-              <a href={`mailto:${contact.email}`} className="btn">
+              <a href={`mailto:${contact.email}`} className="btn btn-ghost">
                 Email me
               </a>
             </div>
           </div>
-
-          <nav aria-label="Contents" className="rise lg:col-span-5 lg:col-start-8" style={{ "--i": 1 } as CSSProperties}>
-            <p className="meta border-b-2 border-ink pb-2">Contents</p>
-            <ol>
-              {contents.map((item) => (
-                <li key={item.n}>
-                  <a
-                    href={item.href}
-                    className="group flex items-baseline gap-3 border-b border-rule py-2.5 hover:text-accent"
-                  >
-                    <span className="meta w-6 shrink-0 transition-transform duration-200 ease-out group-hover:translate-x-1.5">
-                      {item.n}
-                    </span>
-                    <span className="display text-xl transition-transform duration-200 ease-out group-hover:translate-x-1.5">
-                      {item.label}
-                    </span>
-                    <span aria-hidden="true" className="min-w-4 flex-1 -translate-y-1 border-b border-dotted border-muted/50" />
-                    <span className="meta shrink-0">{item.note}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </nav>
         </div>
-      </section>
-    </div>
+
+        <div className="phones fade-edges pointer-events-none relative z-0 -mt-4 lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[56%]">
+          <Image
+            src="/work/quranity-app.jpg"
+            alt="Quranity app screens on iPhone: video stories, the AI assistant, home with prayer times and the daily verse, and the Qur’an reader."
+            width={955}
+            height={555}
+            sizes="(min-width: 1024px) 56vw, 100vw"
+            priority
+            className="h-auto w-full"
+          />
+        </div>
+      </div>
+
+      <nav aria-label="Contents" className="mx-auto mt-5 flex max-w-[1480px] flex-wrap items-center gap-2 px-1">
+        <span className="meta mr-2">Contents</span>
+        {contents.map((item) => (
+          <a key={item.n} href={item.href} className="chip">
+            <span className="meta">{item.n}</span>
+            {item.label}
+          </a>
+        ))}
+      </nav>
+    </section>
   );
 }
