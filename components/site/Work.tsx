@@ -7,9 +7,11 @@ import {
   eqi30,
   malaria,
   miniProjects,
+  moreProjectsNumber,
   quranity,
   quranityFallback,
   quranitySteps,
+  studyNumber,
   type CaseStudy,
 } from "@/data/work";
 
@@ -94,7 +96,7 @@ function LeadStudy() {
     <article id={s.id} className="grid gap-10 border-t border-ink py-16 lg:grid-cols-12 lg:gap-12 lg:py-24">
       <div className="lg:col-span-3">
         <div className="lg:sticky lg:top-24">
-          <p className="display text-[clamp(4.5rem,3rem+6vw,8rem)] italic leading-none text-accent">{s.number}</p>
+          <p className="display text-[clamp(4.5rem,3rem+6vw,8rem)] italic leading-none text-accent">{studyNumber(s.id)}</p>
           <h3 className="display mt-4 text-3xl">{s.title}</h3>
           <div className="mt-5">
             <MetaList study={s} />
@@ -168,7 +170,7 @@ function MatrixStudy({ study }: { study: CaseStudy }) {
     <article id={study.id} className="border-t border-ink py-16 lg:py-24">
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
         <div className="lg:col-span-4">
-          <p className="display text-[clamp(4rem,3rem+4vw,6rem)] italic leading-none text-accent">{study.number}</p>
+          <p className="display text-[clamp(4rem,3rem+4vw,6rem)] italic leading-none text-accent">{studyNumber(study.id)}</p>
           <h3 className="display mt-4 text-3xl">{study.title}</h3>
           <div className="mt-5">
             <MetaList study={study} />
@@ -203,7 +205,7 @@ function ResearchStudy() {
   return (
     <article id={s.id} className="border-t border-ink py-16 lg:py-24">
       <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
-        <p className="display text-6xl italic leading-none text-accent">{s.number}</p>
+        <p className="display text-6xl italic leading-none text-accent">{studyNumber(s.id)}</p>
         <p className="meta">
           {s.title} · {s.year} · {s.role}
         </p>
@@ -238,7 +240,7 @@ function MoreProjects() {
   return (
     <article id="more-projects" className="border-t border-ink py-16 lg:py-24">
       <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
-        <p className="display text-6xl italic leading-none text-accent">04</p>
+        <p className="display text-6xl italic leading-none text-accent">{moreProjectsNumber}</p>
         <h3 className="display text-3xl">More projects</h3>
       </div>
       <ul className="mt-10 border-t border-rule">
@@ -272,7 +274,7 @@ export function Work() {
       <h2 className="display text-[clamp(2rem,1.3rem+2.6vw,3.5rem)]">Selected work</h2>
       <div className="mt-10">
         <LeadStudy />
-        <MatrixStudy study={eqi30} />
+        {eqi30.published ? <MatrixStudy study={eqi30} /> : null}
         <ResearchStudy />
         <MoreProjects />
       </div>

@@ -21,6 +21,8 @@ export interface Publication {
   affiliation: string;
   doiUrl: string | null;
   paperUrl: string | null;
+  /** One plain line on what the paper reports, drawn from its abstract. */
+  summary?: string;
 }
 
 export interface ExperienceEntry {

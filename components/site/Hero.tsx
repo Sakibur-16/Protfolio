@@ -1,17 +1,25 @@
 import { Cite } from "@/components/site/Cite";
 import { contact } from "@/data/site";
 import { sources } from "@/data/sources";
-import { eqi30, malaria, miniProjects, quranity } from "@/data/work";
+import { miniProjects, studies } from "@/data/work";
 
-const contents = [
-  { n: "01", label: quranity.title, note: quranity.year, href: `#${quranity.id}` },
-  { n: "02", label: eqi30.title, note: eqi30.year, href: `#${eqi30.id}` },
-  { n: "03", label: "Malaria diagnosis", note: malaria.year, href: `#${malaria.id}` },
-  { n: "04", label: "More projects", note: `${miniProjects.length}`, href: "#more-projects" },
-  { n: "05", label: "Research", note: "3 papers", href: "#research" },
-  { n: "06", label: "Experience", note: "2024 on", href: "#experience" },
-  { n: "07", label: "Contact", note: "", href: "#contact" },
-] as const;
+const pad = (n: number) => String(n).padStart(2, "0");
+
+const studyRows = studies.map((study, index) => ({
+  n: pad(index + 1),
+  label: study.short ?? study.title,
+  note: study.year,
+  href: `#${study.id}`,
+}));
+
+const restRows = [
+  { label: "More projects", note: `${miniProjects.length}`, href: "#more-projects" },
+  { label: "Research", note: "3 papers", href: "#research" },
+  { label: "Experience", note: "2024 on", href: "#experience" },
+  { label: "Contact", note: "", href: "#contact" },
+].map((row, index) => ({ ...row, n: pad(studyRows.length + index + 1) }));
+
+const contents = [...studyRows, ...restRows];
 
 export function Hero() {
   return (

@@ -10,6 +10,8 @@ import type { Publication } from "@/types/portfolio";
 export const publications: Publication[] = [
   {
     id: "malaria-diagnosis-generalization",
+    summary:
+      "Tests how AI models trained on thin blood smear images generalize across datasets. It flags model robustness, dataset diversity and site-specific bias, and proposes transfer and incremental learning to improve generalization.",
     title:
       "Assessing Generalization Capabilities of AI Models for Malaria Diagnosis Using Blood Smear Images",
     year: "2025",
@@ -21,6 +23,8 @@ export const publications: Publication[] = [
   },
   {
     id: "transformer-code-summarization",
+    summary:
+      "Compares T5, BERT and GPT-2 on Java source code summarization, scored with BLEU, ROUGE, METEOR and human assessment.",
     title:
       "Bridging Code and Comprehension: A Comparative Analysis of Transformer Models for Java Source Code Summarization",
     year: "2025",
@@ -32,6 +36,8 @@ export const publications: Publication[] = [
   },
   {
     id: "neural-command-bci",
+    summary:
+      "A non-invasive EEG system that drives a robotic car in real time from a MUSE headband. It reached 85% control accuracy with an average response time of 300 ms.",
     title:
       "Neural Command: Real-Time EEG-Based Brain-Computer Interface for Assistive Robotic Control",
     year: "2024",

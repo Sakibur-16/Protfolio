@@ -29,16 +29,21 @@ export function Research() {
               className="reveal grid gap-x-8 gap-y-2 border-b border-rule py-8 md:grid-cols-[5rem_1fr_19rem]"
             >
               <span className="display text-4xl italic leading-none text-accent">[{source.n}]</span>
-              <h3 className="display max-w-[34ch] text-[clamp(1.35rem,1.1rem+0.8vw,1.85rem)]">
-                <a
-                  href={paper.doiUrl}
-                  className="underline decoration-rule decoration-1 underline-offset-[0.2em] hover:decoration-accent"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {paper.title}
-                </a>
-              </h3>
+            <div>
+                <h3 className="display max-w-[34ch] text-[clamp(1.35rem,1.1rem+0.8vw,1.85rem)]">
+                  <a
+                    href={paper.doiUrl}
+                    className="underline decoration-rule decoration-1 underline-offset-[0.2em] hover:decoration-accent"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {paper.title}
+                  </a>
+                </h3>
+              {paper.summary ? (
+                <p className="prose-col mt-3 text-[0.9375rem] text-muted">{paper.summary}</p>
+              ) : null}
+            </div>
               <p className="meta md:text-right">
                 {paper.authorRole}
                 <br />

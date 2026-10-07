@@ -6,7 +6,10 @@ import type { SourceId } from "@/data/sources";
 
 export interface CaseStudy {
   id: string;
-  number: string;
+  /** Set to false to hide a study from the site without deleting its content. */
+  published: boolean;
+  /** Shorter label for the table of contents. */
+  short?: string;
   title: string;
   year: string;
   role: string;
@@ -25,7 +28,7 @@ export interface CaseStudy {
 
 export const quranity: CaseStudy = {
   id: "quranity",
-  number: "01",
+  published: true,
   title: "Quranity",
   year: "2026",
   role: "Lead AI Developer & PM",
@@ -64,7 +67,7 @@ export const quranityFallback =
 
 export const eqi30: CaseStudy = {
   id: "eqi30",
-  number: "02",
+  published: false,
   title: "EQi30",
   year: "2025",
   role: "AI Developer, AI service layer",
@@ -81,7 +84,8 @@ export const eqi30: CaseStudy = {
 
 export const malaria: CaseStudy = {
   id: "malaria",
-  number: "03",
+  published: true,
+  short: "Malaria diagnosis",
   title: "Malaria diagnosis from blood smears",
   year: "2025",
   role: "Researcher, author",
@@ -89,7 +93,8 @@ export const malaria: CaseStudy = {
   problem:
     "Blood-smear datasets differ in staining, imaging equipment and collection conditions. A model that scores well on one can fail on another, which matters for a diagnostic tool.",
   how: "I trained CNN classifiers in TensorFlow and Keras and evaluated them across several datasets, judging generalization instead of a single benchmark score.",
-  result: "Peer-reviewed and presented at ICDMIS 2025, published by Springer.",
+  result:
+    "Peer-reviewed and presented at ICDMIS 2025, published by Springer. The paper flags model robustness, dataset diversity and site-specific bias, and proposes transfer and incremental learning to improve generalization.",
   resultCite: "malaria",
   stack: ["Python", "TensorFlow", "Keras", "CNNs"],
 };
@@ -147,3 +152,13 @@ export const earlierResearch = {
   text: "Breast cancer detection and retinal key-sign identification using deep learning on medical images. I built and evaluated CNN-based classification pipelines.",
   stack: ["Python", "TensorFlow", "Keras", "CNNs", "Image processing"],
 } as const;
+
+/** Studies shown on the site, in order. Numbering follows this list. */
+export const studies = [quranity, eqi30, malaria].filter((study) => study.published);
+
+export function studyNumber(id: string): string {
+  return String(studies.findIndex((study) => study.id === id) + 1).padStart(2, "0");
+}
+
+/** Number for the section that follows the case studies. */
+export const moreProjectsNumber = String(studies.length + 1).padStart(2, "0");
