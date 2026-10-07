@@ -1,31 +1,5 @@
-// Central type definitions for every data model used across the site.
-// Components should import types from here and content from /data — never
-// define portfolio shapes inline in a component.
-
-export type AIDomain =
-  | "llm"
-  | "rag"
-  | "nlp"
-  | "computer-vision"
-  | "speech"
-  | "education"
-  | "healthcare"
-  | "product";
-
-export interface NavLink {
-  id: string;
-  label: string;
-  href: string;
-  /** Short mono index shown in the index rail, e.g. "01". Omit if the section is not part of the primary sequence. */
-  code?: string;
-}
-
-export interface SocialLink {
-  id: string;
-  label: string;
-  href: string | null;
-  icon: "github" | "linkedin" | "mail" | "scholar" | "file";
-}
+// Shared shapes for site-level data. Content lives in /data; components import
+// types from here instead of defining shapes inline.
 
 export interface SiteConfig {
   name: string;
@@ -36,124 +10,6 @@ export interface SiteConfig {
   locale: string;
   themeColor: string;
   ogImage: string;
-}
-
-export interface AvailabilityStatus {
-  state: "open" | "selective" | "unavailable";
-  label: string;
-}
-
-export interface Profile {
-  fullName: string;
-  preferredName: string;
-  roleTitle: string;
-  taglines: string[];
-  headline: string;
-  location: {
-    city: string;
-    country: string;
-    lat: number;
-    lon: number;
-  };
-  availability: AvailabilityStatus;
-  bio: string[];
-  resumeUrl: string | null;
-  email: string | null;
-}
-
-export interface CredibilityHighlight {
-  id: string;
-  value: string;
-  label: string;
-  detail?: string;
-}
-
-export interface ExperienceEntry {
-  id: string;
-  organization: string;
-  role: string;
-  /** Set true when the role title/dates are provisional pending confirmation. Never rendered publicly. */
-  isPlaceholder?: boolean;
-  startDate: string;
-  endDate: string | "Present";
-  location: string;
-  employmentType?: string;
-  responsibilities: string[];
-}
-
-export type ProjectCategory =
-  | "llm-application"
-  | "rag-search"
-  | "nlp"
-  | "computer-vision"
-  | "speech-ai"
-  | "education"
-  | "healthcare"
-  | "product-platform"
-  | "tooling";
-
-export type ProjectStatus =
-  | "shipped"
-  | "in-development"
-  | "client-confidential"
-  | "research"
-  /** Genuinely undisclosed — used instead of guessing at a status we don't know. */
-  | "undisclosed";
-
-export interface ProjectLink {
-  external: string | null;
-  repository: string | null;
-  store: string | null;
-}
-
-export interface Project {
-  slug: string;
-  title: string;
-  year: string;
-  role: string;
-  category: ProjectCategory;
-  domains: AIDomain[];
-  status: ProjectStatus;
-  featured: boolean;
-  shortDescription: string;
-  fullDescription: string;
-  challenge: string | null;
-  approach: string | null;
-  outcome: string | null;
-  technologies: string[];
-  image: string | null;
-  gallery: string[];
-  links: ProjectLink;
-  accentColor: string;
-  /** Internal note only — never rendered. Used to flag fields awaiting client confirmation. */
-  todo?: string;
-
-  // --- Case-study fields -------------------------------------------------
-  // All optional. The detail page renders a section only when its data
-  // exists, so a project we know little about shows a short honest page
-  // rather than a scaffold of empty headings.
-
-  /** "At a glance" card rows. */
-  timeline?: string;
-  deliverables?: string;
-  domainLabel?: string;
-  /** Ordered architecture layers for the stepper. */
-  architecture?: { title: string; description: string }[];
-  /** Engineering decisions, rendered as a numbered ledger. */
-  decisions?: { title: string; description: string }[];
-  /** Tech stack grouped by category, rendered as label + chip rows. */
-  stackGroups?: { label: string; items: string[] }[];
-  /** Capability list. */
-  features?: string[];
-  /** Problem/solution pairs, rendered as cards. */
-  challenges?: { problem: string; solution: string }[];
-}
-
-export interface SkillDomain {
-  id: string;
-  domain: string;
-  description: string;
-  items: string[];
 }
 
 export interface Publication {
@@ -167,36 +23,13 @@ export interface Publication {
   paperUrl: string | null;
 }
 
-export interface EducationEntry {
+export interface ExperienceEntry {
   id: string;
-  institution: string;
-  credential: string;
-  startDate: string;
-  endDate: string;
-  location: string;
-  gpa?: string;
-  eqfLevel?: string;
-  coreAreas: string[];
-  /** Clubs, competitions, and similar. Omitted entries render nothing. */
-  activities?: string[];
-}
-
-export interface Certification {
-  id: string;
-  title: string;
-  date: string;
-  issuers: string[];
-  description: string;
-}
-
-export interface LanguageProficiency {
-  id: string;
-  language: string;
-  level: string;
-  breakdown?: {
-    listening?: string;
-    spokenInteraction?: string;
-    reading?: string;
-    writing?: string;
-  };
+  organization: string;
+  role: string;
+  dates: string;
+  /** One line of what the role involved, taken from the CV. */
+  summary: string;
+  /** Optional recognition tied to the role. */
+  note?: string;
 }

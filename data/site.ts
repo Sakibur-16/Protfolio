@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   shortName: "Sakibur Rahman",
   title: "Md. Sakibur Rahman — AI Developer",
   description:
-    "AI developer in Dhaka building RAG and agentic systems whose answers trace back to real sources. Case studies, peer-reviewed research, and contact.",
+    "AI developer in Dhaka building RAG, agentic and ML systems whose answers trace back to real sources. Case studies, peer-reviewed research, and contact.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sakibursr.me",
   locale: "en_US",
   themeColor: "#f2f0e9",
@@ -18,5 +18,7 @@ export const siteConfig: SiteConfig = {
 export const contact = {
   email: "sakibursrrahman@gmail.com",
   linkedin: "https://www.linkedin.com/in/srnrahman/",
+  github: "https://github.com/Sakibur-16",
+  scholar: "https://scholar.google.com/citations?user=M7TDa2gAAAAJ&hl=en",
   location: "Dhaka, Bangladesh",
 } as const;

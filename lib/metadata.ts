@@ -8,7 +8,7 @@ export function buildMetadata(): Metadata {
     metadataBase: new URL(siteConfig.url),
     title: siteConfig.title,
     description: siteConfig.description,
-    keywords: ["AI Developer", "RAG", "Agentic AI", "LLM", "NLP", "Computer Vision", "Dhaka", "Bangladesh"],
+    keywords: ["AI Developer", "Machine Learning", "RAG", "Agentic AI", "LLM", "NLP", "Computer Vision", "Dhaka", "Bangladesh"],
     alternates: { canonical: "/" },
     openGraph: {
       type: "website",
@@ -43,10 +43,11 @@ export function personJsonLd() {
     },
     worksFor: { "@type": "Organization", name: "Sparktech Agency" },
     alumniOf: { "@type": "CollegeOrUniversity", name: "East West University" },
-    sameAs: [contact.linkedin],
+    sameAs: [contact.linkedin, contact.github, contact.scholar],
     knowsAbout: [
       "Retrieval-Augmented Generation",
       "Agentic AI",
+      "Machine Learning",
       "Large Language Models",
       "Natural Language Processing",
       "Computer Vision",

@@ -1,68 +1,47 @@
 import type { ExperienceEntry } from "@/types/portfolio";
 
-// Source: the owner's LinkedIn profile.
-//
-// The current-employer progression is modelled as three separate entries rather than
-// one nested record — the promotions are distinct roles with distinct scopes,
-// and the shared `organization` is what groups them in the UI.
+// Source: the owner's CV. Dates and wording follow it.
+export const experienceIntro =
+  "Led AI development on 15+ live and production-ready applications across healthcare, education, wellness and consumer tech.";
+
 export const experience: ExperienceEntry[] = [
   {
-    id: "current-ai-developer",
+    id: "ai-developer",
     organization: "Sparktech Agency",
     role: "AI Developer",
-    startDate: "July 2026",
-    endDate: "Present",
-    location: "Dhaka, Bangladesh (On-site)",
-    employmentType: "Full-time",
-    responsibilities: [
-      "Builds RAG and agentic RAG pipelines for production systems",
-      "Combines LLM reasoning with grounded retrieval so answers trace back to real sources",
-      "Develops NLP components and AI chat assistants",
-      "Carries features from prototype through to production",
-    ],
+    dates: "Jul 2026 – Present",
+    summary:
+      "Owns the design and delivery of production RAG and Agentic RAG pipelines for client-facing conversational AI, combining LLM reasoning with grounded retrieval to reduce hallucinations and improve accuracy.",
+    note: "Spark of the Quarter",
   },
   {
-    id: "current-junior-ai-developer",
+    id: "junior-ai-developer",
     organization: "Sparktech Agency",
     role: "Junior AI Developer",
-    startDate: "January 2026",
-    endDate: "June 2026",
-    location: "Dhaka, Bangladesh (On-site)",
-    employmentType: "Full-time",
-    responsibilities: [
-      "Built and refined RAG retrieval systems",
-      "Implemented LLM integration workflows",
-      "Developed NLP preprocessing pipelines",
-      "Delivered features independently end to end",
-    ],
+    dates: "Jan 2026 – Jun 2026",
+    summary:
+      "Contributed to the design and testing of RAG-based retrieval systems and LLM integration workflows, then took ownership of features within larger AI systems.",
   },
   {
-    id: "current-trainee-ai-developer",
+    id: "trainee-ai-developer",
     organization: "Sparktech Agency",
     role: "Trainee AI Developer",
-    startDate: "October 2025",
-    endDate: "December 2025",
-    location: "Dhaka, Bangladesh (On-site)",
-    employmentType: "Full-time",
-    responsibilities: [
-      "Learned production RAG architecture",
-      "Practised LLM prompt design",
-      "Covered NLP fundamentals",
-      "Ran model testing and evaluation",
-    ],
+    dates: "Oct 2025 – Dec 2025",
+    summary:
+      "Learned production RAG architecture, LLM prompt design and NLP fundamentals in a live commercial environment.",
   },
   {
     id: "acote-associate",
     organization: "Acote Group",
     role: "Associate",
-    startDate: "November 2024",
-    endDate: "May 2025",
-    location: "Dhaka, Bangladesh (Hybrid)",
-    employmentType: "Full-time / Contract",
-    responsibilities: [
-      "Delivered data annotation, cleaning, and preprocessing across large ML datasets",
-      "Fine-tuned and benchmarked ML models against baseline metrics",
-      "Owned parts of the end-to-end ML workflow, from data preparation to evaluation",
-    ],
+    dates: "Nov 2024 – May 2025",
+    summary:
+      "Annotated, cleaned and preprocessed large ML datasets, and fine-tuned and benchmarked models against baseline metrics. Contract at first, then full-time from January 2025.",
   },
 ];
+
+export const education = {
+  dates: "Oct 2021 – Sep 2025",
+  title: "BSc, Computer Science and Engineering, East West University",
+  detail: "CGPA 3.56 / 4.00 · Dhaka",
+} as const;

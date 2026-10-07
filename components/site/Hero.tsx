@@ -1,12 +1,13 @@
 import { Cite } from "@/components/site/Cite";
 import { contact } from "@/data/site";
 import { sources } from "@/data/sources";
+import { eqi30, malaria, miniProjects, quranity } from "@/data/work";
 
 const contents = [
-  { n: "01", label: "Quranity", note: "2024", href: "#quranity" },
-  { n: "02", label: "EQi30", note: "2025", href: "#eqi30" },
-  { n: "03", label: "Rise", note: "2025", href: "#rise" },
-  { n: "04", label: "Malaria diagnosis", note: "2025", href: "#malaria" },
+  { n: "01", label: quranity.title, note: quranity.year, href: `#${quranity.id}` },
+  { n: "02", label: eqi30.title, note: eqi30.year, href: `#${eqi30.id}` },
+  { n: "03", label: "Malaria diagnosis", note: malaria.year, href: `#${malaria.id}` },
+  { n: "04", label: "More projects", note: `${miniProjects.length}`, href: "#more-projects" },
   { n: "05", label: "Research", note: "3 papers", href: "#research" },
   { n: "06", label: "Experience", note: "2024 on", href: "#experience" },
   { n: "07", label: "Contact", note: "", href: "#contact" },
@@ -19,7 +20,7 @@ export function Hero() {
       className="mx-auto flex min-h-[calc(100dvh-65px)] w-full max-w-[1280px] flex-col justify-between gap-16 px-4 pb-12 pt-12 sm:px-8 lg:pt-16"
     >
       <h1 className="display rise max-w-[16ch] text-[clamp(2.6rem,1rem+6.4vw,5.5rem)]" style={{ "--i": 0 } as React.CSSProperties}>
-        AI answers that show their <em className="text-accent">sources.</em>
+        AI/ML systems that show their <em className="text-accent">sources.</em>
         <Cite source={sources.quranity} hero />
       </h1>
 
@@ -27,7 +28,7 @@ export function Hero() {
         <div className="rise lg:col-span-6" style={{ "--i": 2 } as React.CSSProperties}>
           <p className="prose-col text-lg">
             I’m Sakibur Rahman, an AI developer at Sparktech Agency.
-            <Cite source={sources.sparktech} /> I build RAG and agentic systems with answers traceable to sources.
+            <Cite source={sources.sparktech} /> I build RAG, agentic and ML systems whose answers trace to sources.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a href="#work" className="btn btn-primary">

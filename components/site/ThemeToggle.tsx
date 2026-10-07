@@ -23,7 +23,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="meta px-2 py-2 hover:text-ink"
+      className="meta pressable px-2 py-2 hover:text-ink"
       aria-label="Switch between light and dark theme"
     >
       <span className="dark:hidden">Dark</span>

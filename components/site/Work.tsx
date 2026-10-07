@@ -1,13 +1,15 @@
+import Image from "next/image";
 import type { CSSProperties, ReactNode } from "react";
 import { Cite } from "@/components/site/Cite";
 import { sources } from "@/data/sources";
 import {
+  alsoBuilt,
   eqi30,
   malaria,
+  miniProjects,
   quranity,
   quranityFallback,
   quranitySteps,
-  rise,
   type CaseStudy,
 } from "@/data/work";
 
@@ -39,6 +41,12 @@ function MetaList({ study }: { study: CaseStudy }) {
       <dd className="text-ink">{study.year}</dd>
       <dt>Role</dt>
       <dd className="text-ink">{study.role}</dd>
+      {study.status ? (
+        <>
+          <dt>Status</dt>
+          <dd className="text-ink">{study.status}</dd>
+        </>
+      ) : null}
     </dl>
   );
 }
@@ -91,22 +99,32 @@ function LeadStudy() {
           <div className="mt-5">
             <MetaList study={s} />
           </div>
-          {s.links?.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="link mt-4 inline-block text-sm"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {link.label} ↗
-            </a>
-          ))}
+          <ul className="mt-5 space-y-1">
+            {s.links?.map((link) => (
+              <li key={link.href}>
+                <a className="link text-sm" href={link.href} target="_blank" rel="noopener noreferrer">
+                  {link.label} ↗
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
 
       <div className="lg:col-span-9">
         <p className="display reveal max-w-[24ch] text-[clamp(1.75rem,1.2rem+2vw,3rem)]">{s.lede}</p>
+        <figure className="reveal mt-10">
+          <Image
+            src="/work/quranity-app.jpg"
+            alt="Five Quranity app screens: video stories, the AI assistant, home with prayer times and the daily verse, the Qur’an reader, and a story feed."
+            width={955}
+            height={555}
+            sizes="(min-width: 1280px) 880px, (min-width: 1024px) 70vw, 100vw"
+            className="h-auto w-full border border-rule"
+            priority={false}
+          />
+          <figcaption className="meta mt-3">Quranity on iPhone: stories, the AI assistant, prayer times, the Qur’an reader.</figcaption>
+        </figure>
         <div className="mt-12">
           <Block title="Problem">
             <p>{s.problem}</p>
@@ -138,42 +156,48 @@ function LeadStudy() {
   );
 }
 
-/** 02 and 03: two studies side by side, divided by a hairline. */
-function PairedStudy({ study }: { study: CaseStudy }) {
-  const sections: { title: string; body: string }[] = [
+/** 02: a four-cell matrix, so it reads differently from the long-form lead study. */
+function MatrixStudy({ study }: { study: CaseStudy }) {
+  const cells: { title: string; body: string }[] = [
     { title: "Problem", body: study.problem },
     { title: "How it works", body: study.how },
     ...(study.hard ? [{ title: "The hard part", body: study.hard }] : []),
     { title: "Result", body: study.result },
   ];
   return (
-    <article
-      id={study.id}
-      className="reveal border-t border-ink py-12 lg:px-10 lg:first:pl-0 lg:last:pr-0 lg:[&:not(:first-child)]:border-l lg:[&:not(:first-child)]:border-l-rule"
-    >
-      <div className="flex items-baseline justify-between gap-4">
-        <p className="display text-6xl italic leading-none text-accent">{study.number}</p>
-        <MetaList study={study} />
+    <article id={study.id} className="border-t border-ink py-16 lg:py-24">
+      <div className="grid gap-8 lg:grid-cols-12 lg:gap-12">
+        <div className="lg:col-span-4">
+          <p className="display text-[clamp(4rem,3rem+4vw,6rem)] italic leading-none text-accent">{study.number}</p>
+          <h3 className="display mt-4 text-3xl">{study.title}</h3>
+          <div className="mt-5">
+            <MetaList study={study} />
+          </div>
+        </div>
+        <p className="display reveal max-w-[22ch] self-end text-[clamp(1.75rem,1.2rem+2vw,3rem)] lg:col-span-8">
+          {study.lede}
+        </p>
       </div>
-      <h3 className="display mt-6 text-3xl">{study.title}</h3>
-      <p className="display mt-3 max-w-[26ch] text-xl text-muted">{study.lede}</p>
-      <div className="mt-8 space-y-6">
-        {sections.map((section) => (
-          <div key={section.title}>
-            <h4 className="display mb-1 text-lg italic">{section.title}</h4>
-            <p className="prose-col text-[0.9375rem] leading-relaxed">{section.body}</p>
+      <div className="mt-12 grid border-l border-t border-rule md:grid-cols-2">
+        {cells.map((cell, index) => (
+          <div
+            key={cell.title}
+            className="reveal border-b border-r border-rule p-6 md:p-8"
+            style={{ "--i": index } as CSSProperties}
+          >
+            <h4 className="display mb-2 text-xl italic">{cell.title}</h4>
+            <p className="prose-col text-[0.9375rem] leading-relaxed">{cell.body}</p>
           </div>
         ))}
-        <div>
-          <h4 className="display mb-2 text-lg italic">Stack</h4>
-          <Stack items={study.stack} />
-        </div>
+      </div>
+      <div className="mt-6">
+        <Stack items={study.stack} />
       </div>
     </article>
   );
 }
 
-/** 04: the research study. The question is the headline, three short columns follow. */
+/** 03: the research study. The question is the headline, three short columns follow. */
 function ResearchStudy() {
   const s = malaria;
   return (
@@ -209,17 +233,48 @@ function ResearchStudy() {
   );
 }
 
+/** 04: shorter project entries as a ruled index. */
+function MoreProjects() {
+  return (
+    <article id="more-projects" className="border-t border-ink py-16 lg:py-24">
+      <div className="flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
+        <p className="display text-6xl italic leading-none text-accent">04</p>
+        <h3 className="display text-3xl">More projects</h3>
+      </div>
+      <ul className="mt-10 border-t border-rule">
+        {miniProjects.map((project, index) => (
+          <li
+            key={project.name}
+            className="reveal grid gap-x-8 gap-y-3 border-b border-rule py-7 lg:grid-cols-[15rem_1fr_17rem]"
+            style={{ "--i": index } as CSSProperties}
+          >
+            <div>
+              <p className="display text-2xl">{project.name}</p>
+              <p className="meta mt-1">
+                {project.year} · {project.role}
+              </p>
+            </div>
+            <p className="prose-col text-[0.9375rem] leading-relaxed">{project.description}</p>
+            <div className="lg:text-right">
+              <Stack items={project.stack} />
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p className="prose-col mt-8 text-muted">{alsoBuilt}</p>
+    </article>
+  );
+}
+
 export function Work() {
   return (
     <section id="work" className="mx-auto w-full max-w-[1280px] px-4 pt-24 sm:px-8 lg:pt-32">
       <h2 className="display text-[clamp(2rem,1.3rem+2.6vw,3.5rem)]">Selected work</h2>
       <div className="mt-10">
         <LeadStudy />
-        <div className="grid lg:grid-cols-2">
-          <PairedStudy study={eqi30} />
-          <PairedStudy study={rise} />
-        </div>
+        <MatrixStudy study={eqi30} />
         <ResearchStudy />
+        <MoreProjects />
       </div>
     </section>
   );

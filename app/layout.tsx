@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import { buildMetadata, personJsonLd } from "@/lib/metadata";
 import { themeInitScript } from "@/lib/theme";
 import { Header } from "@/components/site/Header";
@@ -77,6 +78,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <Header />
         <main id="main-content">{children}</main>
         <Footer />
+        {/* Cookieless page-view analytics. Switches on once Web Analytics is enabled in the Vercel project. */}
+        <Analytics />
       </body>
     </html>
   );

@@ -11,6 +11,10 @@ interface Position {
   top: number;
   left: number;
   width: number;
+  /** Horizontal transform origin, so the panel grows out of its marker. */
+  originX: number;
+  /** True when opened from the keyboard, which should not animate. */
+  instant: boolean;
 }
 
 /**
@@ -50,7 +54,7 @@ export function Cite({ source, hero = false }: { source: Source; hero?: boolean 
     };
   }, [open]);
 
-  function toggle() {
+  function toggle(event: React.MouseEvent<HTMLButtonElement>) {
     if (open) {
       setPosition(null);
       return;
@@ -66,7 +70,9 @@ export function Cite({ source, hero = false }: { source: Source; hero?: boolean 
       Math.max(rect.bottom, block?.bottom ?? 0) + 8,
       Math.max(rect.bottom + 8, window.innerHeight - PANEL_HEIGHT),
     );
-    setPosition({ top, left, width });
+    const originX = rect.left + rect.width / 2 - left;
+    // A keyboard-initiated click reports detail 0.
+    setPosition({ top, left, width, originX, instant: event.detail === 0 });
   }
 
   return (
@@ -88,7 +94,13 @@ export function Cite({ source, hero = false }: { source: Source; hero?: boolean 
           id={panelId}
           role="note"
           className="cite-pop"
-          style={{ top: position.top, left: position.left, width: position.width }}
+          data-instant={position.instant}
+          style={{
+            top: position.top,
+            left: position.left,
+            width: position.width,
+            transformOrigin: `${position.originX}px 0`,
+          }}
         >
           <span className="meta block">Source {source.n}</span>
           <span className="display mt-1 block text-lg">{source.title}</span>

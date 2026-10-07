@@ -104,8 +104,10 @@ body {
   text-underline-offset: 0.2em;
 }
 
-.link:hover {
-  text-decoration-thickness: 2px;
+@media (hover: hover) and (pointer: fine) {
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
 }
 
 /* ---------------------------------------------------------------------- */
@@ -131,9 +133,11 @@ body {
   transform: scale(0.97);
 }
 
-.btn:hover {
-  background: var(--ink);
-  color: var(--bg);
+@media (hover: hover) and (pointer: fine) {
+  .btn:hover {
+    background: var(--ink);
+    color: var(--bg);
+  }
 }
 
 .btn-primary {
@@ -142,10 +146,21 @@ body {
   color: var(--bg);
 }
 
-.btn-primary:hover {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--bg);
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+}
+
+/* Press feedback for small controls that are not .btn. */
+.pressable {
+  transition: transform 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.pressable:active {
+  transform: scale(0.97);
 }
 
 /* ---------------------------------------------------------------------- */
@@ -166,9 +181,11 @@ body {
   cursor: pointer;
 }
 
-.cite:hover {
-  text-decoration: underline;
-  text-underline-offset: 0.2em;
+@media (hover: hover) and (pointer: fine) {
+  .cite:hover {
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
 }
 
 .cite--hero {
@@ -193,8 +210,21 @@ body {
   line-height: 1.5;
   text-align: left;
   text-transform: none;
-  transform-origin: top left;
-  animation: pop-in 160ms cubic-bezier(0.23, 1, 0.32, 1) both;
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 160ms cubic-bezier(0.23, 1, 0.32, 1),
+    transform 160ms cubic-bezier(0.23, 1, 0.32, 1);
+
+  @starting-style {
+    opacity: 0;
+    transform: translateY(4px) scale(0.95);
+  }
+}
+
+/* Opened from the keyboard: no animation. */
+.cite-pop[data-instant="true"] {
+  transition: none;
 }
 
 /* ---------------------------------------------------------------------- */
@@ -204,17 +234,6 @@ body {
   from {
     opacity: 0;
     transform: translateY(10px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-@keyframes pop-in {
-  from {
-    opacity: 0;
-    transform: translateY(4px) scale(0.95);
   }
   to {
     opacity: 1;
@@ -239,22 +258,46 @@ body {
   }
 }
 
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Reduced motion means gentler, not none: keep a short fade, drop all movement. */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
 
-  .rise,
-  .reveal,
-  .cite-pop {
+  .rise {
+    animation: fade 200ms ease-out both;
+    animation-delay: 0ms;
+  }
+
+  .reveal {
     animation: none !important;
   }
 
-  .btn {
+  .cite-pop {
+    transition: opacity 120ms ease-out;
+
+    @starting-style {
+      opacity: 0;
+      transform: none;
+    }
+  }
+
+  .btn,
+  .pressable {
     transition: none;
   }
 
-  .btn:active {
+  .btn:active,
+  .pressable:active {
     transform: none;
   }
 }

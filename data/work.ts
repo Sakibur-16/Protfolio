@@ -1,7 +1,7 @@
 import type { SourceId } from "@/data/sources";
 
 // Source of truth: docs/content.md. Text here comes from the owner's answers
-// (Quranity), the owner's earlier project write-ups (EQi30, Rise, malaria), or
+// (Quranity), the owner's CV, earlier project write-ups (EQi30, malaria) or
 // published papers. Sections with no confirmed content are omitted, not filled.
 
 export interface CaseStudy {
@@ -10,6 +10,7 @@ export interface CaseStudy {
   title: string;
   year: string;
   role: string;
+  status?: string;
   lede: string;
   problem: string;
   myRole?: string;
@@ -26,28 +27,36 @@ export const quranity: CaseStudy = {
   id: "quranity",
   number: "01",
   title: "Quranity",
-  year: "2024",
-  role: "AI Developer, PM and QA",
+  year: "2026",
+  role: "Lead AI Developer & PM",
+  status: "Live",
   lede: "Qalam, an assistant whose answers come from the Qur’an and Hadith, with the source attached.",
   problem:
     "People ask Quranity real questions about daily life and faith. A fluent answer is not enough: it has to come from the Qur’an or Hadith, and the person asking should be able to see which.",
   myRole:
-    "I was the AI developer for Qalam, and I also managed the project and ran QA on it.",
-  how: "Qalam looks answers up in a Qur’an and Hadith database before it writes anything, then hands what it found, plus instructions, to the model.",
+    "I led AI development for Qalam and managed the project from concept to launch.",
+  how: "Qalam searches a Qur’an and Hadith database by meaning before it writes anything, then hands what it found, plus instructions, to the model. It answers in English, Arabic and Albanian, and each answer shows its Qur’an or Hadith reference.",
   hard: "Two things kept breaking. When the retrieved source did not match the question, the assistant fell back to a generic answer, every time. Separately, language detection was not working. I rebuilt the prompting and the instructions to fix both. When no source is a close match, Qalam now answers from the closest related sources instead of a generic reply.",
   result:
-    "Quranity is live on Google Play and the App Store, with a landing page at quranity.app. It was tested several ways: by hand and by script, with people and with bots.",
-  stack: ["Python", "FastAPI", "OpenAI API", "Qur’an and Hadith database"],
-  links: [{ label: "quranity.app", href: "https://quranity.app/en" }],
+    "Quranity is live on Google Play, where it has 1K+ downloads, and on the App Store. It was tested several ways: by hand and by script, with people and with bots.",
+  stack: ["Python", "FastAPI", "OpenAI API", "Flutter", "RAG", "Semantic search", "Qur’an and Hadith database"],
+  links: [
+    {
+      label: "Google Play",
+      href: "https://play.google.com/store/apps/details?id=com.quranityllc.quranity&hl=en",
+    },
+    { label: "App Store", href: "https://apps.apple.com/pl/app/quranity/id6764633566" },
+    { label: "quranity.app", href: "https://quranity.app/en" },
+  ],
 };
 
 // The five steps of Qalam's answer path, drawn from the owner's description.
 export const quranitySteps = [
   { title: "Question", text: "A user asks in their own words and language." },
   { title: "Language", text: "The assistant works out which language to answer in." },
-  { title: "Source lookup", text: "It searches the Qur’an and Hadith database.", accent: true },
+  { title: "Source lookup", text: "It searches the Qur’an and Hadith database by meaning.", accent: true },
   { title: "Prompt", text: "The matched sources and the instructions go to the model." },
-  { title: "Answer", text: "The reply comes back tied to its source." },
+  { title: "Answer", text: "The reply shows the Qur’an or Hadith reference it came from." },
 ] as const;
 
 export const quranityFallback =
@@ -59,6 +68,7 @@ export const eqi30: CaseStudy = {
   title: "EQi30",
   year: "2025",
   role: "AI Developer, AI service layer",
+  status: "In production",
   lede: "Twelve AI engines behind an emotional-intelligence platform.",
   problem:
     "The platform’s content was written across 28 separate documents that disagreed with each other. The product needed one structure it could run coaching and scheduling on.",
@@ -69,24 +79,9 @@ export const eqi30: CaseStudy = {
   stack: ["Python", "FastAPI"],
 };
 
-export const rise: CaseStudy = {
-  id: "rise",
-  number: "03",
-  title: "Rise",
-  year: "2025",
-  role: "AI Developer, AI service layer",
-  lede: "The AI layer for a mobile life-coaching app.",
-  problem:
-    "Coaching had to feel personal and immediate on a phone: five distinct personalities, delivered as a stream instead of a delayed wall of text.",
-  how: "Eleven FastAPI endpoints are built around a five-personality tone system. Responses stream to the app over server-sent events as structured JSON, so the app can render them as they arrive.",
-  result:
-    "Delivered as a standalone AI service layer for the mobile app’s backend team to integrate.",
-  stack: ["Python", "FastAPI", "Server-Sent Events", "Structured JSON"],
-};
-
 export const malaria: CaseStudy = {
   id: "malaria",
-  number: "04",
+  number: "03",
   title: "Malaria diagnosis from blood smears",
   year: "2025",
   role: "Researcher, author",
@@ -98,3 +93,57 @@ export const malaria: CaseStudy = {
   resultCite: "malaria",
   stack: ["Python", "TensorFlow", "Keras", "CNNs"],
 };
+
+export interface MiniProject {
+  name: string;
+  year: string;
+  role: string;
+  description: string;
+  stack: string[];
+}
+
+// From the owner's CV. Descriptions are condensed, not embellished.
+export const miniProjects: MiniProject[] = [
+  {
+    name: "Hairlync",
+    year: "2026",
+    role: "Lead AI Developer & PM",
+    description:
+      "A hair diagnostics platform for barbers and specialists. It analyzes hair and scalp condition with computer vision and predictive analytics, and recommends tailored treatments, cuts and colors. Publication in progress.",
+    stack: ["Computer vision", "CNNs", "Image classification"],
+  },
+  {
+    name: "JobAssist AI",
+    year: "2026",
+    role: "AI Developer",
+    description:
+      "An AI career assistant that analyzes CVs, suggests improvements, writes tailored cover letters and application emails, and matches candidates to companies.",
+    stack: ["LLM", "RAG", "OpenAI API", "CV parsing", "Semantic matching"],
+  },
+  {
+    name: "Wondertales",
+    year: "2026",
+    role: "AI Developer",
+    description:
+      "An AI story-generation app that narrates personalized children’s stories, with voice cloning and a pre-built voice library.",
+    stack: ["ElevenLabs", "LLM"],
+  },
+  {
+    name: "Finance AI",
+    year: "2026",
+    role: "AI Developer",
+    description:
+      "A personal finance assistant connected to a client’s live financial database. It uses intent detection and deterministic calculations to answer spending, budgeting and cash-flow questions through a secure OpenAI-based conversational layer.",
+    stack: ["FastAPI", "OpenAI API", "MySQL / MariaDB", "RAG"],
+  },
+];
+
+export const alsoBuilt =
+  "Also built in 2025–2026: Frazzl Kid, Aura, Everidog, BYOJ and Alfred, an AI dating concierge. The apps span children’s education, mental wellness, pet nutrition, generative design and habit formation.";
+
+export const earlierResearch = {
+  years: "2023–2024",
+  title: "Early medical-imaging research",
+  text: "Breast cancer detection and retinal key-sign identification using deep learning on medical images. I built and evaluated CNN-based classification pipelines.",
+  stack: ["Python", "TensorFlow", "Keras", "CNNs", "Image processing"],
+} as const;

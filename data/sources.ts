@@ -30,7 +30,7 @@ export const sources: Record<SourceId, Source> = {
     id: "quranity",
     n: 1,
     title: "Quranity: Qalam, the grounded AI assistant",
-    detail: "AI Developer, PM and QA · 2024 · live app",
+    detail: "Lead AI Developer & PM · 2026 · live on Google Play and the App Store",
     href: "#quranity",
     linkLabel: "Read the case study",
     external: false,

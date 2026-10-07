@@ -1,67 +1,46 @@
-# Site content — single source of truth
+# Site content: source of truth (updated 2026-10-07)
 
-Rule: the site renders only what is written here. Anything marked `TODO(owner)` is unanswered and must be filled in or cut. Nothing is invented. "Pre-filled" means copied from the handoff or the current repo; confirm it.
+Rule: the site renders only what is written here or in the owner's CV. Anything marked `TODO(owner)` is unanswered and is left out of the live page.
 
 ## Hero
-- One-line statement: TODO(owner) — the old line ("I build AI that reasons, retrieves, and acts") is retired. Owner to supply; I will not draft it from invented claims.
-- Sub-line (pre-filled): AI developer at Sparktech Agency, Dhaka. Builds RAG and agentic systems whose answers trace back to real sources.
-- Links: email TODO(owner), LinkedIn https://www.linkedin.com/in/srnrahman/
+- Headline: "AI/ML systems that show their sources." (draft by Claude, from the CV positioning; owner may reword)
+- Sub-line: I'm Sakibur Rahman, an AI developer at Sparktech Agency. I build RAG, agentic and ML systems whose answers trace to sources.
+- Contact: sakibursrrahman@gmail.com · LinkedIn /in/srnrahman · GitHub Sakibur-16 (CV spelling; owner typed "Sakibur16", confirm) · Google Scholar (user M7TDa2gAAAAJ)
 
-## Footnote sources (these power the `[n]` markers)
-| n | Source | Venue / role | Year |
-|---|---|---|---|
-| 1 | Assessing Generalization Capabilities of AI Models for Malaria Diagnosis Using Blood Smear Images (author) | ICDMIS 2025, Springer | 2025 |
-| 2 | Bridging Code and Comprehension: Transformer Models for Java Source Code Summarization (co-author) | IEEE SPICSCON 2025 | 2025 |
-| 3 | Neural Command: Real-Time EEG-Based BCI for Assistive Robotic Control (author) | IEEE RAAICON 2024 | 2024 |
-Paper links / DOIs: TODO(owner)
+## Footnote sources ([n] markers)
+1 Quranity · 2 Sparktech AI Developer role · 3 Malaria paper (ICDMIS 2025, Springer) · 4 SPICSCON 2025 paper (IEEE) · 5 RAAICON 2024 paper (IEEE)
 
-## Case study 1 — Quranity (lead)
-Owner answers (2026-10-06), now live in `data/work.ts`:
-- Year 2024. Role: AI Developer, PM and QA. Qalam is the AI guidance service.
-- Grounding: Qur'an/Hadith database lookup.
-- No good source: answers from the closest related sources.
-- Testing: manual and automated, by people and by bots.
-- Hard part: generic fallback whenever the retrieved source mismatched, and language detection not working; fixed by rebuilding the prompting and instructions.
-- Live on Google Play and the App Store; landing page https://quranity.app/en
-- Drawn from those answers, please confirm: the 5-step answer path (question, language, source lookup, prompt, answer) and its order.
-- Stack shown: Python, FastAPI, OpenAI API, Qur'an and Hadith database (FastAPI and OpenAI come from the old repo data).
-- TODO(owner): Google Play and App Store URLs (not on the landing page, so not linked). Any publicly shareable numbers (users, corpus size, test results).
-- Note: the old repo data described a 2026 build with a Full-Stack and DevOps role. The site now follows the owner's 2024 / AI Developer, PM and QA answer.
+## 01 Quranity (lead)
+- 2026 · Lead AI Developer & PM (CV; owner confirmed over the earlier "2024, AI Developer, PM & QA")
+- Qalam: searches a Qur'an and Hadith database by meaning, then passes sources + instructions to the model. Answers in English, Arabic and Albanian; each answer shows its Qur'an or Hadith reference.
+- Hard part: generic fallback whenever the retrieved source mismatched, plus language detection not working; fixed by rebuilding the prompting and instructions. Now answers from the closest related sources.
+- Testing: manual and automated, people and bots.
+- Live: Google Play (1K+ downloads, per the listing the owner supplied), App Store, quranity.app/en
+- Image: crop of the owner's landing-page screenshot (`public/work/quranity-app.jpg`).
+- Answer-path diagram confirmed by the owner ("yes").
+- Stack shown: Python, FastAPI, OpenAI API, Flutter, RAG, semantic search, Qur'an and Hadith database. (Flutter, RAG, semantic search from the CV; FastAPI and OpenAI from old repo data.)
 
-## Case study 2 — EQi30
-Pre-filled from repo: 2025, AI service layer, 12 engines (assessment, coaching, microlearning, adaptive scheduling), Python + FastAPI. 28 source documents (docx/xlsx) reconciled into 40 abilities across 6 competencies, 30 with complete day-by-day programs.
-- Problem / my role / how it works / hard part / result / stack: TODO(owner) confirm and extend
-- Is the platform live? Public link? TODO(owner)
+## 02 EQi30
+- 2025 · AI Developer, AI service layer · In production (owner)
+- 12 engines (assessment, coaching, microlearning, adaptive scheduling); 28 source documents reconciled into 40 abilities across 6 competencies; 30 with complete day-by-day programs. These figures come from the owner's earlier write-up. TODO(owner): confirm they are still accurate and public.
 
-## Case study 3 — Rise
-Pre-filled from repo: 2025, AI layer for a mobile life-coaching app, 11 FastAPI endpoints, 5 coaching personalities, SSE streaming with structured JSON.
-- Hard part / result / stack: TODO(owner)
+## 03 Malaria diagnosis
+- 2025 · CNN classification across datasets for generalization; ICDMIS 2025, Springer. TODO(owner): one-line finding from the abstract (publisher pages block automated fetching, so the abstract needs to be pasted).
 
-## Case study 4 — Malaria diagnosis research
-Pre-filled: CNN classification of blood-smear images, cross-dataset generalization, TensorFlow/Keras, ICDMIS 2025 (Springer), footnote [1].
-- Datasets used, and the actual generalization gap found: TODO(owner)
-- Hard part / result: TODO(owner)
+## 04 More projects (short entries, from the CV)
+Hairlync, JobAssist AI, Wondertales, Finance AI. A closing sentence mentions Frazzl Kid, Aura, Everidog, BYOJ and Alfred (AI dating concierge).
 
-## Research list
-The three papers above. Per paper, one line on what it found: TODO(owner)
+## Research
+Three papers with DOI links; plus "Early medical-imaging research" (2023-2024, CV). TODO(owner): one finding line each for the SPICSCON and RAAICON papers (paste abstracts).
 
-## Experience (compact)
-| Dates | Role | Org |
-|---|---|---|
-| Jul 2026 – present | AI Developer | Sparktech Agency |
-| Jan 2026 – Jun 2026 | Junior AI Developer | Sparktech Agency |
-| Oct 2025 – Dec 2025 | Trainee | Sparktech Agency |
-| Nov 2024 – May 2025 | Associate | Acote Group |
-Education: BSc CSE, East West University, GPA 3.56/4.00.
-One line of what you did at each role: TODO(owner)
+## Experience (CV)
+AI Developer (Spark of the Quarter), Junior AI Developer, Trainee AI Developer at Sparktech Agency; Associate at Acote Group (Nov 2024 to May 2025, contract then full-time). Intro line from the CV: led AI development on 15+ live and production-ready applications. Education: BSc CSE, East West University, CGPA 3.56/4.00.
 
-## Contact
-Email TODO(owner). LinkedIn above. GitHub: TODO(owner) include or not?
+## Removed
+Rise (owner decision), stat counters, At a glance, marquee, 8 service cards, auto-cycling deck, Aura/Everidog/BYOJ as case studies.
 
-## Cut from the new site
-Stat counters, At a glance, marquee, 8 service cards, auto-cycling deck, Everidog, Aura, BYOJ.
-Undecided: Hairlync, JobAssist AI, Wondertales, Alfred, Frazzl Kid, NibblAI (in repo, not in handoff). See question 9.
+## Not on the site (owner decisions)
+Profile photo (owner will add), availability line, phone number.
 
-## SEO
-- Canonical / OG origin: https://sakibursr.me (cause: `data/site.ts` falls back to sakiburrahman.dev when `NEXT_PUBLIC_SITE_URL` is unset; set the env var on the host and change the fallback).
-- OG image: `/og-image.png` is referenced but does not exist in `public/`. Needs a real one (1200x630). Design TBD after approval.
+## SEO and ops
+Canonical/OG: https://sakibursr.me. OG image is `app/opengraph-image.png`. Hosting: Vercel; set `NEXT_PUBLIC_SITE_URL=https://sakibursr.me` and enable Web Analytics in the Vercel project (the `<Analytics />` component is already in the layout).

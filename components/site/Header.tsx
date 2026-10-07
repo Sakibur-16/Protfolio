@@ -22,7 +22,7 @@ export function Header() {
               </a>
             ))}
           </nav>
-          <a href={`mailto:${contact.email}`} className="text-sm font-medium text-accent hover:underline">
+          <a href={`mailto:${contact.email}`} className="pressable text-sm font-medium text-accent hover:underline">
             Email me
           </a>
           <ThemeToggle />
