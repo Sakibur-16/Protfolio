@@ -96,14 +96,14 @@ function LeadStudy() {
   const s = quranity;
   return (
     <article id={s.id} className="pt-4">
-      <figure className="on-dark reveal overflow-hidden rounded-[var(--radius-frame)]">
+      <figure className="on-dark reveal group overflow-hidden rounded-[var(--radius-frame)]">
         <Image
           src="/work/quranity-screens.jpg"
           alt="Five Quranity app screens: home with prayer times, the Qalam AI assistant, video stories, a story player, and a story feed."
           width={1295}
           height={535}
           sizes="(min-width: 1280px) 1280px, 100vw"
-          className="h-auto w-full"
+          className="h-auto w-full transition-transform duration-[900ms] ease-out group-hover:scale-[1.025]"
         />
         <figcaption className="flex flex-wrap items-center justify-between gap-4 p-6 sm:p-8">
           <div>
@@ -266,7 +266,7 @@ function MoreProjects() {
         {miniProjects.map((project, index) => (
           <li
             key={project.name}
-            className={`reveal ${tones[index % tones.length]} flex min-h-[22rem] flex-col justify-between gap-10 rounded-[var(--radius-tile)] p-7 sm:p-9`}
+            className={`reveal lift ${tones[index % tones.length]} flex min-h-[22rem] flex-col justify-between gap-10 rounded-[var(--radius-tile)] p-7 sm:p-9`}
             style={{ "--i": index % 2 } as CSSProperties}
           >
             <div className="flex items-start justify-between gap-4">

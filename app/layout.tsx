@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </a>
         <ScrollProgress />
         <Header />
-        <main id="main-content" className="pt-20">
+        <main id="main-content" className="pt-3">
           {children}
         </main>
         <Footer />

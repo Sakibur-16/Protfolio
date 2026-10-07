@@ -1,4 +1,8 @@
-# Design direction update (2026-10-07): "framed hybrid"
+# Design direction update 2 (2026-10-07): "cinematic hybrid"
+
+Owner feedback: the first hybrid did not match the Vixels reference. Changes: full-bleed AI-generated hero image (floating paper and glass panes joined by blue citation lines; generated with Figma's image tool, text-free), slow zoom on load plus scroll parallax, glass header pill, two real figures along the hero's bottom edge (15+ applications led, from the CV; 3 papers), and a slow strip of real affiliations (Springer, IEEE, Sparktech, Acote, East West University, Google Play, App Store). The same image bookends the contact card. Project tiles lift on hover; the Quranity image zooms slowly.
+
+# Design direction update 1 (2026-10-07): "framed hybrid"
 
 Supersedes the serif/hairline notes below where they conflict. Inspired by the structure of an agency site the owner liked (rounded hero frame, pill buttons, floating header, device tiles); nothing copied, and no stat counters, logo strips or fake social proof.
 

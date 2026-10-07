@@ -1,9 +1,11 @@
-import Image from "next/image";
 import type { CSSProperties } from "react";
+import { Backdrop } from "@/components/site/Backdrop";
 import { Cite } from "@/components/site/Cite";
+import { Marquee } from "@/components/site/Marquee";
+import { publications } from "@/data/publications";
 import { contact } from "@/data/site";
 import { sources } from "@/data/sources";
-import { miniProjects, studies } from "@/data/work";
+import { studies } from "@/data/work";
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -14,10 +16,10 @@ const studyRows = studies.map((study, index) => ({
 }));
 
 const restRows = [
-  { label: "More projects", href: "#more-projects", note: `${miniProjects.length}` },
-  { label: "Research", href: "#research", note: "" },
-  { label: "Experience", href: "#experience", note: "" },
-  { label: "Contact", href: "#contact", note: "" },
+  { label: "More projects", href: "#more-projects" },
+  { label: "Research", href: "#research" },
+  { label: "Experience", href: "#experience" },
+  { label: "Contact", href: "#contact" },
 ].map((row, index) => ({ ...row, n: pad(studyRows.length + index + 1) }));
 
 const contents = [...studyRows, ...restRows];
@@ -25,12 +27,29 @@ const contents = [...studyRows, ...restRows];
 // The headline is split into words so each can rise out of its own mask.
 const headlineWords = ["AI/ML", "systems", "that", "show", "their"];
 
+// Both figures come from the CV and the paper list.
+const facts = [
+  { value: "15+", label: "live and production-ready applications led" },
+  { value: String(publications.length), label: "peer-reviewed papers" },
+] as const;
+
 export function Hero() {
   return (
     <section id="top" className="px-3 sm:px-4">
-      <div className="on-dark relative isolate mx-auto flex min-h-[calc(100dvh-6.25rem)] max-w-[1480px] flex-col overflow-hidden rounded-[var(--radius-frame)]">
-        <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center gap-10 px-6 pb-10 pt-14 sm:px-10 lg:pb-16">
-          <h1 className="display max-w-[13ch] text-[clamp(2.75rem,1rem+5.4vw,5.5rem)]">
+      <div className="on-dark relative isolate mx-auto flex min-h-[calc(100dvh-1.5rem)] max-w-[1480px] flex-col overflow-hidden rounded-[var(--radius-frame)]">
+        <Backdrop src="/work/hero-sheets.jpg" priority className="object-[70%_50%]" />
+        {/* Keeps the headline legible over the image, and lets the bottom row sit on a calm edge. */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-0 bg-gradient-to-r from-[#0b101e] via-[#0b101e]/75 to-[#0b101e]/0 lg:via-[#0b101e]/55"
+        />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 -z-0 bg-gradient-to-t from-[#0b101e]/90 via-transparent to-[#0b101e]/30"
+        />
+
+        <div className="relative z-10 mx-auto flex w-full max-w-[1280px] flex-1 flex-col justify-center gap-10 px-6 pb-8 pt-32 sm:px-10">
+          <h1 className="display max-w-[13ch] text-[clamp(2.75rem,1rem+5.6vw,5.75rem)]">
             {headlineWords.map((word, index) => (
               <span key={word}>
                 <span className="word">
@@ -47,7 +66,7 @@ export function Hero() {
           </h1>
 
           <div className="rise max-w-[34rem]" style={{ "--i": 0 } as CSSProperties}>
-            <p className="text-lg text-ink/85">
+            <p className="text-lg text-ink/90">
               I’m Sakibur Rahman, an AI developer at Sparktech Agency.
               <Cite source={sources.sparktech} /> I build RAG, agentic and ML systems whose answers trace to sources.
             </p>
@@ -65,21 +84,37 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="phones fade-edges pointer-events-none relative z-0 -mt-4 lg:absolute lg:bottom-0 lg:right-0 lg:mt-0 lg:w-[56%]">
-          <Image
-            src="/work/quranity-app.jpg"
-            alt="Quranity app screens on iPhone: video stories, the AI assistant, home with prayer times and the daily verse, and the Qur’an reader."
-            width={955}
-            height={555}
-            sizes="(min-width: 1024px) 56vw, 100vw"
-            priority
-            className="h-auto w-full"
-          />
+        <div
+          className="rise relative z-10 mx-auto flex w-full max-w-[1280px] items-end justify-between gap-6 px-6 pb-7 sm:px-10"
+          style={{ "--i": 3 } as CSSProperties}
+        >
+          <dl className="flex flex-wrap items-end gap-x-8 gap-y-3">
+            {facts.map((fact, index) => (
+              <div
+                key={fact.label}
+                className={`flex items-center gap-3 ${index > 0 ? "sm:border-l sm:border-white/20 sm:pl-8" : ""}`}
+              >
+                <dt className="display text-3xl sm:text-4xl">{fact.value}</dt>
+                <dd className="meta max-w-[11rem] leading-snug">{fact.label}</dd>
+              </div>
+            ))}
+          </dl>
+          <a href="#work" className="meta hidden items-center gap-2 sm:flex" aria-label="Scroll to the work">
+            Scroll
+            <span className="bob inline-block" aria-hidden="true">
+              ↓
+            </span>
+          </a>
         </div>
       </div>
 
-      <nav aria-label="Contents" className="mx-auto mt-5 flex max-w-[1480px] flex-wrap items-center gap-2 px-1">
-        <span className="meta mr-2">Contents</span>
+      <Marquee />
+
+      <nav
+        aria-label="Contents"
+        className="mx-auto mt-10 flex max-w-[1480px] flex-wrap items-center gap-2 px-1 md:hidden"
+      >
+        <span className="meta mr-2">Jump to</span>
         {contents.map((item) => (
           <a key={item.n} href={item.href} className="chip">
             <span className="meta">{item.n}</span>
