@@ -1,7 +1,14 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useReducedMotion, useScroll, useSpring } from "framer-motion";
+import { useEffect, useRef, useState, type RefObject } from "react";
+import {
+  motion,
+  useMotionValueEvent,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+  type MotionValue,
+} from "framer-motion";
 import { experience } from "@/data/experience";
 import { Reveal } from "@/components/motion/Reveal";
 import { Badge } from "@/components/ui/Badge";
@@ -56,6 +63,69 @@ function formatDuration(start: string, end: string): string | null {
   return parts.join(" ");
 }
 
+/**
+ * Timeline node. Lights up at the exact moment the rail's charge reaches its
+ * centre. It reads the same spring-smoothed value that drives the rail fill, so
+ * the two can never drift apart, and it dims again if you scroll back up past it.
+ */
+function TimelineNode({
+  isCurrent,
+  fill,
+  railRef,
+  instant,
+}: {
+  isCurrent: boolean;
+  fill: MotionValue<number>;
+  railRef: RefObject<HTMLDivElement | null>;
+  instant: boolean;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const [reached, setReached] = useState(false);
+
+  /** Node centre as a fraction of the rail's height (0 = top, 1 = bottom). */
+  const check = (progress: number) => {
+    const node = ref.current;
+    const rail = railRef.current;
+    if (!node || !rail) return;
+    const n = node.getBoundingClientRect();
+    const r = rail.getBoundingClientRect();
+    if (r.height === 0) return;
+    const centre = (n.top + n.height / 2 - r.top) / r.height;
+    setReached(progress >= centre);
+  };
+
+  useMotionValueEvent(fill, "change", check);
+  useEffect(() => {
+    check(fill.get());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const lit = instant || reached;
+
+  return (
+    <span
+      ref={ref}
+      aria-hidden="true"
+      className={cn(
+        "absolute left-0 top-1.5 flex h-6 w-6 items-center justify-center rounded-full border bg-bg transition-[border-color,box-shadow] duration-300 sm:h-8 sm:w-8",
+        lit
+          ? "border-[var(--accent-warm)] shadow-[0_0_0_4px_var(--glow-a),0_0_18px_var(--accent-glow-warm)]"
+          : "border-line-strong"
+      )}
+    >
+      {isCurrent && (
+        <span className="absolute inline-flex h-3 w-3 animate-ping rounded-full bg-warm opacity-60" />
+      )}
+      <span
+        className={cn(
+          "relative inline-flex rounded-full transition-all duration-300",
+          lit ? "accent-bar h-3 w-3" : "h-2 w-2 bg-line-strong"
+        )}
+      />
+    </span>
+  );
+}
+
 export function Experience() {
   const railRef = useRef<HTMLDivElement>(null);
   const prefersReducedMotion = useReducedMotion();
@@ -92,8 +162,8 @@ export function Experience() {
 
         <Reveal delay={0.1}>
           <p className="mt-5 max-w-lg text-base leading-relaxed text-muted">
-            Three promotions in under a year at Sparktech Agency, each one widening the scope
-            from learning production RAG to owning it.
+            Two promotions in nine months at Sparktech Agency, each one widening the scope from
+            learning production RAG to owning it.
           </p>
         </Reveal>
 
@@ -126,25 +196,12 @@ export function Experience() {
                   transition={{ duration: 0.6, delay: 0.05, ease: [0.16, 1, 0.3, 1] }}
                   className="relative pl-10 sm:pl-14"
                 >
-                  {/* Node. The current role carries a live pulse. */}
-                  <span
-                    aria-hidden="true"
-                    className={cn(
-                      "absolute left-0 top-1.5 flex h-6 w-6 items-center justify-center rounded-full border sm:h-8 sm:w-8",
-                      isCurrent
-                        ? "border-transparent bg-bg"
-                        : "border-line-strong bg-bg"
-                    )}
-                  >
-                    {isCurrent ? (
-                      <>
-                        <span className="absolute inline-flex h-3 w-3 animate-ping rounded-full bg-warm opacity-60" />
-                        <span className="accent-bar relative inline-flex h-3 w-3 rounded-full" />
-                      </>
-                    ) : (
-                      <span className="h-2 w-2 rounded-full bg-line-strong" />
-                    )}
-                  </span>
+                  <TimelineNode
+                    isCurrent={isCurrent}
+                    fill={fill}
+                    railRef={railRef}
+                    instant={Boolean(prefersReducedMotion)}
+                  />
 
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <p className="font-mono text-xs tabular-nums text-ink-dim">

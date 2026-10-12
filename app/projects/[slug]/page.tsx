@@ -1,17 +1,25 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink, FolderGit2 } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  ArrowUpRight,
+  Check,
+  ExternalLink,
+  FolderGit2,
+} from "lucide-react";
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import { allProjects, projectCategoryLabels, projectNeighbours } from "@/data/projects";
 import { iconKeyForTech } from "@/data/techStack";
 import { projectMetadata } from "@/lib/metadata";
 import { socialLinks } from "@/data/socialLinks";
 import { TechIcon } from "@/components/ui/TechIcon";
-import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { GlowBlob } from "@/components/ui/GlowBlob";
 import { Reveal } from "@/components/motion/Reveal";
 import { CaseStudyNav } from "@/components/projects/CaseStudyNav";
+import { ProjectVisual } from "@/components/projects/ProjectVisual";
 
 export function generateStaticParams() {
   return allProjects.map((project) => ({ slug: project.slug }));
@@ -32,18 +40,13 @@ const STATUS_LABEL: Record<string, string> = {
   shipped: "Shipped",
   "in-development": "In development",
   "client-confidential": "Client project",
-  research: "Published research",
+  research: "Research",
+  prototype: "Working prototype",
   undisclosed: "Details on request",
 };
 
-/** Section eyebrow: zero-padded index + kicker — the page's repeating rhythm. */
-function SectionLabel({ index, kicker }: { index: number; kicker: string }) {
-  return (
-    <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
-      <span className="text-warm">{String(index).padStart(2, "0")}</span> / {kicker}
-    </p>
-  );
-}
+/** Accent is set per project, so each page picks up its own colour. */
+const ACCENT = "var(--project-accent)";
 
 function TechChip({ name }: { name: string }) {
   return (
@@ -54,44 +57,33 @@ function TechChip({ name }: { name: string }) {
   );
 }
 
-/** Shared section shell: numbered eyebrow rail + content column. */
-function Section({
+/** Section shell: a small coloured label over a plain heading. No numbering. */
+function Block({
   id,
-  index,
-  kicker,
-  heading,
+  label,
+  title,
   children,
 }: {
   id: string;
-  index: number;
-  kicker: string;
-  heading: string;
+  label: string;
+  title: string;
   children: React.ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-40 border-t border-line py-16 first:border-t-0 sm:py-20">
+    <section id={id} className="scroll-mt-40 py-14 sm:py-20">
       <Reveal>
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,14rem)_1fr] lg:gap-12">
-          <SectionLabel index={index} kicker={kicker} />
-          <div>
-            <h2 className="font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-              {heading}
-            </h2>
-            <div className="mt-7">{children}</div>
-          </div>
-        </div>
+        <p
+          className="font-mono text-[0.68rem] uppercase tracking-[0.18em]"
+          style={{ color: ACCENT }}
+        >
+          {label}
+        </p>
+        <h2 className="mt-3 max-w-2xl font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
+          {title}
+        </h2>
+        <div className="mt-9">{children}</div>
       </Reveal>
     </section>
-  );
-}
-
-function SubBlock({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <div>
-      <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">{label}</p>
-      <span aria-hidden="true" className="accent-bar mt-2 block h-0.5 w-8 rounded-full" />
-      <p className="mt-4 text-sm leading-relaxed text-muted">{children}</p>
-    </div>
   );
 }
 
@@ -108,316 +100,364 @@ export default async function ProjectPage({
   }
 
   const neighbours = projectNeighbours(project.slug);
-  const primaryLink =
-    project.links.external ?? project.links.repository ?? project.links.store ?? null;
+  const linkButtons = [
+    { label: "Visit website", href: project.links.external },
+    { label: "Google Play", href: project.links.store },
+    { label: "App Store", href: project.links.appStore ?? null },
+    { label: "Source code", href: project.links.repository },
+  ].filter((link): link is { label: string; href: string } => Boolean(link.href));
 
-  // Only sections with real content are built — and the sticky nav is derived
-  // from the same list, so it can never point at a heading that isn't there.
+  // Only sections with real content are built, and the sticky nav comes from
+  // the same list, so it never points at a heading that is not there.
   const sections: { id: string; label: string }[] = [
-    { id: "overview", label: "Overview" },
-    ...(project.architecture?.length ? [{ id: "architecture", label: "Architecture" }] : []),
-    ...(project.decisions?.length ? [{ id: "decisions", label: "Decisions" }] : []),
+    { id: "brief", label: "Brief" },
+    ...(project.architecture?.length ? [{ id: "system", label: "System" }] : []),
+    ...(project.decisions?.length ? [{ id: "choices", label: "Choices" }] : []),
+    ...(project.features?.length ? [{ id: "capabilities", label: "Capabilities" }] : []),
+    ...(project.challenges?.length ? [{ id: "problems", label: "Problems" }] : []),
     ...(project.stackGroups?.length || project.technologies.length
       ? [{ id: "stack", label: "Stack" }]
       : []),
-    ...(project.features?.length ? [{ id: "features", label: "Features" }] : []),
-    ...(project.challenges?.length ? [{ id: "challenges", label: "Challenges" }] : []),
-    ...(project.outcome ? [{ id: "outcome", label: "Outcome" }] : []),
+    ...(project.stories?.length ? [{ id: "story", label: "Story" }] : []),
+    ...(project.outcome ? [{ id: "result", label: "Result" }] : []),
   ];
 
-  let sectionIndex = 0;
-  const nextIndex = () => ++sectionIndex;
-
-  const glanceRows = [
-    { label: "My role", value: project.role },
+  const meta = [
+    { label: "Role", value: project.role },
     { label: "Timeline", value: project.timeline ?? project.year },
     { label: "Status", value: STATUS_LABEL[project.status] ?? project.status },
-    { label: "Deliverables", value: project.deliverables },
-    { label: "Domain", value: project.domainLabel },
-  ].filter((row): row is { label: string; value: string } => Boolean(row.value));
+    { label: "Domain", value: project.domainLabel ?? projectCategoryLabels[project.category] },
+  ];
+
+  const stackGroups = project.stackGroups ?? [
+    { label: "Technologies", items: project.technologies },
+  ];
 
   return (
-    <div className="relative">
+    <div className="relative" style={{ "--project-accent": project.accentColor } as CSSProperties}>
       {/* Hero */}
-      <section className="relative overflow-hidden px-6 pb-16 pt-32 sm:px-10 sm:pt-40 lg:px-16">
+      <section className="relative overflow-hidden px-6 pb-10 pt-32 sm:px-10 sm:pt-40 lg:px-16">
         <GlowBlob tone="dual" size="46rem" className="-left-32 -top-24" />
 
-        <div className="mx-auto w-full max-w-6xl">
+        <div className="relative mx-auto w-full max-w-6xl">
           <Link
-            href="/#work"
+            href="/projects"
             data-cursor="interactive"
             className="inline-flex items-center gap-2 font-mono text-xs text-muted transition-colors duration-300 hover:text-ink"
           >
             <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-            All work
+            All projects
           </Link>
 
-          <div className="mt-8 grid grid-cols-1 gap-12 lg:grid-cols-[1.25fr_0.75fr] lg:gap-16">
-            <div>
-              <div className="flex flex-wrap items-center gap-3">
-                <Badge>{projectCategoryLabels[project.category]}</Badge>
-                <span className="font-mono text-xs tabular-nums text-muted">{project.year}</span>
-              </div>
+          <p
+            className="mt-10 font-mono text-xs uppercase tracking-[0.18em]"
+            style={{ color: ACCENT }}
+          >
+            {projectCategoryLabels[project.category]} · {project.year}
+          </p>
 
-              <h1 className="mt-7 font-display text-5xl font-semibold leading-[0.98] tracking-tight text-ink sm:text-6xl lg:text-7xl">
-                {project.title}
-              </h1>
-              <p className="mt-3 font-display text-xl font-normal text-ink-dim sm:text-2xl">
-                {project.shortDescription}
-              </p>
+          <h1 className="mt-4 font-display text-6xl font-semibold leading-[0.95] tracking-tight text-ink sm:text-7xl lg:text-8xl">
+            {project.title}
+          </h1>
 
-              <p className="mt-7 max-w-2xl text-base leading-relaxed text-muted">
-                {project.fullDescription}
-              </p>
-
-              {project.technologies.length > 0 && (
-                <>
-                  <p className="mt-10 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
-                    Primary technologies
-                  </p>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <TechChip key={tech} name={tech} />
-                    ))}
-                  </ul>
-                </>
-              )}
-
-              {primaryLink && (
-                <Button href={primaryLink} className="mt-10">
-                  View project
-                  <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
-                </Button>
-              )}
-            </div>
-
-            <aside className="h-fit rounded-3xl border border-line bg-bg-raised p-7">
-              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
-                At a glance
-              </p>
-
-              <dl className="mt-6 flex flex-col">
-                {glanceRows.map((row) => (
-                  <div
-                    key={row.label}
-                    className="border-t border-line py-4 first:border-t-0 first:pt-0"
+          <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+            <p className="max-w-2xl font-display text-xl leading-snug text-ink-dim sm:text-2xl">
+              {project.shortDescription}
+            </p>
+            {linkButtons.length > 0 && (
+              <div className="flex shrink-0 flex-wrap items-center gap-3 self-start lg:self-auto">
+                {linkButtons.map((link, i) => (
+                  <Button
+                    key={link.label}
+                    href={link.href}
+                    variant={i === 0 ? "primary" : "ghost"}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <dt className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
-                      {row.label}
-                    </dt>
-                    <dd className="mt-1.5 font-medium text-ink">{row.value}</dd>
-                  </div>
+                    {link.label}
+                    <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                  </Button>
                 ))}
-              </dl>
-            </aside>
+              </div>
+            )}
           </div>
+
+          <div className="mt-12">
+            <ProjectVisual project={project} />
+          </div>
+
+          <dl className="mt-8 grid grid-cols-2 gap-x-6 gap-y-6 border-t border-line pt-6 lg:grid-cols-4">
+            {meta.map((row) => (
+              <div key={row.label}>
+                <dt className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+                  {row.label}
+                </dt>
+                <dd className="mt-1.5 text-sm font-medium text-ink sm:text-base">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
         </div>
       </section>
 
       <CaseStudyNav sections={sections} />
 
-      <div className="mx-auto w-full max-w-6xl px-6 pb-24 pt-16 sm:px-10 lg:px-16">
-        <Section id="overview" index={nextIndex()} kicker="Context" heading="What this project is">
-          <p className="text-lg leading-relaxed text-ink-dim">{project.fullDescription}</p>
-          {project.challenge && (
-            <div className="mt-10 grid grid-cols-1 gap-8 sm:grid-cols-2">
-              <SubBlock label="Engineering problem">{project.challenge}</SubBlock>
-              {project.approach && <SubBlock label="Approach">{project.approach}</SubBlock>}
-            </div>
-          )}
-        </Section>
+      <div className="mx-auto w-full max-w-6xl px-6 pb-24 sm:px-10 lg:px-16">
+        {/* Brief: the description, with the problem and the approach beside it. */}
+        <Block id="brief" label="The brief" title="What it is and why it was hard">
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16">
+            <p className="text-lg leading-relaxed text-ink-dim sm:text-xl">
+              {project.fullDescription}
+            </p>
 
-        {project.architecture?.length ? (
-          <Section
-            id="architecture"
-            index={nextIndex()}
-            kicker="Architecture"
-            heading="How the system is structured"
-          >
-            <div className="mt-2 rounded-3xl border border-line bg-bg-alt p-7 sm:p-10">
-              <ol className="relative flex flex-col gap-9">
-                {/* Connector runs behind the nodes. */}
-                <span
-                  aria-hidden="true"
-                  className="absolute bottom-4 left-[1.05rem] top-4 w-px bg-line-strong"
-                />
-                {project.architecture.map((layer, i) => (
-                  <li key={layer.title} className="relative flex gap-5">
-                    <span className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-line-strong bg-bg font-mono text-[0.68rem] text-warm">
-                      {String(i + 1).padStart(2, "0")}
-                    </span>
-                    <div>
-                      <p className="font-mono text-[0.6rem] uppercase tracking-[0.18em] text-muted">
-                        Layer {String(i + 1).padStart(2, "0")}
-                      </p>
-                      <h3 className="mt-1.5 font-display text-lg font-medium tracking-tight text-ink">
-                        {layer.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-relaxed text-muted">{layer.description}</p>
-                    </div>
-                  </li>
-                ))}
-              </ol>
-            </div>
-          </Section>
-        ) : null}
-
-        {project.decisions?.length ? (
-          <Section
-            id="decisions"
-            index={nextIndex()}
-            kicker="Engineering judgment"
-            heading="Decisions that shaped it"
-          >
-            <ol className="mt-2 border-t border-line">
-              {project.decisions.map((decision, i) => (
-                <li key={decision.title} className="flex gap-6 border-b border-line py-7">
-                  <span className="font-mono text-sm tabular-nums text-warm">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div>
-                    <h3 className="font-display text-lg font-medium tracking-tight text-ink">
-                      {decision.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-muted">
-                      {decision.description}
-                    </p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </Section>
-        ) : null}
-
-        {project.stackGroups?.length || project.technologies.length ? (
-          <Section id="stack" index={nextIndex()} kicker="Stack" heading="What it's built with">
-            <div className="mt-2 border-t border-line">
-              {(project.stackGroups ?? [{ label: "Technologies", items: project.technologies }]).map(
-                (group) => (
-                  <div
-                    key={group.label}
-                    className="grid grid-cols-1 gap-4 border-b border-line py-6 sm:grid-cols-[minmax(0,12rem)_1fr] sm:gap-8"
-                  >
+            {project.challenge && (
+              <div className="flex flex-col gap-4">
+                <div
+                  className="rounded-2xl border border-line bg-bg-raised p-6"
+                  style={{ borderLeft: `3px solid ${project.accentColor}` }}
+                >
+                  <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+                    The problem
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-dim sm:text-base">
+                    {project.challenge}
+                  </p>
+                </div>
+                {project.approach && (
+                  <div className="rounded-2xl border border-line bg-bg-raised p-6">
                     <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
-                      {group.label}
+                      What I did
                     </p>
-                    <ul className="flex flex-wrap gap-2">
-                      {group.items.map((item) => (
-                        <TechChip key={item} name={item} />
-                      ))}
-                    </ul>
+                    <p className="mt-3 text-sm leading-relaxed text-ink-dim sm:text-base">
+                      {project.approach}
+                    </p>
                   </div>
-                )
-              )}
-            </div>
-          </Section>
-        ) : null}
+                )}
+              </div>
+            )}
+          </div>
+        </Block>
 
-        {project.features?.length ? (
-          <Section id="features" index={nextIndex()} kicker="Capabilities" heading="What it does">
-            <ol className="mt-2 border-t border-line">
-              {project.features.map((feature, i) => (
-                <li key={feature} className="flex gap-6 border-b border-line py-5">
-                  <span className="font-mono text-sm tabular-nums text-warm">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <p className="text-base text-ink-dim">{feature}</p>
+        {/* System: a left-to-right flow instead of a numbered list. */}
+        {project.architecture?.length ? (
+          <Block id="system" label="The system" title="How the pieces fit together">
+            <ol className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-0">
+              {project.architecture.map((layer, i) => (
+                <li key={layer.title} className="flex flex-col gap-3 lg:flex-1 lg:flex-row lg:gap-0">
+                  <div className="flex-1 rounded-2xl border border-line bg-bg-raised p-6">
+                    <span
+                      className="inline-flex h-8 w-8 items-center justify-center rounded-full font-mono text-xs"
+                      style={{ border: `1px solid ${project.accentColor}`, color: ACCENT }}
+                    >
+                      {i + 1}
+                    </span>
+                    <h3 className="mt-4 font-display text-lg font-semibold tracking-tight text-ink">
+                      {layer.title}
+                    </h3>
+                    <p className="mt-2 text-sm leading-relaxed text-muted">{layer.description}</p>
+                  </div>
+                  {i < (project.architecture?.length ?? 0) - 1 && (
+                    <span
+                      aria-hidden="true"
+                      className="flex items-center justify-center py-1 lg:px-3 lg:py-0"
+                      style={{ color: ACCENT }}
+                    >
+                      <ArrowRight className="h-5 w-5 rotate-90 lg:rotate-0" />
+                    </span>
+                  )}
                 </li>
               ))}
             </ol>
-          </Section>
+          </Block>
         ) : null}
 
+        {/* Choices: decisions as a card grid. */}
+        {project.decisions?.length ? (
+          <Block id="choices" label="Choices" title="Decisions that shaped it">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {project.decisions.map((decision) => (
+                <article
+                  key={decision.title}
+                  className="rounded-2xl border border-line bg-bg-raised p-6 sm:p-7"
+                >
+                  <span
+                    aria-hidden="true"
+                    className="block h-0.5 w-10 rounded-full"
+                    style={{ background: project.accentColor }}
+                  />
+                  <h3 className="mt-5 font-display text-xl font-semibold leading-snug tracking-tight text-ink">
+                    {decision.title}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-muted sm:text-base">
+                    {decision.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </Block>
+        ) : null}
+
+        {/* Capabilities: a tick grid. */}
+        {project.features?.length ? (
+          <Block id="capabilities" label="Capabilities" title="What it does">
+            <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              {project.features.map((feature) => (
+                <li
+                  key={feature}
+                  className="flex items-start gap-3 rounded-xl border border-line px-5 py-4 text-sm text-ink-dim sm:text-base"
+                >
+                  <Check
+                    className="mt-0.5 h-4 w-4 shrink-0"
+                    style={{ color: ACCENT }}
+                    aria-hidden="true"
+                  />
+                  {feature}
+                </li>
+              ))}
+            </ul>
+          </Block>
+        ) : null}
+
+        {/* Problems: problem on the left, fix on the right, joined by an arrow. */}
         {project.challenges?.length ? (
-          <Section
-            id="challenges"
-            index={nextIndex()}
-            kicker="Challenges"
-            heading="What was hard, and what fixed it"
-          >
-            <div className="mt-2 flex flex-col gap-5">
-              {project.challenges.map((challenge, i) => (
+          <Block id="problems" label="Problems" title="What went wrong, and what fixed it">
+            <div className="flex flex-col gap-4">
+              {project.challenges.map((challenge) => (
                 <article
                   key={challenge.problem}
-                  className="rounded-3xl border border-line bg-bg-raised p-7 sm:p-8"
+                  className="grid grid-cols-1 items-stretch gap-3 md:grid-cols-[1fr_auto_1fr]"
                 >
-                  <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-warm">
-                    Challenge {String(i + 1).padStart(2, "0")}
-                  </p>
-                  <div className="mt-6 grid grid-cols-1 gap-8 sm:grid-cols-2">
-                    <SubBlock label="Problem">{challenge.problem}</SubBlock>
-                    <SubBlock label="Solution">{challenge.solution}</SubBlock>
+                  <div className="rounded-2xl border border-line p-6">
+                    <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+                      Problem
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-ink-dim sm:text-base">
+                      {challenge.problem}
+                    </p>
+                  </div>
+                  <span
+                    aria-hidden="true"
+                    className="flex items-center justify-center"
+                    style={{ color: ACCENT }}
+                  >
+                    <ArrowRight className="h-5 w-5 rotate-90 md:rotate-0" />
+                  </span>
+                  <div
+                    className="rounded-2xl border border-line bg-bg-raised p-6"
+                    style={{ borderTop: `3px solid ${project.accentColor}` }}
+                  >
+                    <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+                      Fix
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-ink-dim sm:text-base">
+                      {challenge.solution}
+                    </p>
                   </div>
                 </article>
               ))}
             </div>
-          </Section>
+          </Block>
         ) : null}
 
+        {/* Stack */}
+        {project.stackGroups?.length || project.technologies.length ? (
+          <Block id="stack" label="Stack" title="What it is built with">
+            <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+              {stackGroups.map((group) => (
+                <div key={group.label}>
+                  <p className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+                    {group.label}
+                  </p>
+                  <ul className="mt-4 flex flex-wrap gap-2">
+                    {group.items.map((item) => (
+                      <TechChip key={item} name={item} />
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </Block>
+        ) : null}
+
+        {/* Story: personal notes in my own words. */}
+        {project.stories?.length ? (
+          <Block id="story" label="In my words" title="The story behind it">
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+              {project.stories.map((story) => (
+                <article
+                  key={story.label}
+                  className="rounded-2xl border border-line bg-bg-raised p-6 sm:p-7"
+                  style={{ borderTop: `3px solid ${project.accentColor}` }}
+                >
+                  <h3 className="font-display text-lg font-semibold tracking-tight text-ink">
+                    {story.label}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-ink-dim sm:text-base">
+                    {story.text}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </Block>
+        ) : null}
+
+        {/* Result: one big statement. */}
         {project.outcome ? (
-          <Section id="outcome" index={nextIndex()} kicker="Outcome" heading="What shipped">
-            <p className="text-lg leading-relaxed text-ink-dim">{project.outcome}</p>
-          </Section>
-        ) : null}
-
-        {neighbours && (
-          <nav aria-label="More projects" className="mt-24 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {[
-              { neighbour: neighbours.previous, direction: "previous" as const },
-              { neighbour: neighbours.next, direction: "next" as const },
-            ].map(({ neighbour, direction }) => (
-              <Link
-                key={`${direction}-${neighbour.slug}`}
-                href={`/projects/${neighbour.slug}`}
-                data-cursor="interactive"
-                className="gradient-border group rounded-3xl border border-line bg-bg-raised p-6 transition-transform duration-500 ease-[var(--ease-editorial)] hover:-translate-y-1"
+          <section id="result" className="scroll-mt-40 py-14 sm:py-20">
+            <Reveal>
+              <div
+                className="relative overflow-hidden rounded-3xl border border-line bg-bg-alt p-8 sm:p-14"
+                style={{ borderTop: `3px solid ${project.accentColor}` }}
               >
                 <p
-                  className={`flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted ${
-                    direction === "next" ? "sm:justify-end" : ""
-                  }`}
+                  className="font-mono text-[0.68rem] uppercase tracking-[0.18em]"
+                  style={{ color: ACCENT }}
                 >
-                  {direction === "previous" && <ArrowLeft className="h-3 w-3" aria-hidden="true" />}
-                  {direction === "previous" ? "Previous project" : "Next project"}
-                  {direction === "next" && <ArrowRight className="h-3 w-3" aria-hidden="true" />}
+                  The result
                 </p>
-                <p
-                  className={`mt-3 font-display text-xl font-medium tracking-tight text-ink ${
-                    direction === "next" ? "sm:text-right" : ""
-                  }`}
-                >
-                  {neighbour.title}
+                <p className="mt-5 max-w-3xl font-display text-2xl font-semibold leading-snug tracking-tight text-ink sm:text-4xl">
+                  {project.outcome}
                 </p>
-                <p
-                  className={`mt-1 text-sm text-muted ${direction === "next" ? "sm:text-right" : ""}`}
-                >
-                  {projectCategoryLabels[neighbour.category]}
-                </p>
-              </Link>
-            ))}
-          </nav>
+              </div>
+            </Reveal>
+          </section>
+        ) : null}
+
+        {/* Next project: one big link. */}
+        {neighbours && (
+          <Link
+            href={`/projects/${neighbours.next.slug}`}
+            data-cursor="interactive"
+            className="group mt-10 block border-t border-line pt-10"
+          >
+            <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
+              Next project
+              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </p>
+            <p className="mt-4 font-display text-5xl font-semibold leading-none tracking-tight text-ink transition-transform duration-500 ease-[var(--ease-editorial)] group-hover:translate-x-2 sm:text-7xl">
+              {neighbours.next.title}
+            </p>
+            <p className="mt-4 text-base text-muted">
+              {projectCategoryLabels[neighbours.next.category]}
+            </p>
+          </Link>
         )}
 
-        <section className="relative mt-16 overflow-hidden rounded-3xl border border-line bg-bg-alt p-10 text-center sm:p-16">
-          <GlowBlob tone="dual" size="34rem" className="left-1/2 top-0 -translate-x-1/2" />
-          <p className="relative font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted">
-            Next step
-          </p>
-          <h2 className="relative mt-5 font-display text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
-            Have something like this
-            <br />
-            you need <span className="text-gradient">built properly</span>?
-          </h2>
-          <p className="relative mx-auto mt-5 max-w-lg text-base leading-relaxed text-muted">
-            I work on the AI layer — retrieval, reasoning, and the plumbing underneath — and hand it
-            over ready to integrate.
-          </p>
-          <div className="relative mt-9 flex flex-wrap items-center justify-center gap-3">
+        <section className="mt-16 flex flex-col gap-6 border-t border-line pt-10 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h2 className="font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
+              Have something like this to build?
+            </h2>
+            <p className="mt-2 max-w-lg text-base text-muted">
+              I work on the AI layer: retrieval, reasoning and the code underneath. I hand it over
+              ready to integrate.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
             <Button href="/#contact">
-              Start a project
+              Get in touch
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Button>
-            <Button href="/#work" variant="ghost">
+            <Button href="/projects" variant="ghost">
               All projects
             </Button>
           </div>

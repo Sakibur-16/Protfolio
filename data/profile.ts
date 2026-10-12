@@ -20,10 +20,14 @@ export const profile: Profile = {
     label: "Open to select AI engineering & research collaborations",
   },
   bio: [
-    "Md. Sakibur Rahman is an AI developer at Sparktech Agency in Dhaka, Bangladesh, building retrieval-augmented and agentic AI systems — the kind that reason, retrieve, and act, rather than only generating text.",
-    "He joined Sparktech as a trainee in October 2025 and moved through junior to his current role, working across RAG and agentic RAG pipelines, LLM reasoning grounded in real retrieval, NLP components, and AI chat assistants, carrying features from prototype through to production. The emphasis throughout is on reliability and explainability: grounding model outputs, testing edge cases, and understanding the retrieval and reasoning layers beneath the interface.",
-    "Alongside product work he publishes applied AI research, with peer-reviewed contributions spanning medical image diagnostics, source-code understanding, and brain-computer interfaces, presented at international conferences including ICDMIS 2025 and IEEE SPICSCON 2025.",
+    "I'm an AI developer at Sparktech Agency in Dhaka. Most of my work is RAG and agentic systems: the kind that look something up, reason over it, and then take the next step. I try to ground every answer in a source I can point to.",
+    "I joined Sparktech as a trainee in October 2025, became a Junior AI Developer in January 2026 and an AI Developer in July 2026. That is two promotions in nine months, and I was named Spark of the Quarter.",
+    "Day to day I ship chat assistants and NLP components into live client apps, using OpenAI, Anthropic Claude, ElevenLabs and SerpAPI. I have led the AI work on more than 15 apps across healthcare, education, wellness and consumer tech. One of them is Quranity, a Qur'an app that is live on Google Play, where I also led the project.",
+    "Before Sparktech I worked at Acote Group on data annotation, cleaning and model benchmarking. I studied Computer Science and Engineering at East West University and graduated in 2025. My papers cover malaria diagnosis from blood-smear images, transformer models for Java code summarization, and a real-time EEG brain-computer interface.",
+    "I'm open to roles and collaborations where I would own the AI layer of a real product.",
   ],
-  resumeUrl: null,
-  email: null,
+
+
+  resumeUrl: "/Sakibur_Rahman_CV.pdf",
+  email: "sakibursrrahman@gmail.com",
 };

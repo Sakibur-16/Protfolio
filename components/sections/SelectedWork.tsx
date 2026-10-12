@@ -1,21 +1,15 @@
-import { featuredProjects, otherProjects, allProjects } from "@/data/projects";
+import Link from "next/link";
+import { ArrowUpRight } from "lucide-react";
+import { allProjects } from "@/data/projects";
 import { Reveal } from "@/components/motion/Reveal";
 import { ProjectCarousel } from "@/components/projects/ProjectCarousel";
-import { ProjectCard } from "@/components/projects/ProjectCard";
 import { GlowBlob } from "@/components/ui/GlowBlob";
 import { Badge } from "@/components/ui/Badge";
 
 /**
- * Work section, in two registers.
- *
- * The auto-cycling deck is the showpiece — layered, tilted cards for the lead
- * case studies. Beneath it, a plain responsive grid carries every project, so
- * a visitor scanning for something specific never has to wait for a carousel
- * to come round to it.
+ * Work section. Every project sits in the auto-cycling deck, and "View all
+ * projects" opens the full list on its own page.
  */
-const FEATURED_COUNT = featuredProjects.length;
-const gridProjects = otherProjects;
-
 export function SelectedWork() {
   return (
     <section id="work" className="relative overflow-hidden bg-bg px-5 py-20 sm:px-10 sm:py-32 lg:px-16">
@@ -26,40 +20,38 @@ export function SelectedWork() {
           <Badge>Selected work</Badge>
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <h2 className="mt-6 max-w-2xl font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-            Shipped AI, <span className="text-gradient">not slideware</span>.
-          </h2>
-        </Reveal>
+        <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+          <Reveal delay={0.05}>
+            <h2 className="max-w-2xl font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
+              Shipped AI, <span className="text-gradient">not slideware</span>.
+            </h2>
+          </Reveal>
 
-        <Reveal delay={0.1}>
+          <Reveal delay={0.1}>
+            <Link
+              href="/projects"
+              data-cursor="interactive"
+              className="btn-ghost group inline-flex shrink-0 items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
+            >
+              View all projects
+              <ArrowUpRight
+                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                aria-hidden="true"
+              />
+            </Link>
+          </Reveal>
+        </div>
+
+        <Reveal delay={0.15}>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
-            {allProjects.length} projects across LLM products, retrieval systems, computer vision,
-            and speech. The deck cycles automatically — drag, swipe, or use the arrow keys.
+            {allProjects.length} projects across LLM products, retrieval, computer vision and
+            speech. Drag, swipe or click a side card to move through them.
           </p>
         </Reveal>
 
-        <Reveal delay={0.15} className="mt-14 block sm:mt-16">
-          <ProjectCarousel projects={featuredProjects} />
+        <Reveal delay={0.2} className="mt-14 block sm:mt-16">
+          <ProjectCarousel projects={allProjects} />
         </Reveal>
-
-        {gridProjects.length > 0 && (
-          <div className="mt-24 sm:mt-32">
-            <Reveal>
-              <h3 className="font-mono text-xs uppercase tracking-[0.2em] text-muted">
-                More work — {gridProjects.length} projects
-              </h3>
-            </Reveal>
-
-            <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {gridProjects.map((project, i) => (
-                <Reveal key={project.slug} delay={Math.min(i, 5) * 0.05}>
-                  <ProjectCard project={project} index={i + FEATURED_COUNT} />
-                </Reveal>
-              ))}
-            </div>
-          </div>
-        )}
       </div>
     </section>
   );

@@ -198,6 +198,10 @@ body {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  /* Tight tracking pushes the last glyph past the inline box, and the clip
+     then cuts it off. Pad the box and pull the margin back. */
+  padding-right: 0.08em;
+  margin-right: -0.08em;
 }
 
 .accent-bar {
@@ -627,5 +631,58 @@ html.vt-theme-active::view-transition-new(root) {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+/* ---------------------------------------------------------------------- */
+/* Case-study nav: the labels glitch, the panel does not move              */
+/* ---------------------------------------------------------------------- */
+@keyframes glitch-text-flicker {
+  0%, 100% { opacity: 1; }
+  12% { opacity: 0.35; }
+  24% { opacity: 1; }
+  38% { opacity: 0.5; }
+  52% { opacity: 1; }
+  70% { opacity: 0.7; }
+}
+.is-glitching {
+  animation: glitch-text-flicker 0.55s steps(1, end);
+  text-shadow:
+    -1px 0 color-mix(in srgb, var(--accent-warm) 85%, transparent),
+    1px 0 color-mix(in srgb, var(--accent-cool) 85%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+  .is-glitching {
+    animation: none;
+    text-shadow: none;
+  }
+}
+
+/* First-visit screen flicker: a few bands in the portfolio colours. */
+@keyframes intro-glitch-flash {
+  0%, 100% { opacity: 0; clip-path: inset(0 0 100% 0); }
+  10% { opacity: 1; clip-path: inset(12% 0 70% 0); transform: translateX(-10px); }
+  22% { opacity: 1; clip-path: inset(55% 0 25% 0); transform: translateX(12px); }
+  36% { opacity: 0.8; clip-path: inset(30% 0 52% 0); transform: translateX(-6px); }
+  50% { opacity: 1; clip-path: inset(75% 0 8% 0); transform: translateX(8px); }
+  66% { opacity: 0.7; clip-path: inset(5% 0 82% 0); transform: translateX(-4px); }
+  82% { opacity: 0.4; clip-path: inset(44% 0 44% 0); transform: translateX(3px); }
+}
+.intro-glitch-flash {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    color-mix(in srgb, var(--accent-warm) 30%, transparent),
+    color-mix(in srgb, var(--accent-cool) 30%, transparent)
+  );
+  mix-blend-mode: screen;
+  animation: intro-glitch-flash 0.65s steps(1, end) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .intro-glitch-flash {
+    display: none;
   }
 }

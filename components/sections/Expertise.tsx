@@ -1,9 +1,9 @@
-import { skillDomains } from "@/data/skills";
+import { services } from "@/data/services";
 import { Reveal } from "@/components/motion/Reveal";
 import { Badge } from "@/components/ui/Badge";
 import { GlowBlob } from "@/components/ui/GlowBlob";
 
-/** Capability cards, one per technical domain. */
+/** What I take on: one row per service, with three concrete points each. */
 export function Expertise() {
   return (
     <section
@@ -23,27 +23,33 @@ export function Expertise() {
           </h2>
         </Reveal>
 
-        <div className="mt-14 grid grid-cols-1 gap-5 sm:mt-16 sm:grid-cols-2 lg:grid-cols-3">
-          {skillDomains.map((skill, i) => (
-            <Reveal key={skill.id} delay={Math.min(i, 5) * 0.05}>
-              <article className="gradient-border group h-full rounded-3xl border border-line bg-bg-raised p-6 transition-transform duration-500 ease-[var(--ease-editorial)] hover:-translate-y-1.5">
-                <p className="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted">
-                  {String(i + 1).padStart(2, "0")}
-                </p>
+        <Reveal delay={0.1}>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
+            From the data to the deployed service. Here is what I can build for you.
+          </p>
+        </Reveal>
 
-                <h3 className="mt-4 font-display text-xl font-medium leading-snug tracking-tight text-ink">
-                  {skill.domain}
-                </h3>
+        <div className="mt-12 border-t border-line sm:mt-14">
+          {services.map((service, i) => (
+            <Reveal key={service.id} delay={Math.min(i, 4) * 0.04}>
+              <article className="grid grid-cols-1 gap-x-12 gap-y-5 border-b border-line py-8 sm:py-10 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
+                <div>
+                  <h3 className="font-display text-2xl font-semibold leading-snug tracking-tight text-ink">
+                    {service.title}
+                  </h3>
+                  <p className="mt-3 max-w-md text-sm leading-relaxed text-muted sm:text-base">
+                    {service.description}
+                  </p>
+                </div>
 
-                <p className="mt-3 text-sm leading-relaxed text-muted">{skill.description}</p>
-
-                <ul className="mt-5 flex flex-wrap gap-1.5 border-t border-line pt-4">
-                  {skill.items.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full bg-bg px-2.5 py-1 font-mono text-[0.6rem] tracking-wide text-ink-dim"
-                    >
-                      {item}
+                <ul className="flex flex-col gap-3 lg:pt-1.5">
+                  {service.points.map((point) => (
+                    <li key={point} className="flex items-start gap-3 text-sm text-ink-dim sm:text-base">
+                      <span
+                        aria-hidden="true"
+                        className="accent-bar mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full"
+                      />
+                      {point}
                     </li>
                   ))}
                 </ul>
@@ -51,6 +57,19 @@ export function Expertise() {
             </Reveal>
           ))}
         </div>
+
+        <Reveal delay={0.1}>
+          <p className="mt-8 text-base text-muted">
+            Not sure which fits?{" "}
+            <a
+              href="#contact"
+              className="text-ink underline decoration-line-strong underline-offset-4 transition-colors hover:decoration-ink"
+            >
+              Describe your project
+            </a>{" "}
+            and I&rsquo;ll suggest the right scope.
+          </p>
+        </Reveal>
       </div>
     </section>
   );

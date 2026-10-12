@@ -5,7 +5,7 @@ import { projectCategoryLabels } from "@/data/projects";
 export function ProjectVisual({ project }: { project: Project }) {
   if (project.image) {
     return (
-      <div className="relative aspect-[4/3] w-full overflow-hidden rounded-sm border border-line">
+      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm border border-line">
         <Image
           src={project.image}
           alt={`${project.title} — screenshot`}

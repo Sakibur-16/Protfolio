@@ -32,7 +32,7 @@ const PLACEHOLDER_GRADIENTS = [
 ];
 
 const DRAG_THRESHOLD = 55;
-const AUTOPLAY_MS = 2000;
+const AUTOPLAY_MS = 4000;
 /** Cards further round the ring than this are not rendered at all. */
 const VISIBLE_RANGE = 3;
 
@@ -52,6 +52,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
   const prefersReducedMotion = useReducedMotion();
   const rootRef = useRef<HTMLDivElement>(null);
   const dragStartX = useRef<number | null>(null);
+  const didDrag = useRef(false);
 
   const goTo = useCallback((index: number) => {
     setActive(((index % total) + total) % total);
@@ -97,6 +98,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
       const delta = event.clientX - dragStartX.current;
       dragStartX.current = null;
       setPaused(false);
+      didDrag.current = Math.abs(delta) > 6;
       if (Math.abs(delta) > DRAG_THRESHOLD) {
         if (delta < 0) next();
         else prev();
@@ -109,6 +111,20 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
       window.removeEventListener("pointercancel", onUp);
     };
   }, [next, prev]);
+
+  // Side cards are hit-test transparent, so a click on one lands on the
+  // container itself. Treat it as "go to that side". A drag that just ended
+  // also fires a click; skip those.
+  const onBackgroundClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target !== event.currentTarget) return;
+    if (didDrag.current) {
+      didDrag.current = false;
+      return;
+    }
+    const rect = event.currentTarget.getBoundingClientRect();
+    if (event.clientX < rect.left + rect.width / 2) prev();
+    else next();
+  };
 
   const onKeyDown = (event: React.KeyboardEvent) => {
     if (event.key === "ArrowRight") {
@@ -130,12 +146,10 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
         onKeyDown={onKeyDown}
         onPointerDown={(e) => {
           dragStartX.current = e.clientX;
+          didDrag.current = false;
           setPaused(true);
         }}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        onFocus={() => setPaused(true)}
-        onBlur={() => setPaused(false)}
+        onClick={onBackgroundClick}
         className="relative h-[25rem] cursor-grab touch-pan-y select-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:h-[30rem]"
         style={{ perspective: "1700px", perspectiveOrigin: "50% 45%" }}
       >

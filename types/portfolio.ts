@@ -97,13 +97,17 @@ export type ProjectStatus =
   | "in-development"
   | "client-confidential"
   | "research"
+  /** A working prototype that has no public link yet. */
+  | "prototype"
   /** Genuinely undisclosed — used instead of guessing at a status we don't know. */
   | "undisclosed";
 
 export interface ProjectLink {
   external: string | null;
   repository: string | null;
+  /** Google Play. */
   store: string | null;
+  appStore?: string | null;
 }
 
 export interface Project {
@@ -145,6 +149,8 @@ export interface Project {
   stackGroups?: { label: string; items: string[] }[];
   /** Capability list. */
   features?: string[];
+  /** Personal notes in my own words, for example why I built it. */
+  stories?: { label: string; text: string }[];
   /** Problem/solution pairs, rendered as cards. */
   challenges?: { problem: string; solution: string }[];
 }
@@ -165,6 +171,10 @@ export interface Publication {
   affiliation: string;
   doiUrl: string | null;
   paperUrl: string | null;
+  /** What I personally did on the paper. */
+  contribution?: string;
+  /** The hardest part, in my own words. */
+  challenge?: string;
 }
 
 export interface EducationEntry {

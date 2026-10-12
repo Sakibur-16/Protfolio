@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navigation } from "@/data/navigation";
@@ -9,6 +10,8 @@ import { useActiveSection } from "@/lib/useActiveSection";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { MagneticLink } from "@/components/ui/MagneticLink";
 import { RollingText } from "@/components/ui/RollingText";
+import { GlitchText } from "@/components/ui/GlitchText";
+import { useIntroGlitch } from "@/lib/introGlitch";
 import { cn } from "@/lib/utils";
 
 const NAV_IDS = navigation.map((n) => n.id);
@@ -16,7 +19,17 @@ const NAV_IDS = navigation.map((n) => n.id);
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const active = useActiveSection(NAV_IDS);
+  // Per-link click counters. A click bumps its counter, which replays that
+  // label's glitch. The first-visit glitch bumps every label at once.
+  const [clicks, setClicks] = useState<Record<string, number>>({});
+  const intro = useIntroGlitch();
+  const pathname = usePathname();
+  const onHome = pathname === "/";
+  // On any other page (a project, the projects index) the section anchors live
+  // on the home page, so the links must point there instead of at "#...".
+  const homePrefix = onHome ? "" : "/";
+  const homeActive = useActiveSection(NAV_IDS);
+  const active = onHome ? homeActive : "";
   const prefersReducedMotion = useReducedMotion();
 
   // Tightens the pill once the page leaves the hero. Passive listener +
@@ -65,7 +78,7 @@ export function Header() {
           )}
         >
           <a
-            href="#hero"
+            href={`${homePrefix}#hero`}
             data-cursor="interactive"
             onClick={() => setOpen(false)}
             className="group relative z-10 flex shrink-0 items-center gap-2 pr-1 transition-opacity duration-200 hover:opacity-80"
@@ -88,14 +101,15 @@ export function Header() {
             aria-label="Primary"
             className="relative z-10 hidden items-center gap-1 md:flex"
           >
-            {navigation.slice(1).map((link) => {
+            {navigation.map((link) => {
               const isActive = active === link.id;
               return (
                 <a
                   key={link.id}
-                  href={link.href}
+                  href={`${homePrefix}${link.href}`}
                   data-cursor="interactive"
                   aria-current={isActive ? "true" : undefined}
+                  onClick={() => setClicks((c) => ({ ...c, [link.id]: (c[link.id] ?? 0) + 1 }))}
                   className={cn(
                     "relative rounded-full px-2.5 py-1 font-mono text-[0.65rem] tracking-wide transition-colors duration-300",
                     isActive ? "text-ink" : "text-muted hover:text-ink"
@@ -112,7 +126,7 @@ export function Header() {
                       }
                     />
                   )}
-                  {link.label}
+                  <GlitchText text={link.label} trigger={intro * 1000 + (clicks[link.id] ?? 0)} />
                 </a>
               );
             })}
@@ -133,7 +147,7 @@ export function Header() {
             <ThemeToggle />
 
             <MagneticLink
-              href="#contact"
+              href={`${homePrefix}#contact`}
               className="btn-glow group hidden items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-medium sm:inline-flex"
             >
               <RollingText text="Contact me" />
@@ -171,7 +185,7 @@ export function Header() {
                 {navigation.map((link) => (
                   <a
                     key={link.id}
-                    href={link.href}
+                    href={`${homePrefix}${link.href}`}
                     onClick={() => setOpen(false)}
                     data-cursor="interactive"
                     className="flex items-baseline gap-3 rounded-2xl px-3 py-3 font-display text-xl text-ink transition-colors duration-200 hover:bg-ink/[0.06]"

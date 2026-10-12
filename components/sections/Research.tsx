@@ -75,6 +75,22 @@ export function Research() {
                     <p className="mt-2 text-sm text-muted">
                       {paper.venue} · {paper.affiliation}
                     </p>
+                    {paper.contribution && (
+                      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-ink-dim">
+                        <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+                          My part{" "}
+                        </span>
+                        {paper.contribution}
+                      </p>
+                    )}
+                    {paper.challenge && (
+                      <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ink-dim">
+                        <span className="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+                          The hard part{" "}
+                        </span>
+                        {paper.challenge}
+                      </p>
+                    )}
                   </div>
 
                   <div className="flex items-start gap-4 lg:justify-end">

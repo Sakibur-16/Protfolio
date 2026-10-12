@@ -7,11 +7,11 @@ import { buildMetadata, personJsonLd } from "@/lib/metadata";
 import { ThemeProvider, themeInitScript } from "@/components/theme/ThemeProvider";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { IndexRail } from "@/components/layout/IndexRail";
 import { CursorFX } from "@/components/layout/CursorFX";
 import { GrainOverlay } from "@/components/layout/GrainOverlay";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { Preloader } from "@/components/layout/Preloader";
+import { IntroGlitch } from "@/components/layout/IntroGlitch";
 import "./globals.css";
 
 export const metadata: Metadata = buildMetadata();
@@ -36,11 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             Skip to content
           </a>
           <Preloader />
+          <IntroGlitch />
           <GrainOverlay />
           <ScrollProgress />
           <CursorFX />
           <Header />
-          <IndexRail />
           <main id="main-content">{children}</main>
           <Footer />
         </ThemeProvider>

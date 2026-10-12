@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-label="Malaria Diagnosis">
+  <defs>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6b2c"/>
+      <stop offset="1" stop-color="#2c6bff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="800" fill="#101114"/>
+  <rect x="0" y="0" width="8" height="800" fill="url(#edge)"/>
+  <rect x="760" y="120" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="760" y="182" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="760" y="244" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="760" y="306" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="760" y="368" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="822" y="120" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="822" y="182" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.12000000000000001"/>
+  <rect x="822" y="244" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.17"/>
+  <rect x="822" y="306" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.22000000000000003"/>
+  <rect x="822" y="368" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="884" y="120" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="884" y="182" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.17"/>
+  <rect x="884" y="244" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="884" y="306" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.17"/>
+  <rect x="884" y="368" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="946" y="120" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="946" y="182" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.22000000000000003"/>
+  <rect x="946" y="244" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.17"/>
+  <rect x="946" y="306" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.12000000000000001"/>
+  <rect x="946" y="368" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1008" y="120" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1008" y="182" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1008" y="244" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1008" y="306" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1008" y="368" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1070" y="120" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1070" y="182" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.12000000000000001"/>
+  <rect x="1070" y="244" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.17"/>
+  <rect x="1070" y="306" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.22000000000000003"/>
+  <rect x="1070" y="368" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1132" y="120" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1132" y="182" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.17"/>
+  <rect x="1132" y="244" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <rect x="1132" y="306" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.17"/>
+  <rect x="1132" y="368" width="46" height="46" rx="8" fill="#ff6b2c" fill-opacity="0.07"/>
+  <text x="72" y="470" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="88" font-weight="700" letter-spacing="-2.5" fill="#F4F4F5">Malaria Diagnosis</text>
+  <text x="72" y="540" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="30" fill="#A1A1AA"><tspan x="72" dy="0">CNNs on blood smears, tested</tspan><tspan x="72" dy="40">across datasets</tspan></text>
+</svg>
