@@ -2,6 +2,7 @@
 
 import { createElement, useState } from "react";
 import { GlitchText } from "@/components/ui/GlitchText";
+import { cn } from "@/lib/utils";
 
 type Segment = { text: string; className?: string };
 
@@ -23,10 +24,13 @@ export function GlitchBlock({
 
   return createElement(
     as,
-    { className, onMouseEnter: () => setHovers((count) => count + 1) },
+    {
+      className: cn("relative", className),
+      onMouseEnter: () => setHovers((count) => count + 1),
+    },
     segments.map((segment, i) => (
       <span key={i} className={segment.className}>
-        <GlitchText text={segment.text} trigger={hovers} />
+        <GlitchText text={segment.text} trigger={hovers} lock />
       </span>
     ))
   );

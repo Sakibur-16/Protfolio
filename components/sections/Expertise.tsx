@@ -19,13 +19,13 @@ export function Expertise() {
 
         <Reveal delay={0.05}>
           <h2 className="mt-6 max-w-2xl font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-            The <span className="text-gradient">AI layer</span>, end to end.
+            From data to a <span className="text-gradient">deployed service</span>.
           </h2>
         </Reveal>
 
         <Reveal delay={0.1}>
           <p className="mt-5 max-w-xl text-base leading-relaxed text-muted">
-            From the data to the deployed service. Here is what I can build for you.
+            Here is what I can build for you.
           </p>
         </Reveal>
 

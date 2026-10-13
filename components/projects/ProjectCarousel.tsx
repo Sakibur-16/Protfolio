@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { ArrowUpRight, ChevronLeft, ChevronRight, Pause, Play } from "lucide-react";
 import { motion, useReducedMotion } from "framer-motion";
@@ -224,15 +225,23 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                   isActive ? "shadow-2xl ring-line-strong" : "shadow-lg ring-line"
                 )}
               >
-                {/*
-                  Thumbnail placeholder — swap for
-                  <Image src={`/images/projects/${project.slug}.jpg`} fill />
-                  once real screenshots exist.
-                */}
                 <div
-                  className="relative aspect-[16/10] w-full"
-                  style={{ background: PLACEHOLDER_GRADIENTS[i % PLACEHOLDER_GRADIENTS.length] }}
+                  className="relative aspect-[16/10] w-full overflow-hidden"
+                  style={
+                    project.image
+                      ? undefined
+                      : { background: PLACEHOLDER_GRADIENTS[i % PLACEHOLDER_GRADIENTS.length] }
+                  }
                 >
+                  {project.image && (
+                    <Image
+                      src={project.image}
+                      alt=""
+                      fill
+                      sizes="(min-width: 640px) 352px, 264px"
+                      className="object-cover"
+                    />
+                  )}
                   <span className="absolute left-4 top-4 rounded-full bg-bg/75 border border-line px-2.5 py-1 font-mono text-[0.65rem] text-ink backdrop-blur-sm">
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -345,7 +354,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
           className="font-mono text-xs text-muted"
         >
           {String(active + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
-          <span className="sr-only"> — {projects[active]?.title}</span>
+          <span className="sr-only">: {projects[active]?.title}</span>
         </p>
 
         <div className="flex flex-1 items-center justify-end gap-1.5">

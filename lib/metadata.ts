@@ -10,7 +10,7 @@ export function buildMetadata(overrides: Partial<Metadata> = {}): Metadata {
     metadataBase: new URL(siteConfig.url),
     title: {
       default: siteConfig.title,
-      template: `%s — ${siteConfig.shortName}`,
+      template: `%s | ${siteConfig.shortName}`,
     },
     description: siteConfig.description,
     keywords: [
@@ -59,7 +59,7 @@ export function projectMetadata(project: Project): Metadata {
     openGraph: {
       type: "article",
       url: `${siteConfig.url}/projects/${project.slug}`,
-      title: `${project.title} — ${siteConfig.shortName}`,
+      title: `${project.title} | ${siteConfig.shortName}`,
       description: project.shortDescription,
       images: [{ url: siteConfig.ogImage }],
     },

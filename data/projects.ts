@@ -107,7 +107,7 @@ export const selectedWork: Project[] = [
     slug: "eqi30-emotional-intelligence-platform",
     title: "EQi30",
     year: "2025",
-    role: "AI Developer — AI service layer",
+    role: "AI Developer",
     category: "llm-application",
     domains: ["llm", "product", "education"],
     status: "shipped",
@@ -326,6 +326,38 @@ export const additionalProjects: Project[] = [
     stackGroups: [
       { label: "Service", items: ["FastAPI", "MySQL/MariaDB"] },
       { label: "AI", items: ["OpenAI API", "RAG"] },
+    ],
+    architecture: [
+      {
+        title: "A question comes in",
+        description:
+          "The user asks about spending, a budget or cash flow in plain language, through a secure service.",
+      },
+      {
+        title: "Intent detection",
+        description: "The model works out what is being asked and which figures it needs.",
+      },
+      {
+        title: "Deterministic calculations",
+        description:
+          "Code calculates the numbers from the client's live financial database. The model never does the arithmetic.",
+      },
+      {
+        title: "The answer is written",
+        description: "The OpenAI-based chat layer turns the calculated result into a clear reply.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Numbers from code, words from the model",
+        description:
+          "A language model should not be doing arithmetic on someone's money. Calculations are deterministic, so a spending or cash-flow answer can be checked.",
+      },
+      {
+        title: "Work on the live data",
+        description:
+          "The assistant reads the client's financial database directly, so answers reflect the current state and not a stale copy.",
+      },
     ],
     todo: "Add measured results and what was hardest once confirmed.",
   },
@@ -678,9 +710,9 @@ export const additionalProjects: Project[] = [
     status: "client-confidential",
     featured: false,
     shortDescription:
-      "A document-automation platform that generates certification-ready candidate files for two training institutes.",
+      "A document-automation platform that generates certification-ready candidate files for Proforma Institut and Proskills Institut.",
     fullDescription:
-      "CertiFlow AI is a document-automation platform for two training institutes. It generates the candidate files needed for the RS6485, RS7200, RS7311 and RS7344 certifications. Claude writes and structures the candidate-specific content that runs through several documents, while rules in code handle scoring consistency and pass or fail readiness.",
+      "CertiFlow AI is a document-automation platform for two training institutes, Proforma Institut and Proskills Institut. It generates the candidate files needed for the RS6485, RS7200, RS7311 and RS7344 certifications. Claude writes and structures the candidate-specific content that runs through several documents, while rules in code handle scoring consistency and pass or fail readiness.",
     challenge:
       "Every document has to tell the same story about a candidate, with the same grades and the same final summary, and a long generation chain had to run within serverless limits.",
     approach:
@@ -761,36 +793,100 @@ export const additionalProjects: Project[] = [
     title: "Nibbl AI",
     year: "2026",
     role: "AI Developer",
-    category: "llm-application",
-    domains: ["llm", "product"],
-    status: "undisclosed",
+    category: "computer-vision",
+    domains: ["computer-vision", "llm", "product"],
+    status: "prototype",
     featured: false,
     shortDescription:
-      "A rebate and review platform where brands fund campaigns and shoppers earn rewards by uploading receipts and writing reviews.",
+      "AI receipt intelligence for a cashback platform: it reads receipt photos and returns validated, structured data, and sends anything doubtful for review.",
     fullDescription:
-      "Nibbl AI is a multi-tenant platform where brands fund rebate and review campaigns and consumers earn rewards by submitting receipts. Brands manage their products, fund campaigns and review analytics. Consumers find offers, reserve rewards, upload receipts, publish reviews and withdraw their earnings. I was the AI developer on the project. The AI covers receipt processing and AI-assisted review prompts.",
-    challenge: null,
-    approach: null,
-    outcome: null,
-    technologies: ["Python", "Anthropic API", "OpenAI API", "Gemini API"],
+      "Nibbl AI is a platform where brands fund rebate and review campaigns and shoppers earn rewards by uploading receipts. I built its AI receipt intelligence service. It turns a receipt image into structured, validated JSON that the backend can use for cashback and rebate processing: the merchant, items with quantities, prices, discounts and taxes, dates, currency, totals, payment method and masked card details. The service also writes AI-assisted product reviews and suggests questions for reviewers.",
+    challenge:
+      "A basic OCR system can read text, but a real one has to decide whether what it read makes sense, on receipts that are blurry, inconsistent, multilingual and financially ambiguous.",
+    approach:
+      "I built a layered pipeline: OCR, normalisation, rule-based extraction, validation, confidence scoring, provenance, and an optional LLM fallback for fields the rules cannot settle.",
+    outcome:
+      "The receipt pipeline is built and covered by 533 automated tests, which pass in 13.46 seconds. It runs as a containerised FastAPI service with a versioned API contract and OpenAPI documentation.",
+    technologies: ["Python", "FastAPI", "Tesseract", "PaddleOCR", "Docker"],
     image: "/images/projects/nibbl-ai.svg",
     gallery: [],
     links: { external: null, repository: null, store: null },
-    accentColor: ACCENT.violet,
+    accentColor: ACCENT.cyan,
     timeline: "2026",
-    domainLabel: "Rebates and reviews",
-    features: [
-      "Receipt processing with OCR, product matching and fraud flags, with a manual review queue",
-      "Duplicate receipt detection using fingerprints",
-      "AI-assisted review prompts, trying Anthropic, OpenAI and Gemini in turn, with a plain fallback",
-      "Campaigns with QR or link access, reward tiers and budget-aware reservations",
-      "A wallet with escrow and payout batches",
+    deliverables: "Receipt extraction API · Review generation",
+    domainLabel: "Cashback and rebates",
+    architecture: [
+      {
+        title: "Quality check and cleanup",
+        description:
+          "Measures blur, brightness, contrast and skew, and preprocesses poor receipts before reading them.",
+      },
+      {
+        title: "OCR",
+        description:
+          "Several engines behind one interface: Tesseract, PaddleOCR, PaddleOCR-VL and OpenAI-compatible vision models.",
+      },
+      {
+        title: "Extraction",
+        description:
+          "Rules extract the merchant, items, dates, currency, totals and payment method first. An LLM is only a fallback for ambiguous fields, and it is off by default.",
+      },
+      {
+        title: "Validation and review routing",
+        description:
+          "Subtotal, tax, payment and total are cross-checked, every field gets a confidence score, and doubtful receipts go to manual review.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Rules first, model second",
+        description:
+          "The common path is deterministic, so it needs no model, costs nothing per receipt and cannot hallucinate. The LLM only steps in for ambiguous or low-confidence fields.",
+      },
+      {
+        title: "Never guess",
+        description:
+          "A date like 08/09/26 is ambiguous, so it is not guessed. Anything missing stays null instead of being invented, and low-confidence results go to a person.",
+      },
+      {
+        title: "Redact what is sensitive",
+        description: "Card-like numbers are detected and redacted before the data goes anywhere.",
+      },
     ],
     stackGroups: [
-      { label: "AI", items: ["Anthropic API", "OpenAI API", "Gemini API"] },
-      { label: "Platform", items: ["Python", "Django", "Django REST Framework", "PostgreSQL", "Docker", "AWS", "GitHub Actions"] },
+      { label: "Reading receipts", items: ["Tesseract", "PaddleOCR", "PaddleOCR-VL", "OpenAI-compatible vision"] },
+      { label: "Service", items: ["Python", "FastAPI", "Docker", "OpenAPI"] },
     ],
-    todo: "Confirm exactly which AI parts were mine, the status, and add the hardest problem and a real number.",
+    features: [
+      "Receipt photos turned into structured, validated JSON",
+      "Image quality analysis for blur, brightness, contrast and skew",
+      "Items, quantities, prices, discounts, taxes, dates, currency and totals",
+      "Payment method and masked card details, with card numbers redacted",
+      "Checks that subtotal, tax, payment and total agree",
+      "A confidence score for every field, with automatic manual-review routing",
+      "AI-assisted product review generation and reviewer-question suggestions",
+      "Health checks, metrics and a versioned API contract",
+    ],
+    challenges: [
+      {
+        problem:
+          "Receipts are blurry, inconsistent, multilingual and financially ambiguous, and OCR on its own cannot tell whether the result makes sense.",
+        solution:
+          "A layered pipeline: OCR, normalisation, rule-based extraction, validation, confidence scoring, provenance, and an optional LLM fallback.",
+      },
+      {
+        problem:
+          "OCR confuses 0, O, 1 and I, totals may not match the items and tax, and a wrong guess would pay out the wrong cashback.",
+        solution:
+          "Financial validation catches the mismatches, unclear fields stay null, and low-confidence results are routed to manual review instead of being accepted.",
+      },
+    ],
+    stories: [
+      {
+        label: "Where it stands",
+        text: "The receipt pipeline is implemented and tested, and it runs as an API in a container built for deployment on the project's AWS setup. Review generation and question suggestions are built. Two endpoints are still planned and not finished: the adaptive conversational question endpoint and the AI review summary.",
+      },
+    ],
   },
   {
     slug: "everidog",

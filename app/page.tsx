@@ -16,7 +16,7 @@ export default function HomePage() {
       <SelectedWork />
       <Expertise />
       <Research />
-      <Contact links={<ContactGrid showLabels showAddress />} />
+      <Contact links={<ContactGrid tiles />} />
     </>
   );
 }

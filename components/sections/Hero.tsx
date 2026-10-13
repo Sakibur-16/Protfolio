@@ -52,9 +52,7 @@ export function Hero() {
 
           <h1 className="mt-5 max-w-2xl font-display text-[2.5rem] font-semibold leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-7xl">
             I build RAG and agent systems that ship to{" "}
-            <span className="text-gradient">
-              <GlitchWord text="real users" everyMs={AUTO_GLITCH_MS} />
-            </span>.
+            <GlitchWord text="real users" className="text-gradient" everyMs={AUTO_GLITCH_MS} />.
           </h1>
 
           <p className="mt-6 max-w-xl text-base leading-relaxed text-ink-dim sm:text-lg">
@@ -64,7 +62,7 @@ export function Hero() {
           </p>
 
           {/* Two stacked buttons | divider | 2x2 icon buttons with the CV bar below. */}
-          <div className="mt-8 flex flex-col gap-5 sm:mt-10 lg:flex-row lg:items-stretch lg:gap-6">
+          <div className="mt-8 flex flex-col gap-5 sm:mt-10 lg:w-full lg:max-w-xl lg:flex-row lg:items-stretch lg:gap-6">
             <div className="flex flex-wrap items-center gap-3 lg:flex-col lg:items-start lg:justify-center">
               <Button href="#contact" className="group">
                 <RollingText text="Contact me" />
@@ -80,7 +78,7 @@ export function Hero() {
 
             <span aria-hidden="true" className="h-px w-full bg-line-strong lg:h-auto lg:w-px" />
 
-            <ContactGrid className="max-w-[22rem] lg:w-auto lg:max-w-none" />
+            <ContactGrid className="max-w-[22rem] lg:min-w-0 lg:max-w-none lg:flex-1" />
           </div>
 
           <dl className="mt-10 grid w-full max-w-xl grid-cols-1 gap-x-8 gap-y-4 border-t border-line pt-6 sm:grid-cols-3">

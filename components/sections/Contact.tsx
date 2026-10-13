@@ -8,9 +8,9 @@ import { gmailComposeUrl } from "@/lib/mail";
 import { cn } from "@/lib/utils";
 
 const STEPS = [
-  "You tell me what you're building.",
-  "I read it and reply by email.",
-  "If it fits, we set up a short call.",
+  { title: "You tell me what you're building.", note: "A few lines about the project is enough." },
+  { title: "I read it and reply by email.", note: "I'll ask about anything that is unclear." },
+  { title: "If it fits, we set up a short call.", note: "To talk through scope and next steps." },
 ];
 
 type Errors = { name?: string; email?: string; message?: string };
@@ -70,53 +70,60 @@ export function Contact({ links }: { links: ReactNode }) {
   return (
     <section id="contact" className="relative overflow-hidden bg-bg px-5 py-20 sm:px-10 sm:py-32 lg:px-16">
       <div className="mx-auto w-full max-w-6xl">
-        <Reveal blur>
-          <h2 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-            Let&rsquo;s talk.
-          </h2>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted">
-            Open to AI engineering roles, applied ML work, research collaborations and AI product
-            consulting. Based in {profile.location.city}, working with teams anywhere.
-          </p>
-        </Reveal>
+        {/* Heading and intro sit in the same two columns as the cards below, so the
+            paragraph ends exactly where the left card ends. */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-10">
+          <div>
+            <Reveal blur>
+              <h2 className="font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
+                Let&rsquo;s talk.
+              </h2>
+            </Reveal>
+            <Reveal delay={0.1}>
+              <p className="mt-6 text-lg leading-relaxed text-muted">
+                Open to AI engineering roles, applied ML work, research collaborations and AI
+                product consulting. Based in {profile.location.city}, working with teams anywhere.
+              </p>
+            </Reveal>
+          </div>
+        </div>
 
         <div className="mt-12 grid grid-cols-1 gap-8 sm:mt-14 lg:grid-cols-2 lg:gap-10">
-          <div className="flex flex-col gap-5">
-            <Reveal delay={0.1}>
-              <div className="rounded-3xl border border-line bg-bg-raised p-6 sm:p-7">
-                <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
-                  What happens next
-                </p>
-                <ol className="mt-5 flex flex-col gap-4">
-                  {STEPS.map((step, i) => (
-                    <li key={step} className="flex items-start gap-3.5 text-ink-dim">
-                      <span className="accent-bar mt-0.5 grid h-6 w-6 shrink-0 place-items-center rounded-full font-mono text-[0.68rem] font-semibold text-white">
-                        {i + 1}
+          <Reveal delay={0.1} className="flex">
+            <div className="flex w-full flex-col rounded-3xl border border-line bg-bg-raised p-6 sm:p-8">
+              <p className="font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
+                What happens next
+              </p>
+              <ol className="mt-6 flex flex-col gap-6">
+                {STEPS.map((step, i) => (
+                  <li key={step.title} className="flex items-start gap-4">
+                    <span className="accent-bar mt-0.5 grid h-7 w-7 shrink-0 place-items-center rounded-full font-mono text-xs font-semibold text-white">
+                      {i + 1}
+                    </span>
+                    <span>
+                      <span className="block text-base font-medium leading-snug text-ink">
+                        {step.title}
                       </span>
-                      <span className="text-base leading-snug">{step}</span>
-                    </li>
-                  ))}
-                </ol>
-              </div>
-            </Reveal>
+                      <span className="mt-1 block text-sm leading-snug text-muted">{step.note}</span>
+                    </span>
+                  </li>
+                ))}
+              </ol>
 
-            <Reveal delay={0.15}>
-              <div>
-                <p className="mb-3 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
+              <div className="mt-8 border-t border-line pt-6 lg:mt-auto">
+                <p className="mb-4 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
                   Or reach me directly
                 </p>
                 {links}
               </div>
-            </Reveal>
-          </div>
+            </div>
+          </Reveal>
 
           <Reveal delay={0.1} className="w-full">
             <form
               onSubmit={handleSubmit}
               noValidate
-              className="flex w-full flex-col gap-5 gradient-border rounded-3xl border border-line bg-bg-raised p-6 sm:p-9"
+              className="flex w-full flex-col gap-5 gradient-border rounded-3xl border border-line bg-bg-raised p-6 sm:p-8"
             >
               <div className="flex flex-col gap-2">
                 <label htmlFor="contact-name" className="font-mono text-[0.68rem] uppercase tracking-[0.16em] text-muted">
@@ -186,7 +193,7 @@ export function Contact({ links }: { links: ReactNode }) {
                 )}
               </div>
 
-              <div className="mt-1 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div className="mt-1 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
                 <button
                   type="submit"
                   disabled={!profile.email}

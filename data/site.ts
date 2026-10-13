@@ -5,7 +5,7 @@ import type { SiteConfig } from "@/types/portfolio";
 export const siteConfig: SiteConfig = {
   name: "Md. Sakibur Rahman",
   shortName: "Sakibur Rahman",
-  title: "Md. Sakibur Rahman — AI Developer & ML Researcher",
+  title: "Md. Sakibur Rahman | AI Developer & ML Researcher",
   description:
     "AI developer and ML researcher building production LLM, RAG, NLP, computer vision, and speech products, with published research in medical AI, code understanding, and brain-computer interfaces.",
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sakibursr.me",

@@ -27,7 +27,7 @@ export const experience: ExperienceEntry[] = [
     responsibilities: [
       "Helped design and test RAG retrieval systems and LLM integrations under senior engineers",
       "Built NLP preprocessing pipelines to clean up input before it reached the language model",
-      "Moved from supervised tasks to owning features end to end, which led to the promotion",
+      "Moved from supervised tasks to owning whole features, which led to the promotion",
     ],
   },
   {

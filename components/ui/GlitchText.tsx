@@ -17,10 +17,18 @@ export function GlitchText({
   text,
   trigger,
   className,
+  lock = false,
 }: {
   text: string;
   trigger: number;
   className?: string;
+  /**
+   * Keeps the real text in place (hidden while glitching) and draws the
+   * scrambled letters on top of it, so the glitch can never change the width,
+   * the line breaks or the height of the layout. The nearest positioned
+   * ancestor must be the box to cover, so give the parent `relative`.
+   */
+  lock?: boolean;
 }) {
   const [display, setDisplay] = useState(text);
   const [glitching, setGlitching] = useState(false);
@@ -61,6 +69,22 @@ export function GlitchText({
       setGlitching(false);
     };
   }, [trigger, text, reduced]);
+
+  if (lock) {
+    return (
+      <>
+        <span className={cn(glitching && "opacity-0", className)}>{text}</span>
+        {glitching && (
+          <span
+            aria-hidden="true"
+            className={cn("is-glitching pointer-events-none absolute inset-0 select-none", className)}
+          >
+            {display}
+          </span>
+        )}
+      </>
+    );
+  }
 
   return (
     <>

@@ -109,8 +109,8 @@ export function Header() {
                   aria-current={isActive ? "true" : undefined}
                   onClick={() => setClicks((c) => ({ ...c, [link.id]: (c[link.id] ?? 0) + 1 }))}
                   className={cn(
-                    "relative rounded-full px-2.5 py-1 font-mono text-[0.65rem] tracking-wide transition-colors duration-300",
-                    isActive ? "text-ink" : "text-muted hover:text-ink"
+                    "relative rounded-full px-3 py-1.5 text-[0.82rem] font-medium tracking-[-0.01em] transition-colors duration-300",
+                    isActive ? "text-ink" : "text-ink-dim hover:text-ink"
                   )}
                 >
                   {isActive && (
@@ -124,7 +124,9 @@ export function Header() {
                       }
                     />
                   )}
-                  <GlitchText text={link.label} trigger={clicks[link.id] ?? 0} />
+                  <span className="relative inline-block">
+                    <GlitchText text={link.label} trigger={clicks[link.id] ?? 0} lock />
+                  </span>
                 </a>
               );
             })}

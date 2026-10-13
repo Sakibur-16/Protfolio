@@ -13,7 +13,7 @@ export const education: EducationEntry[] = [
     coreAreas: [
       "Artificial Intelligence",
       "Machine Learning",
-      "Image Processing & Brain–Computer Interfaces",
+      "Image Processing & Brain-Computer Interfaces",
       "Blockchain in Green IT",
       "Computer Networks & Security",
       "Algorithms & Data Structures",
@@ -22,7 +22,7 @@ export const education: EducationEntry[] = [
     ],
     activities: [
       "EWU Computer Programming Club (CoPC)",
-      "Project Showcase — 1st Runner-up",
+      "Project Showcase, 1st Runner-up",
     ],
   },
   {

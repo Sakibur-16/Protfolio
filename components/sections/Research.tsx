@@ -25,7 +25,7 @@ export function Research() {
         <Reveal delay={0.05}>
           <p className="mt-6 max-w-xl text-base leading-relaxed text-muted">
             {publications.length} peer-reviewed publications across medical image diagnostics,
-            source-code understanding, and brain–computer interfaces.
+            source-code understanding, and brain-computer interfaces.
           </p>
         </Reveal>
 
@@ -125,7 +125,7 @@ export function Research() {
                       {degree.institution}
                     </h4>
                     <p className="font-mono text-xs tabular-nums text-muted">
-                      {degree.startDate} — {degree.endDate}
+                      {degree.startDate} to {degree.endDate}
                     </p>
                   </div>
                   <p className="mt-2 text-sm text-muted">
@@ -170,7 +170,7 @@ export function Research() {
                         <span className="text-sm text-ink">{entry.institution}</span>
                         <span className="text-sm text-muted">{entry.credential}</span>
                         <span className="font-mono text-xs tabular-nums text-muted">
-                          {entry.startDate} — {entry.endDate}
+                          {entry.startDate} to {entry.endDate}
                         </span>
                       </li>
                     ))}

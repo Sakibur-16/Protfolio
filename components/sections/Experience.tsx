@@ -205,7 +205,7 @@ export function Experience() {
 
                   <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
                     <p className="font-mono text-xs tabular-nums text-ink-dim">
-                      {role.startDate} — {role.endDate}
+                      {role.startDate} to {role.endDate}
                     </p>
                     {duration && (
                       <span className="rounded-full border border-line px-2 py-0.5 font-mono text-[0.6rem] text-muted">

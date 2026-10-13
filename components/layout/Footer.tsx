@@ -13,6 +13,7 @@ const ICONS = [
   { id: "linkedin", name: "LinkedIn", file: "linkedin" },
   { id: "github", name: "GitHub", file: "github" },
   { id: "scholar", name: "Google Scholar", file: "scholar" },
+  { id: "whatsapp", name: "WhatsApp", file: "whatsapp" },
 ] as const;
 
 const labelClass = "font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted";

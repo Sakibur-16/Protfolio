@@ -37,8 +37,11 @@ export function GlitchWord({
   }, [everyMs]);
 
   return (
-    <span onMouseEnter={() => setTrigger((n) => n + 1)} className={className}>
-      <GlitchText text={text} trigger={trigger} />
+    <span
+      onMouseEnter={() => setTrigger((n) => n + 1)}
+      className="relative inline-block whitespace-nowrap"
+    >
+      <GlitchText text={text} trigger={trigger} className={className} lock />
     </span>
   );
 }

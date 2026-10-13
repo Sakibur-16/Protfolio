@@ -24,7 +24,7 @@ export interface SocialLink {
   id: string;
   label: string;
   href: string | null;
-  icon: "github" | "linkedin" | "mail" | "scholar" | "file";
+  icon: "github" | "linkedin" | "mail" | "scholar" | "whatsapp" | "file";
 }
 
 export interface SiteConfig {

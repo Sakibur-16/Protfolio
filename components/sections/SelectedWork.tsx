@@ -23,7 +23,7 @@ export function SelectedWork() {
         <div className="mt-6 flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
           <Reveal delay={0.05}>
             <h2 className="max-w-2xl font-display text-4xl font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
-              Shipped AI, <span className="text-gradient">not slideware</span>.
+              Things I&rsquo;ve <span className="text-gradient">built</span>.
             </h2>
           </Reveal>
 
