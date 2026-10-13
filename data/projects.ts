@@ -20,74 +20,86 @@ export const selectedWork: Project[] = [
   {
     slug: "alfred-ai-dating-concierge",
     title: "Alfred",
-    year: "2025",
-    role: "AI Developer — AI service layer",
+    year: "2025-26",
+    role: "AI Developer",
     category: "llm-application",
     domains: ["llm", "product"],
     status: "prototype",
     featured: true,
     shortDescription:
-      "The AI service layer behind an AI dating concierge — conversational guidance grounded in live web search.",
+      "An AI dating concierge that plans dates, finds restaurants, gifts and trips, and gives relationship advice by text or voice.",
     fullDescription:
-      "Alfred is an AI dating concierge. This project scope covered the AI service layer only: a production-ready FastAPI backend built around a provider-agnostic LLM abstraction, so the underlying model can be swapped without touching the product around it, plus a live SerpAPI search integration for grounding advice in current, real-world information.",
+      "Alfred is an AI dating concierge. Through natural text or voice conversations it helps users plan dates, discover restaurants and activities, find gifts, get relationship and conversation advice, analyse budgets and plan travel. I built the FastAPI service that powers its conversational intelligence.",
     challenge:
-      "A dating concierge needs to reason conversationally about a user's specific situation, not just recite generic advice — and static model knowledge alone can't keep answers current.",
+      "A dating concierge has to follow a conversation. People give the details of a request across several messages, and the right action depends on putting them together.",
     approach:
-      "Built a provider-agnostic LLM abstraction so the concierge isn't locked to a single model vendor, and integrated SerpAPI so responses can draw on live search results. A full pytest suite covers the service layer.",
-    outcome:
-      "Delivered as a handoff-ready AI layer with test coverage in place, for a separate backend team to integrate into the product.",
-    technologies: ["Python", "FastAPI", "Provider-agnostic LLM abstraction", "SerpAPI", "pytest"],
+      "I combined LLM-based intent classification with session memory, structured intent schemas and slot extraction for location, budget, dates and destinations, then routed each request to the right AI workflow.",
+    outcome: "A working prototype with test coverage, built to be integrated by the product's backend team.",
+    technologies: ["Python", "FastAPI", "OpenAI API", "Anthropic API", "SerpAPI", "Pydantic"],
     image: "/images/projects/alfred-ai-dating-concierge.svg",
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.violet,
-    timeline: "2025",
-    deliverables: "FastAPI service · Provider-agnostic LLM layer · Test suite",
+    timeline: "2025-26",
+    deliverables: "FastAPI AI service · Test suite",
     domainLabel: "Consumer dating",
     architecture: [
       {
-        title: "FastAPI service layer",
-        description: "The integration surface handed to the product's backend team.",
+        title: "Intent detection and routing",
+        description:
+          "Works out what the user wants, even when the details arrive over several messages, and sends it to the right workflow.",
       },
       {
-        title: "Provider-agnostic LLM abstraction",
+        title: "LLM layer",
         description:
-          "A single internal interface over the model vendor, so the underlying model can be swapped without touching the product around it.",
+          "OpenAI and Anthropic behind one interface, with prompts for chat, recommendations, coaching, gifts, travel and date planning.",
       },
       {
-        title: "Live search grounding",
+        title: "Live search",
         description:
-          "SerpAPI integration so advice can draw on current, real-world information rather than static model knowledge.",
+          "SerpAPI looks up real restaurants, activities, hotels, flights and products so advice is current.",
+      },
+      {
+        title: "Structured answers",
+        description:
+          "Replies are generated as JSON against Pydantic schemas, so the app always gets predictable data.",
       },
     ],
     decisions: [
       {
-        title: "Never bind the product to one model vendor",
+        title: "Memory plus slots",
         description:
-          "Model quality and pricing move quickly. The abstraction means a vendor change is a config change, not a rewrite.",
+          "Session memory and slot extraction keep a location, budget or date from an earlier message, so users never repeat themselves.",
       },
       {
-        title: "Ground advice in live search",
+        title: "Fail gracefully",
         description:
-          "Static model knowledge goes stale. Live retrieval keeps guidance anchored to what is actually true now.",
+          "When an AI or search service fails, Alfred falls back to a sensible answer instead of an error.",
+      },
+      {
+        title: "Secure by default",
+        description: "Communication with the service is protected with API-key authentication.",
       },
     ],
     stackGroups: [
-      { label: "Service", items: ["Python", "FastAPI"] },
-      { label: "AI", items: ["Provider-agnostic LLM abstraction", "SerpAPI"] },
-      { label: "Quality", items: ["pytest"] },
+      { label: "Service", items: ["Python", "FastAPI", "Pydantic", "HTTPX", "Docker"] },
+      { label: "AI and search", items: ["OpenAI API", "Anthropic API", "SerpAPI"] },
+      { label: "Quality", items: ["Pytest", "pytest-asyncio"] },
     ],
     features: [
-      "Conversational dating guidance grounded in live web search",
-      "Swappable model provider behind one interface",
-      "Full pytest coverage across the service layer",
+      "Plans dates and finds restaurants and activities",
+      "Finds gifts and plans travel with real hotel and flight searches",
+      "Relationship and conversation advice",
+      "Budget and receipt analysis",
+      "Text and voice input",
+      "Multi-turn memory",
     ],
     challenges: [
       {
         problem:
-          "A concierge has to reason about a user's specific situation, not recite generic advice — and static model knowledge cannot keep answers current.",
+          "Users give the details of a request across several messages, and the right action depends on all of them.",
         solution:
-          "Paired a conversational LLM layer with live SerpAPI retrieval, so responses combine reasoning with current information.",
+          "LLM intent classification, session memory, structured intent schemas, and slot extraction for location, budget, dates and destinations, routed to the matching workflow.",
       },
     ],
   },
@@ -115,94 +127,77 @@ export const selectedWork: Project[] = [
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.violet,
+    challenges: [
+      {
+        problem:
+          "Subjective answers about emotions had to become consistent, meaningful insights.",
+        solution:
+          "A structured scoring pipeline, outputs checked against predefined criteria, handling for ambiguous responses, and refinement through repeated testing.",
+      },
+    ],
   },
   {
     slug: "rise-life-coaching-app",
     title: "Rise",
-    year: "2025",
-    role: "AI Developer — AI service layer",
+    year: "2025-26",
+    role: "AI Developer",
     category: "llm-application",
     domains: ["llm", "product"],
     status: "prototype",
     featured: true,
     shortDescription:
-      "The AI layer for a mobile life-coaching app: eleven endpoints, five coaching personalities, and streamed responses.",
+      "The AI layer for a mobile coaching app: it turns your mood, energy and goals into coaching cards and streams its replies.",
     fullDescription:
-      "Rise is a mobile life-coaching app. Its AI layer exposes 11 FastAPI endpoints built around a five-personality tone system, so coaching responses feel distinct depending on the personality selected. Responses stream to the client over server-sent events as structured JSON, rather than arriving as a single blocking reply.",
+      "Rise is a mobile coaching app. Its AI layer turns a user's mood, energy, goals and context into actionable coaching cards: focus tasks, a day plan, interventions, a recap, a music vibe and reward progress. It can also detect mood, energy and personality from plain text. It exposes 11 FastAPI endpoints around a five-personality tone system, and coach replies stream to the app over server-sent events.",
     challenge:
-      "Coaching needed to feel personal and immediate in a mobile client — five distinct personalities, delivered as a smooth stream rather than a delayed wall of text.",
+      "LLM output has to be reliable and safe for a mobile app to render, whichever provider produced it.",
     approach:
-      "Designed 11 endpoints around a five-personality tone system, with server-sent-event streaming and structured JSON outputs the mobile app could render as it arrived.",
-    outcome:
-      "Delivered as a standalone AI service layer, ready for the mobile app's backend team to integrate.",
-    technologies: ["Python", "FastAPI", "Server-Sent Events", "Structured JSON outputs"],
+      "I built the whole AI microservice: prompt orchestration, a JSON schema for each endpoint, memory extraction and retrieval, one /ai/chat endpoint that orchestrates the cards, streaming coach replies, and token and cost tracking.",
+    outcome: "A working prototype: 11 endpoints, five coaching personalities, and streamed replies.",
+    technologies: ["Python", "FastAPI", "Server-Sent Events", "JSON schema"],
     image: "/images/projects/rise-life-coaching-app.svg",
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.violet,
-  },
-  {
-    slug: "medical-imaging-diagnostics",
-    title: "Medical Imaging Diagnostics",
-    year: "2023-24",
-    role: "ML Researcher",
-    category: "computer-vision",
-    domains: ["computer-vision", "healthcare"],
-    status: "research",
-    featured: false,
-    shortDescription:
-      "Early research on breast cancer detection and retinal key-sign identification, using CNN classifiers on medical images.",
-    fullDescription:
-      "Early research from my BSc. I built and evaluated CNN-based classification pipelines for two medical-imaging problems: detecting breast cancer and identifying key signs in retinal images.",
-    challenge: null,
-    approach:
-      "Built and evaluated CNN-based classification pipelines in TensorFlow and Keras, with image preprocessing ahead of training.",
-    outcome: null,
-    technologies: ["Python", "TensorFlow", "Keras", "CNNs", "Image processing"],
-    image: "/images/projects/medical-imaging-diagnostics.svg",
-    gallery: [],
-    links: { external: null, repository: null, store: null },
-    accentColor: ACCENT.cyan,
-    timeline: "2023-24",
-    domainLabel: "Medical imaging",
-    stackGroups: [
-      { label: "ML", items: ["Python", "TensorFlow", "Keras", "CNNs", "Image processing"] },
+    timeline: "2025-26",
+    deliverables: "AI microservice · 11 endpoints",
+    domainLabel: "Coaching",
+    decisions: [
+      {
+        title: "A schema for every endpoint",
+        description:
+          "Each endpoint has a strict JSON contract in its prompt, so the app can render what comes back.",
+      },
+      {
+        title: "Any provider, one gateway",
+        description:
+          "A provider-agnostic gateway covers Anthropic, OpenAI, Google, Groq, Mistral and Together, so the model can change without touching the app.",
+      },
+      {
+        title: "Know what it costs",
+        description: "Token and cost tracking is normalised across providers.",
+      },
     ],
-    todo: "Add datasets and results once confirmed.",
-  },
-  {
-    slug: "malaria-diagnosis",
-    title: "Malaria Diagnosis",
-    year: "2025",
-    role: "Researcher",
-    category: "computer-vision",
-    domains: ["computer-vision", "healthcare"],
-    status: "research",
-    featured: false,
-    shortDescription:
-      "CNN-based classification of blood smear images for malaria diagnosis, tested for how well the models hold up on new datasets.",
-    fullDescription:
-      "Diagnostic imaging models often score well on the dataset they were trained on and fall apart on another one collected under different conditions. This study trained and evaluated CNN-based models on several blood smear datasets, with the evaluation built around generalization rather than a single benchmark score. It became a peer-reviewed paper at ICDMIS 2025, published by Springer.",
-    challenge:
-      "Blood smear datasets differ in staining, imaging equipment and collection conditions, so a model that does well on one can fail on another. For a diagnostic tool that matters a great deal.",
-    approach:
-      "I prepared and preprocessed the datasets, trained and fine-tuned the models in TensorFlow and Keras, evaluated them, and tuned the pipeline. I measured how performance carried across datasets instead of optimising for one.",
-    outcome: "Peer-reviewed and presented at ICDMIS 2025 (Springer). See the Research section.",
-    technologies: ["Python", "TensorFlow", "Keras", "CNNs", "Image classification"],
-    image: "/images/projects/malaria-diagnosis.svg",
-    gallery: [],
-    links: {
-      external: "https://link.springer.com/chapter/10.1007/978-3-032-25955-4_35",
-      repository: null,
-      store: null,
-    },
-    accentColor: ACCENT.cyan,
-    timeline: "2025",
-    domainLabel: "Medical imaging",
-    stackGroups: [
-      { label: "ML", items: ["Python", "TensorFlow", "Keras", "CNNs", "Image classification"] },
+    features: [
+      "Coaching cards: focus tasks, day plan, interventions, recap, music vibe, reward progress",
+      "Mood, energy and personality detected from plain text",
+      "Five coaching personalities",
+      "Streamed coach replies",
+      "Memory extraction and retrieval",
+      "One chat endpoint that builds the cards",
     ],
-    todo: "Add datasets and results once confirmed.",
+    stackGroups: [
+      { label: "Service", items: ["Python", "FastAPI", "Server-Sent Events"] },
+      { label: "AI", items: ["Anthropic", "OpenAI", "Google", "Groq", "Mistral", "Together"] },
+    ],
+    challenges: [
+      {
+        problem:
+          "LLM output was not reliable enough for the app's front end, and it differed between providers.",
+        solution:
+          "Strict schema-return prompts, JSON recovery and parsing with explicit parse errors, and calls wrapped in retries with backoff and normalised usage tracking.",
+      },
+    ],
   },
 ];
 
@@ -451,43 +446,63 @@ export const additionalProjects: Project[] = [
   {
     slug: "frazzl-kid",
     title: "Frazzl Kid",
-    year: "2025",
-    role: "Deployment & DevOps Support",
+    year: "2025-26",
+    role: "AI Developer",
     category: "education",
-    domains: ["education", "product"],
+    domains: ["llm", "education"],
     status: "client-confidential",
     featured: false,
-    shortDescription: "Production deployment support for a FastAPI backend behind a children's educational app.",
+    shortDescription:
+      "A learning platform for children where AI writes dyslexia-friendly questions, hints and explanations for each child's grade and topic.",
     fullDescription:
-      "Guided a first-time production deployment of the Frazzl Kid API to a Hostinger VPS, including SSH access, systemd service configuration, and firewall setup.",
-    challenge: null,
-    approach: "Configured SSH, systemd, and firewall rules for a first-time VPS deployment.",
-    outcome: "The API was moved from local development to a running production deployment.",
-    technologies: ["Python", "FastAPI", "Hostinger VPS", "systemd"],
+      "Frazzl uses AI to generate personalised, dyslexia-friendly learning questions for children from their grade level, subject and syllabus topic. Each question comes at a set difficulty, with step-by-step explanations and progressive hints so a child can learn independently. Parents can monitor progress, generate question sets and support their child's learning. I also guided the first production deployment of the backend to a VPS.",
+    challenge:
+      "AI-generated questions have to be accurate, age-appropriate, dyslexia-friendly and different every time.",
+    approach:
+      "I worked on the question-generation system and how it joins the platform: a child's grade and topic go to the AI, a structured question set comes back, is validated, and is shown with hints and explanations. I also worked on the parent and child accounts and the learning experience.",
+    outcome: null,
+    technologies: ["Python", "Django", "FastAPI", "OpenAI API", "Gemini API", "PostgreSQL"],
     image: "/images/projects/frazzl-kid.svg",
     gallery: [],
     links: { external: null, repository: null, store: null },
     accentColor: ACCENT.cyan,
-    timeline: "2025",
-    deliverables: "Production deployment · Service configuration",
+    timeline: "2025-26",
     domainLabel: "Children's education",
-    architecture: [
+    decisions: [
       {
-        title: "Hostinger VPS",
-        description: "The target environment for the first production deployment.",
+        title: "Validate everything the AI writes",
+        description:
+          "Pydantic schemas check each question set, so a malformed answer never reaches a child.",
       },
       {
-        title: "systemd service",
-        description: "Keeps the FastAPI backend running and restarting reliably as a managed service.",
+        title: "Fixed difficulty levels",
+        description:
+          "Difficulty is set by the system, not left to the model, so a topic always has easy, medium and hard questions.",
       },
       {
-        title: "SSH & firewall",
-        description: "Access and network rules configured for a first-time production environment.",
+        title: "More than one AI provider",
+        description:
+          "Retry and fallback handling across OpenAI and Gemini keeps question generation available.",
       },
     ],
+    features: [
+      "Questions generated for a child's grade, subject and syllabus topic",
+      "Dyslexia-friendly wording",
+      "Different difficulty levels",
+      "Step-by-step explanations and progressive hints",
+      "Parent and child accounts, with progress for parents",
+    ],
     stackGroups: [
-      { label: "Application", items: ["Python", "FastAPI"] },
-      { label: "Infrastructure", items: ["Hostinger VPS", "systemd", "Linux"] },
+      { label: "AI", items: ["OpenAI API", "Gemini API", "Pydantic"] },
+      { label: "Platform", items: ["Python", "Django", "Django REST Framework", "FastAPI", "PostgreSQL", "JavaScript", "Docker"] },
+    ],
+    challenges: [
+      {
+        problem:
+          "AI-generated questions have to be accurate, age-appropriate, dyslexia-friendly and different each time.",
+        solution:
+          "Structured prompts, Pydantic schema validation, fixed difficulty levels, randomised generation, retry and fallback across AI providers, and carefully designed hints and explanations.",
+      },
     ],
   },
   {
@@ -654,60 +669,236 @@ export const additionalProjects: Project[] = [
     ],
   },
   {
-    slug: "everidog",
-    title: "Everidog",
-    year: "2024",
+    slug: "certiflow-ai",
+    title: "CertiFlow AI",
+    year: "2026",
+    role: "AI Developer & Full-Stack",
+    category: "llm-application",
+    domains: ["llm", "education", "product"],
+    status: "client-confidential",
+    featured: false,
+    shortDescription:
+      "A document-automation platform that generates certification-ready candidate files for two training institutes.",
+    fullDescription:
+      "CertiFlow AI is a document-automation platform for two training institutes. It generates the candidate files needed for the RS6485, RS7200, RS7311 and RS7344 certifications. Claude writes and structures the candidate-specific content that runs through several documents, while rules in code handle scoring consistency and pass or fail readiness.",
+    challenge:
+      "Every document has to tell the same story about a candidate, with the same grades and the same final summary, and a long generation chain had to run within serverless limits.",
+    approach:
+      "I built the whole generation workflow: a dashboard and API, the AI generation chain, an export pipeline to Word, Excel and PowerPoint, the scoring and readiness logic, the database and storage, and the web and Windows desktop builds.",
+    outcome:
+      "A working, production-oriented system with an active deployment and a Windows desktop build.",
+    technologies: ["Next.js", "TypeScript", "Anthropic SDK", "PostgreSQL", "Electron"],
+    image: "/images/projects/certiflow-ai.svg",
+    gallery: [],
+    links: { external: null, repository: null, store: null },
+    accentColor: ACCENT.violet,
+    timeline: "2026",
+    deliverables: "Generation pipeline · Document exports · Desktop app",
+    domainLabel: "Training and certification",
+    architecture: [
+      {
+        title: "Dashboard and API",
+        description: "A Next.js app where staff set up candidates and start a generation.",
+      },
+      {
+        title: "AI generation chain",
+        description:
+          "Claude writes the candidate-specific content in phases that can resume if a run is cut short.",
+      },
+      {
+        title: "Scoring and readiness",
+        description:
+          "Strict rules in code, not the model, decide scores and whether a candidate is ready.",
+      },
+      {
+        title: "Export pipeline",
+        description:
+          "The same candidate record is turned into Word, Excel and PowerPoint documents and stored.",
+      },
+    ],
+    decisions: [
+      {
+        title: "Scoring in code, not in the AI",
+        description:
+          "A grade has to be the same every time and explainable to an assessor, so rules in code decide it and the model only writes.",
+      },
+      {
+        title: "One source of truth per candidate",
+        description:
+          "All correlated content comes from one record, so the story, the grades and the summary match in every document.",
+      },
+      {
+        title: "Generation in resumable phases",
+        description:
+          "Long chains are split into phases that save their progress, which works within serverless time limits.",
+      },
+    ],
+    stackGroups: [
+      { label: "AI", items: ["Anthropic SDK"] },
+      { label: "App", items: ["Next.js 15", "TypeScript", "React 19", "Tailwind CSS"] },
+      { label: "Data and files", items: ["PostgreSQL (Neon)", "pg", "Vercel Blob", "docx", "exceljs", "pptxgenjs"] },
+      { label: "Delivery", items: ["Docker", "GitHub Actions", "Electron"] },
+    ],
+    features: [
+      "Candidate-specific content written by Claude",
+      "Word, Excel and PowerPoint export from one record",
+      "Scoring and pass or fail readiness rules in code",
+      "Resumable, phase-based generation",
+      "Automated audit and verification scripts before delivery",
+      "A web dashboard and a Windows desktop build",
+    ],
+    challenges: [
+      {
+        problem:
+          "Candidate story, grading and final summary had to match across every document, and long generation chains hit serverless limits.",
+        solution:
+          "A phase-based resumable pipeline, a single source of truth for correlated content, strict rule-based scoring in code instead of the AI, and automated audit scripts that verify the files before delivery.",
+      },
+    ],
+  },
+  {
+    slug: "nibbl-ai",
+    title: "Nibbl AI",
+    year: "2026",
     role: "AI Developer",
     category: "llm-application",
-    domains: ["product"],
-    status: "shipped",
+    domains: ["llm", "product"],
+    status: "undisclosed",
     featured: false,
-    shortDescription: "An AI-driven pet nutrition app for dog owners.",
-    fullDescription: "Everidog is a pet nutrition app for dog owners, built with AI at its core.",
+    shortDescription:
+      "A rebate and review platform where brands fund campaigns and shoppers earn rewards by uploading receipts and writing reviews.",
+    fullDescription:
+      "Nibbl AI is a multi-tenant platform where brands fund rebate and review campaigns and consumers earn rewards by submitting receipts. Brands manage their products, fund campaigns and review analytics. Consumers find offers, reserve rewards, upload receipts, publish reviews and withdraw their earnings. I was the AI developer on the project. The AI covers receipt processing and AI-assisted review prompts.",
     challenge: null,
     approach: null,
     outcome: null,
-    technologies: [],
-    image: null,
+    technologies: ["Python", "Anthropic API", "OpenAI API", "Gemini API"],
+    image: "/images/projects/nibbl-ai.svg",
     gallery: [],
     links: { external: null, repository: null, store: null },
-    accentColor: ACCENT.cyan,
-    todo: "Add confirmed detail once available.",
+    accentColor: ACCENT.violet,
+    timeline: "2026",
+    domainLabel: "Rebates and reviews",
+    features: [
+      "Receipt processing with OCR, product matching and fraud flags, with a manual review queue",
+      "Duplicate receipt detection using fingerprints",
+      "AI-assisted review prompts, trying Anthropic, OpenAI and Gemini in turn, with a plain fallback",
+      "Campaigns with QR or link access, reward tiers and budget-aware reservations",
+      "A wallet with escrow and payout batches",
+    ],
+    stackGroups: [
+      { label: "AI", items: ["Anthropic API", "OpenAI API", "Gemini API"] },
+      { label: "Platform", items: ["Python", "Django", "Django REST Framework", "PostgreSQL", "Docker", "AWS", "GitHub Actions"] },
+    ],
+    todo: "Confirm exactly which AI parts were mine, the status, and add the hardest problem and a real number.",
+  },
+  {
+    slug: "everidog",
+    title: "Everidog",
+    year: "2026",
+    role: "AI Developer",
+    category: "llm-application",
+    domains: ["llm", "product"],
+    status: "shipped",
+    featured: false,
+    shortDescription:
+      "An AI pet nutrition app that recommends dog food from your dog's profile and finds real products to buy.",
+    fullDescription:
+      "Everidog is a pet nutrition app for dog owners. You describe your dog: breed, age, activity, allergies and preferences. The AI builds a nutrition plan, then the backend finds real product pages, ranks them and returns each with its price and image. Products that contain an allergen are filtered out.",
+    challenge:
+      "The data coming back was noisy: AI replies with broken JSON, and search results that were not product pages or were duplicates of each other.",
+    approach:
+      "I built the FastAPI recommendation backend: profile validation, orchestration across OpenAI, Claude and Gemini, a merge of search results with the product database, allergy-safe filtering, deduplication and ranking, and response caching.",
+    outcome: "Live at everidog.com, with personalised food recommendations from a dog's profile.",
+    technologies: ["Python", "FastAPI", "Pydantic", "OpenAI API", "Anthropic API", "Gemini API"],
+    image: "/images/projects/everidog.svg",
+    gallery: [],
+    links: { external: "https://everidog.com/", repository: null, store: null },
+    accentColor: ACCENT.violet,
+    timeline: "2026",
+    deliverables: "Recommendation backend",
+    domainLabel: "Pet nutrition",
+    decisions: [
+      {
+        title: "Hard allergy filters",
+        description:
+          "Allergens are removed by rule after the AI answers, so a model slip can never put an unsafe product on screen.",
+      },
+      {
+        title: "Several AI providers behind one layer",
+        description:
+          "OpenAI, Claude and Gemini sit behind one orchestration layer, so a provider can fail or change without breaking recommendations.",
+      },
+    ],
+    features: [
+      "Personalised food recommendations from a dog's profile",
+      "AI nutrition planning",
+      "Real product pages with price and image",
+      "Allergy-safe filtering",
+      "Deduplication and ranking of results",
+      "Response caching",
+    ],
+    stackGroups: [
+      { label: "AI", items: ["OpenAI API", "Anthropic API", "Gemini API"] },
+      { label: "Backend", items: ["Python", "FastAPI", "Pydantic", "HTTPX", "Uvicorn"] },
+      { label: "Search", items: ["SerpAPI", "Serper"] },
+      { label: "Quality", items: ["Pytest"] },
+    ],
+    challenges: [
+      {
+        problem:
+          "AI replies came back with inconsistent JSON, and search results mixed in non-product pages and duplicates.",
+        solution:
+          "Strict JSON parsing with a fallback extractor, product-page URL filtering, domain-aware deduplication, and a fallback query and enrichment flow.",
+      },
+    ],
   },
   {
     slug: "byoj",
     title: "BYOJ",
-    year: "2024",
+    year: "2026",
     role: "AI Developer",
     category: "llm-application",
-    domains: ["product"],
+    domains: ["llm", "product"],
     status: "client-confidential",
     featured: false,
-    shortDescription: "An AI-driven generative design product.",
-    fullDescription: "BYOJ is a generative design product that uses AI to create designs.",
+    shortDescription:
+      "An AI jewelry design product: it generates designs from your taste, suggests what to make them from in gold, and has a consultant chatbot.",
+    fullDescription:
+      "BYOJ generates jewelry designs based on a user's taste and suggests what each design could be made from in gold. It also includes a consultant chatbot that helps users decide, researches options with them, and guides them through making an AI-generated jewelry design. I handled the whole AI side.",
     challenge: null,
-    approach: null,
+    approach:
+      "GPT powers both the design generation and the consultant chatbot, built as a Python service.",
     outcome: null,
-    technologies: [],
-    image: null,
+    technologies: ["Python", "OpenAI GPT"],
+    image: "/images/projects/byoj.svg",
     gallery: [],
     links: { external: null, repository: null, store: null },
-    accentColor: ACCENT.cyan,
-    todo: "Add confirmed detail once available.",
+    accentColor: ACCENT.violet,
+    timeline: "2026",
+    deliverables: "AI design generation · Consultant chatbot",
+    domainLabel: "Jewelry design",
+    features: [
+      "Jewelry designs generated from the user's taste",
+      "Suggestions for what each design can be made from in gold",
+      "A consultant chatbot that helps decide and does the research",
+    ],
+    stackGroups: [{ label: "AI", items: ["Python", "OpenAI GPT"] }],
+    todo: "Add the hardest problem and a real number if remembered.",
   },
 ];
 
 const WORK_ORDER = [
   "quranity",
   "hairlync",
+  "certiflow-ai",
+  "nibbl-ai",
   "jobassist-ai",
   "wondertales",
   "finance-ai",
   "alfred-ai-dating-concierge",
   "eqi30-emotional-intelligence-platform",
   "rise-life-coaching-app",
-  "medical-imaging-diagnostics",
-  "malaria-diagnosis",
   "frazzl-kid",
   "everidog",
   "byoj",

@@ -32,7 +32,7 @@ const PLACEHOLDER_GRADIENTS = [
 ];
 
 const DRAG_THRESHOLD = 55;
-const AUTOPLAY_MS = 4000;
+const AUTOPLAY_MS = 2500;
 /** Cards further round the ring than this are not rendered at all. */
 const VISIBLE_RANGE = 3;
 
@@ -53,6 +53,8 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const dragStartX = useRef<number | null>(null);
   const didDrag = useRef(false);
+  /** How far the pointer has moved since it went down; a real drag holds autoplay. */
+  const dragDistance = useRef(0);
 
   const goTo = useCallback((index: number) => {
     setActive(((index % total) + total) % total);
@@ -87,26 +89,36 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
 
   useEffect(() => {
     if (!autoplayActive) return;
-    const id = setInterval(() => setActive((a) => (a + 1) % total), AUTOPLAY_MS);
+    const id = setInterval(() => {
+      // Hovering or clicking never stops it. Only a drag in progress holds a tick.
+      if (dragStartX.current !== null && dragDistance.current > 8) return;
+      setActive((a) => (a + 1) % total);
+    }, AUTOPLAY_MS);
     return () => clearInterval(id);
   }, [autoplayActive, total]);
 
   // Drag resolves on the window so a gesture that leaves the element still ends.
   useEffect(() => {
+    const onMove = (event: PointerEvent) => {
+      if (dragStartX.current === null) return;
+      dragDistance.current = Math.abs(event.clientX - dragStartX.current);
+    };
     const onUp = (event: PointerEvent) => {
       if (dragStartX.current === null) return;
       const delta = event.clientX - dragStartX.current;
       dragStartX.current = null;
-      setPaused(false);
+      dragDistance.current = 0;
       didDrag.current = Math.abs(delta) > 6;
       if (Math.abs(delta) > DRAG_THRESHOLD) {
         if (delta < 0) next();
         else prev();
       }
     };
+    window.addEventListener("pointermove", onMove);
     window.addEventListener("pointerup", onUp);
     window.addEventListener("pointercancel", onUp);
     return () => {
+      window.removeEventListener("pointermove", onMove);
       window.removeEventListener("pointerup", onUp);
       window.removeEventListener("pointercancel", onUp);
     };
@@ -146,8 +158,8 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
         onKeyDown={onKeyDown}
         onPointerDown={(e) => {
           dragStartX.current = e.clientX;
+          dragDistance.current = 0;
           didDrag.current = false;
-          setPaused(true);
         }}
         onClick={onBackgroundClick}
         className="relative h-[25rem] cursor-grab touch-pan-y select-none active:cursor-grabbing focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:h-[30rem]"
@@ -199,7 +211,7 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
               transition={
                 prefersReducedMotion || offscreen
                   ? { duration: 0 }
-                  : { type: "spring", stiffness: 290, damping: 30, mass: 0.75 }
+                  : { type: "spring", stiffness: 150, damping: 22, mass: 1 }
               }
               aria-hidden={!isActive}
               // Non-focused cards must not take focus or swallow clicks.

@@ -8,7 +8,7 @@ export const siteConfig: SiteConfig = {
   title: "Md. Sakibur Rahman — AI Developer & ML Researcher",
   description:
     "AI developer and ML researcher building production LLM, RAG, NLP, computer vision, and speech products, with published research in medical AI, code understanding, and brain-computer interfaces.",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sakiburrahman.dev",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://sakibursr.me",
   locale: "en_US",
   themeColor: "#0a0a0b",
   ogImage: "/og-image.png",

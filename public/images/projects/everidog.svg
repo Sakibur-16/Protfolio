@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="800" viewBox="0 0 1280 800" role="img" aria-label="Everidog">
+  <defs>
+    <linearGradient id="edge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff6b2c"/>
+      <stop offset="1" stop-color="#2c6bff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="800" fill="#101114"/>
+  <rect x="0" y="0" width="8" height="800" fill="url(#edge)"/>
+  <rect x="760" y="120" width="120" height="14" rx="7" fill="#2c6bff" fill-opacity="0.4"/>
+  <rect x="760" y="164" width="173" height="14" rx="7" fill="#2c6bff" fill-opacity="0.16"/>
+  <rect x="760" y="208" width="226" height="14" rx="7" fill="#2c6bff" fill-opacity="0.16"/>
+  <rect x="760" y="252" width="279" height="14" rx="7" fill="#2c6bff" fill-opacity="0.4"/>
+  <rect x="760" y="296" width="332" height="14" rx="7" fill="#2c6bff" fill-opacity="0.16"/>
+  <rect x="760" y="340" width="125" height="14" rx="7" fill="#2c6bff" fill-opacity="0.16"/>
+  <rect x="760" y="384" width="178" height="14" rx="7" fill="#2c6bff" fill-opacity="0.4"/>
+  <rect x="760" y="428" width="231" height="14" rx="7" fill="#2c6bff" fill-opacity="0.16"/>
+  <text x="72" y="470" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="88" font-weight="700" letter-spacing="-2.5" fill="#F4F4F5">Everidog</text>
+  <text x="72" y="540" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="30" fill="#A1A1AA"><tspan x="72" dy="0">AI dog food recommendations from a</tspan><tspan x="72" dy="40">dog's profile</tspan></text>
+</svg>

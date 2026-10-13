@@ -2,9 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import { allProjects } from "@/data/projects";
-import { socialLinks } from "@/data/socialLinks";
 import { ProjectIndex } from "@/components/projects/ProjectIndex";
-import { SocialLinks } from "@/components/ui/SocialLinks";
+import { Button } from "@/components/ui/Button";
+import { ContactGrid } from "@/components/ui/ContactGrid";
 import { Badge } from "@/components/ui/Badge";
 import { GlowBlob } from "@/components/ui/GlowBlob";
 
@@ -45,27 +45,31 @@ export default function ProjectsPage() {
           <ProjectIndex projects={allProjects} />
         </div>
 
-        <div className="mt-16 border-t border-line pt-12 sm:mt-24 sm:pt-16">
-          <h2 className="max-w-2xl font-display text-2xl font-semibold tracking-tight text-ink sm:text-3xl">
-            Want the full story behind any of these?
-          </h2>
-          <p className="mt-4 max-w-xl text-base leading-relaxed text-muted">
-            I&rsquo;m happy to walk you through the process, the decisions and the architecture, on
-            a call or over email.
-          </p>
-          <div className="mt-7 flex flex-wrap items-center gap-x-8 gap-y-5">
-            <Link
-              href="/#contact"
-              data-cursor="interactive"
-              className="btn-ghost group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-medium"
-            >
-              Get in touch
-              <ArrowUpRight
-                className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                aria-hidden="true"
-              />
-            </Link>
-            <SocialLinks links={socialLinks} />
+        <div className="relative mt-16 overflow-hidden rounded-3xl border border-line bg-bg-raised p-6 sm:mt-24 sm:p-10 lg:p-12">
+          <GlowBlob tone="dual" size="30rem" className="-right-32 -top-40 opacity-80" />
+
+          <div className="relative grid grid-cols-1 gap-10 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16">
+            <div>
+              <p className="font-mono text-[0.7rem] uppercase tracking-[0.18em] text-muted">
+                Let&rsquo;s talk
+              </p>
+              <h2 className="mt-4 max-w-md font-display text-3xl font-semibold leading-[1.1] tracking-tight text-ink sm:text-4xl">
+                Want the full story behind any of these?
+              </h2>
+              <p className="mt-4 max-w-md text-base leading-relaxed text-muted">
+                I&rsquo;m happy to walk you through the process, the decisions and the architecture,
+                on a call or over email.
+              </p>
+              <Button href="/#contact" className="group mt-8">
+                Get in touch
+                <ArrowUpRight
+                  className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  aria-hidden="true"
+                />
+              </Button>
+            </div>
+
+            <ContactGrid showLabels className="max-w-md lg:justify-self-end" />
           </div>
         </div>
       </div>

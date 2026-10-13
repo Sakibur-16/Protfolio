@@ -40,7 +40,13 @@ export function buildMetadata(overrides: Partial<Metadata> = {}): Metadata {
       description: siteConfig.description,
       images: [siteConfig.ogImage],
     },
-    icons: { icon: "/icon.svg" },
+    icons: {
+      icon: [
+        { url: "/icon.svg", type: "image/svg+xml" },
+        { url: "/favicon.ico", sizes: "48x48" },
+      ],
+      apple: "/apple-icon.png",
+    },
     ...overrides,
   };
 }

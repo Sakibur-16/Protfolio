@@ -11,7 +11,6 @@ import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { MagneticLink } from "@/components/ui/MagneticLink";
 import { RollingText } from "@/components/ui/RollingText";
 import { GlitchText } from "@/components/ui/GlitchText";
-import { useIntroGlitch } from "@/lib/introGlitch";
 import { cn } from "@/lib/utils";
 
 const NAV_IDS = navigation.map((n) => n.id);
@@ -20,9 +19,8 @@ export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   // Per-link click counters. A click bumps its counter, which replays that
-  // label's glitch. The first-visit glitch bumps every label at once.
+  // label's glitch.
   const [clicks, setClicks] = useState<Record<string, number>>({});
-  const intro = useIntroGlitch();
   const pathname = usePathname();
   const onHome = pathname === "/";
   // On any other page (a project, the projects index) the section anchors live
@@ -126,7 +124,7 @@ export function Header() {
                       }
                     />
                   )}
-                  <GlitchText text={link.label} trigger={intro * 1000 + (clicks[link.id] ?? 0)} />
+                  <GlitchText text={link.label} trigger={clicks[link.id] ?? 0} />
                 </a>
               );
             })}

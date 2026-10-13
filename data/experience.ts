@@ -1,10 +1,6 @@
 import type { ExperienceEntry } from "@/types/portfolio";
 
-// Source: the owner's LinkedIn profile.
-//
-// The current-employer progression is modelled as three separate entries rather than
-// one nested record — the promotions are distinct roles with distinct scopes,
-// and the shared `organization` is what groups them in the UI.
+// Source: the owner's CV.
 export const experience: ExperienceEntry[] = [
   {
     id: "current-ai-developer",
@@ -15,10 +11,9 @@ export const experience: ExperienceEntry[] = [
     location: "Dhaka, Bangladesh (On-site)",
     employmentType: "Full-time",
     responsibilities: [
-      "Builds RAG and agentic RAG pipelines for production systems",
-      "Combines LLM reasoning with grounded retrieval so answers trace back to real sources",
-      "Develops NLP components and AI chat assistants",
-      "Carries features from prototype through to production",
+      "Spark of the Quarter award",
+      "Design and deliver production RAG and agentic RAG pipelines for client-facing assistants, grounding LLM answers in retrieved sources to cut hallucinations",
+      "Ship chat assistants and NLP components into live client apps using ElevenLabs, OpenAI, Anthropic Claude and SerpAPI",
     ],
   },
   {
@@ -30,10 +25,9 @@ export const experience: ExperienceEntry[] = [
     location: "Dhaka, Bangladesh (On-site)",
     employmentType: "Full-time",
     responsibilities: [
-      "Built and refined RAG retrieval systems",
-      "Implemented LLM integration workflows",
-      "Developed NLP preprocessing pipelines",
-      "Delivered features independently end to end",
+      "Helped design and test RAG retrieval systems and LLM integrations under senior engineers",
+      "Built NLP preprocessing pipelines to clean up input before it reached the language model",
+      "Moved from supervised tasks to owning features end to end, which led to the promotion",
     ],
   },
   {
@@ -45,24 +39,35 @@ export const experience: ExperienceEntry[] = [
     location: "Dhaka, Bangladesh (On-site)",
     employmentType: "Full-time",
     responsibilities: [
-      "Learned production RAG architecture",
-      "Practised LLM prompt design",
-      "Covered NLP fundamentals",
-      "Ran model testing and evaluation",
+      "Learned production RAG architecture and prompt design on live commercial projects",
+      "Helped senior developers with model testing, data preparation and evaluating generated output",
     ],
   },
   {
-    id: "acote-associate",
+    id: "acote-associate-fulltime",
+    organization: "Acote Group",
+    role: "Associate",
+    startDate: "January 2025",
+    endDate: "May 2025",
+    location: "Dhaka, Bangladesh",
+    employmentType: "Full-time",
+    responsibilities: [
+      "Annotated, cleaned and preprocessed large ML training datasets",
+      "Fine-tuned models and benchmarked them against baseline metrics to find performance gaps",
+      "Owned parts of the ML workflow from raw data to evaluation",
+    ],
+  },
+  {
+    id: "acote-associate-contract",
     organization: "Acote Group",
     role: "Associate",
     startDate: "November 2024",
-    endDate: "May 2025",
-    location: "Dhaka, Bangladesh (Hybrid)",
-    employmentType: "Full-time / Contract",
+    endDate: "December 2024",
+    location: "Dhaka, Bangladesh",
+    employmentType: "Contract",
     responsibilities: [
-      "Delivered data annotation, cleaning, and preprocessing across large ML datasets",
-      "Fine-tuned and benchmarked ML models against baseline metrics",
-      "Owned parts of the end-to-end ML workflow, from data preparation to evaluation",
+      "Prepared training data through annotation, cleaning and preprocessing",
+      "Helped fine-tune models and compare results against baselines",
     ],
   },
 ];

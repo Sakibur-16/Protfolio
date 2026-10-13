@@ -33,49 +33,10 @@ const result: IntakeField = {
   type: "text",
   help: "Users, accuracy, speed, tests, cost saved... anything measurable.",
 };
-const myPart: IntakeField = {
-  id: "myPart",
-  label: "What I built (my part)",
-  type: "textarea",
-  help: "In your own words. Only your part.",
-};
-const stack: IntakeField = {
-  id: "stack",
-  label: "Tech used",
-  type: "text",
-  help: "Comma separated, for example Python, FastAPI, OpenAI API.",
-};
 
 /** Only the projects that still have open questions. */
 const neededFields: Record<string, IntakeField[]> = {
-  everidog: [
-    { id: "what", label: "What does the AI do for dog owners?", type: "textarea" },
-    { id: "liveLink", label: "Live link", type: "url", placeholder: "https://" },
-    myPart,
-    stack,
-    hardest,
-    result,
-  ],
-  byoj: [
-    { id: "what", label: "What does it generate, and for whom?", type: "textarea" },
-    myPart,
-    stack,
-    hardest,
-    result,
-  ],
-  "alfred-ai-dating-concierge": [hardest, result],
-  "rise-life-coaching-app": [hardest, result],
   "finance-ai": [hardest, result],
-  "frazzl-kid": [
-    { id: "what", label: "What does the app do for children?", type: "textarea" },
-    result,
-  ],
-  "medical-imaging-diagnostics": [
-    { id: "metrics", label: "Datasets and results (optional)", type: "textarea" },
-  ],
-  "malaria-diagnosis": [
-    { id: "metrics", label: "Datasets and results (optional)", type: "textarea" },
-  ],
 };
 
 /** The one thing about the site itself that is still missing. */

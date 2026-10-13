@@ -16,5 +16,5 @@
   <rect x="760" y="384" width="178" height="14" rx="7" fill="#2c6bff" fill-opacity="0.4"/>
   <rect x="760" y="428" width="231" height="14" rx="7" fill="#2c6bff" fill-opacity="0.16"/>
   <text x="72" y="470" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="88" font-weight="700" letter-spacing="-2.5" fill="#F4F4F5">Alfred</text>
-  <text x="72" y="540" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="30" fill="#A1A1AA"><tspan x="72" dy="0">AI service layer for a dating</tspan><tspan x="72" dy="40">concierge</tspan></text>
+  <text x="72" y="540" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="30" fill="#A1A1AA"><tspan x="72" dy="0">AI dating concierge for dates,</tspan><tspan x="72" dy="40">gifts and trips</tspan></text>
 </svg>

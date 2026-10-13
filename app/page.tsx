@@ -5,6 +5,7 @@ import { SelectedWork } from "@/components/sections/SelectedWork";
 import { Expertise } from "@/components/sections/Expertise";
 import { Research } from "@/components/sections/Research";
 import { Contact } from "@/components/sections/Contact";
+import { ContactGrid } from "@/components/ui/ContactGrid";
 
 export default function HomePage() {
   return (
@@ -15,7 +16,7 @@ export default function HomePage() {
       <SelectedWork />
       <Expertise />
       <Research />
-      <Contact />
+      <Contact links={<ContactGrid showLabels showAddress />} />
     </>
   );
 }

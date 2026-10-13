@@ -16,5 +16,5 @@
   <rect x="1096" y="218" width="38" height="202" rx="8" fill="#ff6b2c" fill-opacity="0.16"/>
   <rect x="1152" y="341" width="38" height="79" rx="8" fill="#ff6b2c" fill-opacity="0.16"/>
   <text x="72" y="470" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="88" font-weight="700" letter-spacing="-2.5" fill="#F4F4F5">Frazzl Kid</text>
-  <text x="72" y="540" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="30" fill="#A1A1AA"><tspan x="72" dy="0">Production deployment for a</tspan><tspan x="72" dy="40">children's learning API</tspan></text>
+  <text x="72" y="540" font-family="Inter, 'Segoe UI', system-ui, sans-serif" font-size="30" fill="#A1A1AA"><tspan x="72" dy="0">AI questions for children, made</tspan><tspan x="72" dy="40">dyslexia-friendly</tspan></text>
 </svg>
