@@ -8,6 +8,7 @@ import { motion, useReducedMotion } from "framer-motion";
 import type { Project } from "@/types/portfolio";
 import { projectCategoryLabels } from "@/data/projects";
 import { cn } from "@/lib/utils";
+import { BrowserFrame } from "./BrowserFrame";
 
 /**
  * Circular, auto-advancing project deck.
@@ -233,7 +234,20 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                       : { background: PLACEHOLDER_GRADIENTS[i % PLACEHOLDER_GRADIENTS.length] }
                   }
                 >
-                  {project.image && (
+                  {project.image && project.frame === "browser" && (
+                    <div className="absolute inset-x-3 bottom-3 top-12">
+                      <BrowserFrame title={project.title} compact className="h-full">
+                        <Image
+                          src={project.image}
+                          alt=""
+                          fill
+                          sizes="(min-width: 640px) 352px, 264px"
+                          className="object-cover object-top"
+                        />
+                      </BrowserFrame>
+                    </div>
+                  )}
+                  {project.image && project.frame !== "browser" && (
                     <Image
                       src={project.image}
                       alt=""

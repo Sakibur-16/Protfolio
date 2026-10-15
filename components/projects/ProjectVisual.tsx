@@ -1,8 +1,23 @@
 import Image from "next/image";
 import type { Project } from "@/types/portfolio";
 import { projectCategoryLabels } from "@/data/projects";
+import { BrowserFrame } from "./BrowserFrame";
 
 export function ProjectVisual({ project }: { project: Project }) {
+  if (project.image && project.frame === "browser") {
+    return (
+      <BrowserFrame title={project.title} bodyClassName="aspect-[1829/694]">
+        <Image
+          src={project.image}
+          alt={`${project.title} screenshot`}
+          fill
+          className="object-cover object-top"
+          sizes="(min-width: 1024px) 50vw, 100vw"
+        />
+      </BrowserFrame>
+    );
+  }
+
   if (project.image) {
     return (
       <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm border border-line">

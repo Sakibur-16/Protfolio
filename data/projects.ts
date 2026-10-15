@@ -381,7 +381,7 @@ export const additionalProjects: Project[] = [
     outcome:
       "Qalam is live in the Quranity app on Google Play and the App Store, and every answer carries a source link. Its concise mode is designed to cut token cost by about 45%.",
     technologies: ["Python", "FastAPI", "OpenAI API", "Pydantic", "Flutter"],
-    image: "/images/projects/quranity.svg",
+    image: "/images/projects/quranity.jpg",
     gallery: [],
     links: {
       external: "https://quranity.app",
@@ -625,7 +625,8 @@ export const additionalProjects: Project[] = [
     outcome:
       "Live at hairlync.com. The AI service is covered by 50 automated regression tests.",
     technologies: ["Python", "FastAPI", "OpenAI GPT-4o Vision", "JSON Schema", "Pillow"],
-    image: "/images/projects/hairlync.svg",
+    image: "/images/projects/hairlync-full.jpg",
+    frame: "browser",
     gallery: [],
     links: { external: "https://hairlync.com", repository: null, store: null },
     accentColor: ACCENT.cyan,
