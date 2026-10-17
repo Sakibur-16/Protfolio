@@ -42,3 +42,6 @@ next-env.d.ts
 
 # Local intake answers (personal notes), not for the repo
 /intake-data/
+
+# browser test output
+/.playwright-mcp/
