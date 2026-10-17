@@ -234,27 +234,19 @@ export function ProjectCarousel({ projects }: { projects: Project[] }) {
                       : { background: PLACEHOLDER_GRADIENTS[i % PLACEHOLDER_GRADIENTS.length] }
                   }
                 >
-                  {project.image && project.frame === "browser" && (
+                  {project.image && (
                     <div className="absolute inset-x-3 bottom-3 top-12">
                       <BrowserFrame title={project.title} compact className="h-full">
                         <Image
                           src={project.image}
                           alt=""
                           fill
+                          quality={95}
                           sizes="(min-width: 640px) 352px, 264px"
                           className="object-cover object-top"
                         />
                       </BrowserFrame>
                     </div>
-                  )}
-                  {project.image && project.frame !== "browser" && (
-                    <Image
-                      src={project.image}
-                      alt=""
-                      fill
-                      sizes="(min-width: 640px) 352px, 264px"
-                      className="object-cover"
-                    />
                   )}
                   <span className="absolute left-4 top-4 rounded-full bg-bg/75 border border-line px-2.5 py-1 font-mono text-[0.65rem] text-ink backdrop-blur-sm">
                     {String(i + 1).padStart(2, "0")}

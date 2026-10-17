@@ -89,9 +89,6 @@ export function Header() {
             <span className="hidden font-display text-sm font-medium tracking-tight text-ink lg:inline">
               Md Sakibur Rahman
             </span>
-            <span className="rounded border border-line-strong px-1.5 py-0.5 text-[0.6rem] font-medium uppercase tracking-wider text-muted">
-              Beta
-            </span>
           </a>
 
           {/* Desktop nav — active link gets a shared-layout pill behind it. */}

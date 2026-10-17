@@ -126,8 +126,8 @@ export interface Project {
   outcome: string | null;
   technologies: string[];
   image: string | null;
-  /** Web projects show their screenshot inside a browser-window frame. */
-  frame?: "browser";
+  /** Width divided by height of the picture, when it is not the default 16:10. */
+  imageRatio?: number;
   gallery: string[];
   links: ProjectLink;
   accentColor: string;

@@ -20,18 +20,15 @@ export default function Template({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 12, filter: "blur(6px)" }}
-      animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-      // Even `blur(0px)` makes this wrapper the containing block for every
-      // `position: fixed` descendant, so fixed elements (like the case-study
-      // side rail) would scroll with the page. Clear it once the enter
-      // animation is done.
+      // A leftover transform or filter would make this wrapper the containing
+      // block for every `position: fixed` descendant (like the case-study side
+      // rail), so the page enter animates opacity and position only, and the
+      // transform is cleared when it ends.
       onAnimationComplete={() => {
-        if (ref.current) {
-          ref.current.style.filter = "none";
-          ref.current.style.transform = "none";
-        }
+        if (ref.current) ref.current.style.transform = "none";
       }}
     >
       {children}

@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowLeft,
@@ -20,6 +21,7 @@ import { GlowBlob } from "@/components/ui/GlowBlob";
 import { Reveal } from "@/components/motion/Reveal";
 import { CaseStudyNav } from "@/components/projects/CaseStudyNav";
 import { ProjectVisual } from "@/components/projects/ProjectVisual";
+import { BrowserFrame } from "@/components/projects/BrowserFrame";
 
 export function generateStaticParams() {
   return allProjects.map((project) => ({ slug: project.slug }));
@@ -422,23 +424,47 @@ export default async function ProjectPage({
           </section>
         ) : null}
 
-        {/* Next project: one big link. */}
+        {/* Next project: one big link, with a preview of what comes next. */}
         {neighbours && (
           <Link
             href={`/projects/${neighbours.next.slug}`}
             data-cursor="interactive"
-            className="group mt-10 block border-t border-line pt-10"
+            className="group mt-10 grid items-center gap-8 border-t border-line pt-10 md:grid-cols-[1.1fr_1fr] md:gap-12"
           >
-            <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
-              Next project
-              <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
-            </p>
-            <p className="mt-4 font-display text-5xl font-semibold leading-none tracking-tight text-ink transition-transform duration-500 ease-[var(--ease-editorial)] group-hover:translate-x-2 sm:text-7xl">
-              {neighbours.next.title}
-            </p>
-            <p className="mt-4 text-base text-muted">
-              {projectCategoryLabels[neighbours.next.category]}
-            </p>
+            <div>
+              <p className="flex items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.18em] text-muted">
+                Next project
+                <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+              </p>
+              <p className="mt-4 font-display text-5xl font-semibold leading-none tracking-tight text-ink transition-transform duration-500 ease-[var(--ease-editorial)] group-hover:translate-x-2 sm:text-6xl">
+                {neighbours.next.title}
+              </p>
+              <p className="mt-4 text-base text-muted">
+                {projectCategoryLabels[neighbours.next.category]}
+              </p>
+            </div>
+
+            {neighbours.next.image && (
+              <BrowserFrame
+                title={neighbours.next.title}
+                compact
+                className="transition-transform duration-500 ease-[var(--ease-editorial)] group-hover:-translate-y-1"
+              >
+                <div
+                  className="relative w-full"
+                  style={{ aspectRatio: neighbours.next.imageRatio ?? 1.6 }}
+                >
+                  <Image
+                    src={neighbours.next.image}
+                    alt={`${neighbours.next.title} preview`}
+                    fill
+                    quality={95}
+                    sizes="(min-width: 1024px) 540px, 100vw"
+                    className="object-cover object-top"
+                  />
+                </div>
+              </BrowserFrame>
+            )}
           </Link>
         )}
 

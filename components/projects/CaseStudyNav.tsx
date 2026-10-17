@@ -115,6 +115,19 @@ export function CaseStudyNav({ sections }: { sections: Section[] }) {
     return () => observer.disconnect();
   }, [sections]);
 
+  // On a phone the bar scrolls sideways, so keep the active pill in view. Only
+  // the bar itself is scrolled, never the page.
+  useEffect(() => {
+    const bar = barRef.current;
+    const pill = bar?.querySelector<HTMLElement>('[aria-current="true"]');
+    if (!bar || !pill || bar.scrollWidth <= bar.clientWidth) return;
+    const barBox = bar.getBoundingClientRect();
+    const pillBox = pill.getBoundingClientRect();
+    const target =
+      bar.scrollLeft + (pillBox.left - barBox.left) - (barBox.width - pillBox.width) / 2;
+    bar.scrollTo({ left: target, behavior: "smooth" });
+  }, [active]);
+
   // Bar <-> rail, with a gap between the two thresholds so it never flickers
   // back and forth around a single scroll position.
   useEffect(() => {
@@ -166,7 +179,7 @@ export function CaseStudyNav({ sections }: { sections: Section[] }) {
           ref={barRef}
           aria-label="Case study sections"
           data-hidden={railActive}
-          className="liquid-glass is-scrolled -mx-1 flex gap-1 overflow-x-auto rounded-full p-1.5 transition-opacity duration-300 xl:data-[hidden=true]:pointer-events-none xl:data-[hidden=true]:opacity-0"
+          className="liquid-glass is-scrolled -mx-1 flex gap-1 overflow-x-auto rounded-full p-1.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden transition-opacity duration-300 xl:data-[hidden=true]:pointer-events-none xl:data-[hidden=true]:opacity-0"
         >
           {sections.map((section) => (
             <a

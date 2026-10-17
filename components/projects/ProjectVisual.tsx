@@ -4,31 +4,20 @@ import { projectCategoryLabels } from "@/data/projects";
 import { BrowserFrame } from "./BrowserFrame";
 
 export function ProjectVisual({ project }: { project: Project }) {
-  if (project.image && project.frame === "browser") {
-    return (
-      <BrowserFrame title={project.title} bodyClassName="aspect-[1829/694]">
-        <Image
-          src={project.image}
-          alt={`${project.title} screenshot`}
-          fill
-          className="object-cover object-top"
-          sizes="(min-width: 1024px) 50vw, 100vw"
-        />
-      </BrowserFrame>
-    );
-  }
-
   if (project.image) {
     return (
-      <div className="relative aspect-[16/10] w-full overflow-hidden rounded-sm border border-line">
-        <Image
-          src={project.image}
-          alt={`${project.title} screenshot`}
-          fill
-          className="object-cover"
-          sizes="(min-width: 1024px) 50vw, 100vw"
-        />
-      </div>
+      <BrowserFrame title={project.title}>
+        <div className="relative w-full" style={{ aspectRatio: project.imageRatio ?? 1.6 }}>
+          <Image
+            src={project.image}
+            alt={`${project.title} screenshot`}
+            fill
+            quality={95}
+            className="object-cover object-top"
+            sizes="(min-width: 1280px) 1152px, 100vw"
+          />
+        </div>
+      </BrowserFrame>
     );
   }
 
