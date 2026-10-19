@@ -50,7 +50,7 @@ export function Hero() {
             AI Developer
           </p>
 
-          <h1 className="mt-5 max-w-2xl font-display text-[2.5rem] font-semibold leading-[1.02] tracking-tight text-ink sm:text-6xl lg:text-7xl">
+          <h1 className="mt-5 max-w-2xl font-display text-[clamp(2.4rem,0.9rem+4.4vw,4.5rem)] font-semibold leading-[1.02] tracking-tight text-ink">
             I build RAG and agent systems that ship to{" "}
             <GlitchWord text="real users" className="text-gradient" everyMs={AUTO_GLITCH_MS} />.
           </h1>

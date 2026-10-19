@@ -162,12 +162,12 @@ export default async function ProjectPage({
             {project.title}
           </h1>
 
-          <div className="mt-8 flex flex-col gap-8 lg:flex-row lg:items-end lg:justify-between">
+          <div className="mt-8 flex flex-col gap-8 xl:flex-row xl:items-end xl:justify-between">
             <p className="max-w-2xl font-display text-xl leading-snug text-ink-dim sm:text-2xl">
               {project.shortDescription}
             </p>
             {linkButtons.length > 0 && (
-              <div className="flex shrink-0 flex-wrap items-center gap-3 self-start lg:self-auto">
+              <div className="flex shrink-0 flex-wrap items-center gap-3 self-start xl:self-auto">
                 {linkButtons.map((link, i) => (
                   <Button
                     key={link.label}
@@ -242,9 +242,9 @@ export default async function ProjectPage({
         {/* System: a left-to-right flow instead of a numbered list. */}
         {project.architecture?.length ? (
           <Block id="system" label="The system" title="How the pieces fit together">
-            <ol className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-0">
+            <ol className="flex flex-col gap-3 xl:flex-row xl:items-stretch xl:gap-0">
               {project.architecture.map((layer, i) => (
-                <li key={layer.title} className="flex flex-col gap-3 lg:flex-1 lg:flex-row lg:gap-0">
+                <li key={layer.title} className="flex flex-col gap-3 xl:flex-1 xl:flex-row xl:gap-0">
                   <div className="flex-1 rounded-2xl border border-line bg-bg-raised p-6">
                     <span
                       className="inline-flex h-8 w-8 items-center justify-center rounded-full font-mono text-xs"
@@ -260,10 +260,10 @@ export default async function ProjectPage({
                   {i < (project.architecture?.length ?? 0) - 1 && (
                     <span
                       aria-hidden="true"
-                      className="flex items-center justify-center py-1 lg:px-3 lg:py-0"
+                      className="flex items-center justify-center py-1 xl:px-3 xl:py-0"
                       style={{ color: ACCENT }}
                     >
-                      <ArrowRight className="h-5 w-5 rotate-90 lg:rotate-0" />
+                      <ArrowRight className="h-5 w-5 rotate-90 xl:rotate-0" />
                     </span>
                   )}
                 </li>
