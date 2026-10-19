@@ -45,3 +45,7 @@ next-env.d.ts
 
 # browser test output
 /.playwright-mcp/
+
+# local tooling and reference screenshots (not part of the site)
+.agent/
+docs/reference/
