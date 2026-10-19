@@ -17,7 +17,7 @@ const ENTRIES = [
 ] as const;
 
 /**
- * Email, LinkedIn, GitHub and Scholar, plus the CV, in two layouts:
+ * Email, LinkedIn, GitHub and WhatsApp (plus Scholar in the tiles), and the CV, in two layouts:
  *
  * - default: a 2x2 grid of buttons with the "Download CV" card underneath.
  *   Used in the hero and on the projects page. `showLabels` puts each name
@@ -42,7 +42,8 @@ export function ContactGrid({
     href: socialLinks.find((l) => l.id === entry.id)?.href ?? null,
     icon: findIcon(entry.file),
   })).filter((entry) => Boolean(entry.href));
-  const gridLinks = links.filter((link) => link.id !== "whatsapp");
+  // The 2x2 grid shows Email, LinkedIn, GitHub and WhatsApp. Scholar stays in the icon row below.
+  const gridLinks = links.filter((link) => link.id !== "scholar");
 
   if (tiles) {
     const tileClass =
